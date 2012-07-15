@@ -190,16 +190,10 @@ shoptype.formPanel = new Ext.form.FormPanel({
 						name : 'id',
 						anchor : '99%'
 					}, {
-						fieldLabel : '字段',
-						maxLength : 64,
-						allowBlank : false,
-						name : 'name',
-						anchor : '99%'
-					},{
 						fieldLabel : '类型名',
 						maxLength : 128,
 						allowBlank : false,
-						name : 'fieldName',
+						name : 'name',
 						anchor : '99%'
 					},shoptype.enabledCombo, {
 						fieldLabel : '描述',

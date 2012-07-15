@@ -19,8 +19,7 @@ public class SysFieldServiceImpl implements SysFieldService {
 	
 	@Override
 	public SysField selectByPrimaryKey(String fieldId) {
-		// TODO Auto-generated method stub
-		return null;
+		return sysFieldDao.findById(Integer.valueOf(fieldId));
 	}
 
 	@Override
@@ -30,7 +29,7 @@ public class SysFieldServiceImpl implements SysFieldService {
 
 	@Override
 	public void delete(SysField field) {
-		// TODO Auto-generated method stub
+		sysFieldDao.deleteById(field.getId());
 	}
 
 	@Override

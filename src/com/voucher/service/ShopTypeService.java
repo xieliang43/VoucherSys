@@ -10,4 +10,7 @@ public interface ShopTypeService {
 	public List<ShopType> getShopTypes();
 	public int getTotalCount();
 	public List<ShopType> getShopTypesByName(ExtPager pager, String name);
+	public void deleteById(int id);
+	public void saveShopType(ShopType shopType);
+	public void update(ShopType shopType);
 }

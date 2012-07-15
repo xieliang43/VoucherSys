@@ -27,6 +27,23 @@ public class ShopType {
 	@Column(name="CREATE_DATE")
 	private Date createDate;
 	/**
+	 * 
+	 */
+	public ShopType() {
+		
+	}
+	/**
+	 * @param name
+	 * @param enabled
+	 * @param description
+	 * @param createDate
+	 */
+	public ShopType(String name, short enabled, String description) {
+		this.name = name;
+		this.enabled = enabled;
+		this.description = description;
+	}
+	/**
 	 * @return the id
 	 */
 	public int getId() {

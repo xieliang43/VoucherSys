@@ -51,5 +51,20 @@ public class ShopTypeServiceImpl implements ShopTypeService {
 		}
 		return list;
 	}
+
+	@Override
+	public void deleteById(int id) {
+		shopTypeDao.deleteById(id);
+	}
+
+	@Override
+	public void saveShopType(ShopType shopType) {
+		shopTypeDao.saveShopType(shopType);
+	}
+
+	@Override
+	public void update(ShopType shopType) {
+		shopTypeDao.update(shopType);
+	}
 	
 }

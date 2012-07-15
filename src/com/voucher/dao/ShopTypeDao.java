@@ -10,4 +10,7 @@ public interface ShopTypeDao {
 	public List<ShopType> getShopTypes();
 	public List<ShopType> getShopTypes(ExtPager pager);
 	public List<ShopType> getShopTypesByName(ExtPager pager, String name);
+	public void deleteById(int id);
+	public void saveShopType(ShopType shopType);
+	public void update(ShopType shopType);
 }

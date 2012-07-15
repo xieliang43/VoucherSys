@@ -61,4 +61,31 @@ public class ShopTypeDaoImpl extends BaseDaoImpl implements ShopTypeDao {
 		return null;
 	}
 
+	@Override
+	public void deleteById(int id) {
+		try {
+			this.getJpaTemplate().remove(this.findShopTypeById(id));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void saveShopType(ShopType shopType) {
+		try {
+			this.getJpaTemplate().persist(shopType);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void update(ShopType shopType) {
+		try {
+			this.getJpaTemplate().merge(shopType);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

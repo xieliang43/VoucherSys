@@ -1,10 +1,14 @@
 package com.voucher.action;
 
+import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.voucher.entity.ShopType;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ExtReturn;
 import com.voucher.service.ShopTypeService;
 
 
@@ -40,7 +44,32 @@ public class ShopTypeAction extends BaseAction {
 		
 		this.sendExtGridReturn(new ExtGridReturn(total, list));
 	}
+	
+	public void save() {
+		if (StringUtils.isBlank(getName())) {
+			sendExtReturn(new ExtReturn(false, "名称不能为空！"));
+			return;
+		}
+		ShopType shopType = new ShopType(name, Short.valueOf(enabled), description);
+		if(StringUtils.isBlank(getId())) {
+			shopType.setCreateDate(new Date());
+			shopTypeService.saveShopType(shopType);
+		} else {
+			shopType.setId(Integer.valueOf(id));
+			shopTypeService.update(shopType);
+		}
+	}
 
+	public void delete() {
+		if (StringUtils.isBlank(id)) {
+			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
+			return;
+		}
+		
+		shopTypeService.deleteById(Integer.valueOf(id));
+		sendExtReturn(new ExtReturn(true, "删除成功！"));
+	}
+	
 	/**
 	 * @return the shopTypeService
 	 */
