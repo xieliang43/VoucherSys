@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="4.3" timestamp="2012-07-12T23:20:36.573">
+<file name="D:\workspace\VoucherSys\src\com\voucher\action\BaseAction.java">
+<violation beginline="34" endline="34" begincolumn="63" endcolumn="69" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer Rules" package="com.voucher.action" class="BaseAction" method="sendErrorResoponse" externalInfoUrl="http://pmd.sourceforge.net/rules/strings.html#AvoidDuplicateLiterals" priority="3">
+The String literal &quot;UTF-8&quot; appears 4 times in this file; the first occurrence is on line 34
+</violation>
+<violation beginline="41" endline="41" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.action" class="BaseAction" method="sendErrorResoponse" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="53" endline="53" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.action" class="BaseAction" method="sendExtReturn" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="65" endline="65" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.action" class="BaseAction" method="sendExtGridReturn" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="77" endline="77" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.action" class="BaseAction" method="sendJSonReturn" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\action\sys\SysLoginAction.java">
+<violation beginline="53" endline="53" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.action.sys" class="SysLoginAction" method="login" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="54" endline="54" begincolumn="25" endcolumn="76" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.action.sys" class="SysLoginAction" method="login" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="76" endline="76" begincolumn="24" endcolumn="60" rule="UnusedPrivateMethod" ruleset="Unused Code Rules" package="com.voucher.action.sys" class="SysLoginAction" method="getIpAddr" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedPrivateMethod" priority="3">
+Avoid unused private methods such as 'getIpAddr(HttpServletRequest)'.
+</violation>
+<violation beginline="78" endline="78" begincolumn="55" endcolumn="63" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer Rules" package="com.voucher.action.sys" class="SysLoginAction" method="getIpAddr" externalInfoUrl="http://pmd.sourceforge.net/rules/strings.html#AvoidDuplicateLiterals" priority="3">
+The String literal &quot;unknown&quot; appears 5 times in this file; the first occurrence is on line 78
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\constants\WebConstants.java">
+<violation beginline="9" endline="9" begincolumn="29" endcolumn="89" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.constants" class="WebConstants" variable="TIME_OUT" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="11" endline="11" begincolumn="29" endcolumn="65" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.constants" class="WebConstants" variable="CURRENT_USER" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\MerchantDao.java">
+<violation beginline="6" endline="6" begincolumn="16" endcolumn="46" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="MerchantDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="7" endline="7" begincolumn="16" endcolumn="46" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="MerchantDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="46" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="MerchantDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="57" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="MerchantDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="10" endline="10" begincolumn="16" endcolumn="62" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="MerchantDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="11" endline="11" begincolumn="16" endcolumn="88" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="MerchantDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\RegionDao.java">
+<violation beginline="15" endline="15" begincolumn="16" endcolumn="42" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="16" endline="16" begincolumn="16" endcolumn="42" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="42" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="51" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="19" endline="19" begincolumn="16" endcolumn="62" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="20" endline="20" begincolumn="16" endcolumn="56" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="21" endline="21" begincolumn="16" endcolumn="79" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="22" endline="22" begincolumn="16" endcolumn="52" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="RegionDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\ShopDao.java">
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="45" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="10" endline="10" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="11" endline="11" begincolumn="16" endcolumn="37" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="12" endline="12" begincolumn="16" endcolumn="55" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\ShopTypeDao.java">
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="57" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="45" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="ShopTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\UserDao.java">
+<violation beginline="6" endline="6" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="UserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="7" endline="7" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="UserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="UserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="45" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="UserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="10" endline="10" begincolumn="16" endcolumn="54" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="UserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="11" endline="11" begincolumn="16" endcolumn="80" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="UserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\VoucherDao.java">
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="44" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="44" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="10" endline="10" begincolumn="16" endcolumn="44" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="11" endline="11" begincolumn="16" endcolumn="54" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="12" endline="12" begincolumn="16" endcolumn="39" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\VoucherTypeDao.java">
+<violation beginline="15" endline="15" begincolumn="16" endcolumn="49" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="16" endline="16" begincolumn="16" endcolumn="49" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="49" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="57" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="19" endline="19" begincolumn="16" endcolumn="40" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao" class="VoucherTypeDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\MerchantDaoImpl.java">
+<violation beginline="19" endline="19" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="MerchantDaoImpl" method="create" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="28" endline="28" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="MerchantDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="37" endline="37" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="MerchantDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="46" endline="46" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="MerchantDaoImpl" method="findMerchantById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="62" endline="62" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="MerchantDaoImpl" method="findMerchantByPhoneNo" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="80" endline="80" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="MerchantDaoImpl" method="findMerchantByPhoneAndPassword" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\RegionDaoImpl.java">
+<violation beginline="26" endline="26" begincolumn="25" endcolumn="101" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="create" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="34" endline="34" begincolumn="25" endcolumn="96" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="findRegionById" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="42" endline="42" begincolumn="25" endcolumn="100" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="50" endline="50" begincolumn="25" endcolumn="100" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="60" endline="60" begincolumn="25" endcolumn="104" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="findRegionsByParent" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="71" endline="71" begincolumn="25" endcolumn="104" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="findRegionsByType" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="85" endline="86" begincolumn="41" endcolumn="57" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="findRegionByName" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="90" endline="90" begincolumn="25" endcolumn="101" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="findRegionByName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="107" endline="107" begincolumn="25" endcolumn="134" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.impl" class="RegionDaoImpl" method="findRegionsByParentAndType" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\ShopDaoImpl.java">
+<violation beginline="19" endline="19" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopDaoImpl" method="findShopById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="30" endline="30" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="39" endline="39" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopDaoImpl" method="create" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="50" endline="50" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopDaoImpl" method="getShops" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="63" endline="63" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopDaoImpl" method="getShopsByCityId" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\ShopTypeDaoImpl.java">
+<violation beginline="19" endline="19" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopTypeDaoImpl" method="findShopTypeById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="31" endline="31" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="ShopTypeDaoImpl" method="getShopTypes" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\UserDaoImpl.java">
+<violation beginline="27" endline="27" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="UserDaoImpl" method="create" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="37" endline="37" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="UserDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="47" endline="47" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="UserDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="57" endline="57" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="UserDaoImpl" method="findUserById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="74" endline="74" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="UserDaoImpl" method="findUserByPhoneNo" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="91" endline="91" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="UserDaoImpl" method="findUserByPhoneAndPassword" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\VoucherDaoImpl.java">
+<violation beginline="20" endline="20" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherDaoImpl" method="create" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="30" endline="30" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="40" endline="40" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="49" endline="49" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherDaoImpl" method="findVoucherById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="61" endline="61" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherDaoImpl" method="findAll" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\impl\VoucherTypeDaoImpl.java">
+<violation beginline="20" endline="20" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherTypeDaoImpl" method="create" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="30" endline="30" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherTypeDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="40" endline="40" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherTypeDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="50" endline="50" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherTypeDaoImpl" method="findVoucherTypeById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="63" endline="63" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.impl" class="VoucherTypeDaoImpl" method="findAll" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\SysUserDao.java">
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="39" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="19" endline="19" begincolumn="16" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="20" endline="20" begincolumn="16" endcolumn="48" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="21" endline="21" begincolumn="16" endcolumn="85" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="22" endline="22" begincolumn="16" endcolumn="82" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="23" endline="23" begincolumn="16" endcolumn="55" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="24" endline="24" begincolumn="16" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="25" endline="25" begincolumn="16" endcolumn="35" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.dao.sys" class="SysUserDao" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\impl\SysFieldDaoImpl.java">
+<violation beginline="24" endline="24" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="getAllEnabledSysFields" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="40" endline="40" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="getSysFieldsByFieldName" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="56" endline="56" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="getAllSysFields" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="69" endline="69" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="getTotalCount" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="80" endline="80" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="save" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="90" endline="90" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="100" endline="100" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="deleteById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="110" endline="110" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysFieldDaoImpl" method="findById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\impl\SysModuleDaoImpl.java">
+<violation beginline="25" endline="25" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="getModules" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="45" endline="45" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="getAllSysModules" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="67" endline="67" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="getSysModulesByModuleName" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="86" endline="86" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="getRootSysModules" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="96" endline="96" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="save" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="105" endline="105" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="114" endline="114" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="deleteById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="123" endline="123" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="findById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="136" endline="136" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysModuleDaoImpl" method="getAllEnabledModules" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\impl\SysRoleDaoImpl.java">
+<violation beginline="33" endline="33" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="getSysRoles" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="49" endline="49" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="getSysRolesByRoleName" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="61" endline="61" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="getSysRoles" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="71" endline="71" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="save" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="80" endline="80" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="89" endline="89" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="deleteById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="98" endline="98" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleDaoImpl" method="findById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\impl\SysRoleModuleDaoImpl.java">
+<violation beginline="25" endline="25" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleModuleDaoImpl" method="getSysRoleModuleByRole" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="43" endline="43" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleModuleDaoImpl" method="save" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="52" endline="52" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleModuleDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="64" endline="64" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysRoleModuleDaoImpl" method="getSysRoleModuleCountByModule" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="65" endline="65" begincolumn="25" endcolumn="74" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.dao.sys.impl" class="SysRoleModuleDaoImpl" method="getSysRoleModuleCountByModule" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\impl\SysUserDaoImpl.java">
+<violation beginline="23" endline="23" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="save" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="32" endline="32" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="41" endline="41" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="50" endline="50" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="findUserById" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="67" endline="67" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="findUserByAccountAndPassword" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="83" endline="83" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="findUsersByRealName" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="98" endline="98" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="findUsers" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="115" endline="115" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserDaoImpl" method="findUsers" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\dao\sys\impl\SysUserRoleDaoImpl.java">
+<violation beginline="23" endline="23" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserRoleDaoImpl" method="getSysUserRolesByUser" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="36" endline="36" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserRoleDaoImpl" method="getSysUserRolesByRole" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="46" endline="46" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserRoleDaoImpl" method="save" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="55" endline="55" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserRoleDaoImpl" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+<violation beginline="64" endline="64" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.dao.sys.impl" class="SysUserRoleDaoImpl" method="delete" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\entity\Merchant.java">
+<violation beginline="184" endline="185" begincolumn="17" endcolumn="36" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="186" endline="187" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="188" endline="189" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="191" endline="192" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="194" endline="195" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="196" endline="197" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="199" endline="200" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="201" endline="202" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="204" endline="205" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="206" endline="207" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="209" endline="210" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="211" endline="212" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="214" endline="215" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="216" endline="217" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Merchant" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\entity\Region.java">
+<violation beginline="175" endline="176" begincolumn="17" endcolumn="36" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="177" endline="178" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="179" endline="180" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="182" endline="183" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="185" endline="186" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="187" endline="188" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="189" endline="190" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="192" endline="193" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="194" endline="195" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="197" endline="198" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="199" endline="200" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="202" endline="203" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="204" endline="205" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="206" endline="207" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Region" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\entity\Shop.java">
+<violation beginline="173" endline="174" begincolumn="17" endcolumn="36" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="175" endline="176" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="177" endline="178" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="181" endline="182" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="183" endline="184" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="185" endline="186" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="188" endline="189" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="190" endline="191" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="193" endline="194" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="195" endline="196" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="198" endline="199" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="200" endline="201" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="203" endline="204" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="205" endline="206" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="Shop" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\entity\User.java">
+<violation beginline="151" endline="152" begincolumn="17" endcolumn="36" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="153" endline="154" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="155" endline="156" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="159" endline="160" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="161" endline="162" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="163" endline="164" begincolumn="17" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="166" endline="167" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="168" endline="169" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="171" endline="172" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="173" endline="174" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="176" endline="177" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="178" endline="179" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="181" endline="182" begincolumn="25" endcolumn="45" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+<violation beginline="183" endline="184" begincolumn="24" endcolumn="37" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.entity" class="User" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\interceptor\ParameterInterceptor.java">
+<violation beginline="30" endline="30" begincolumn="69" endcolumn="77" rule="SignatureDeclareThrowsException" ruleset="Strict Exception Rules" package="com.voucher.interceptor" class="ParameterInterceptor" method="intercept" externalInfoUrl="http://pmd.sourceforge.net/rules/strictexception.html#SignatureDeclareThrowsException" priority="3">
+A method/constructor shouldn't explicitly throw java.lang.Exception
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\MerchantService.java">
+<violation beginline="13" endline="13" begincolumn="16" endcolumn="44" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="MerchantService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="14" endline="14" begincolumn="16" endcolumn="46" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="MerchantService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="15" endline="15" begincolumn="16" endcolumn="46" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="MerchantService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="16" endline="16" begincolumn="16" endcolumn="53" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="MerchantService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="62" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="MerchantService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="88" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="MerchantService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\RegionService.java">
+<violation beginline="16" endline="16" begincolumn="16" endcolumn="84" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="RegionService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="78" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="RegionService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="75" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="RegionService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="19" endline="19" begincolumn="16" endcolumn="68" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="RegionService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="20" endline="20" begincolumn="16" endcolumn="79" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="RegionService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\ShopService.java">
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="45" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="10" endline="10" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="11" endline="11" begincolumn="16" endcolumn="36" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="12" endline="12" begincolumn="16" endcolumn="37" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="13" endline="13" begincolumn="16" endcolumn="101" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\ShopTypeService.java">
+<violation beginline="8" endline="8" begincolumn="16" endcolumn="57" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopTypeService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="9" endline="9" begincolumn="16" endcolumn="45" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="ShopTypeService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\UserService.java">
+<violation beginline="13" endline="13" begincolumn="16" endcolumn="36" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="UserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="14" endline="14" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="UserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="15" endline="15" begincolumn="16" endcolumn="38" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="UserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="16" endline="16" begincolumn="16" endcolumn="45" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="UserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="54" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="UserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="80" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service" class="UserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\impl\RegionServiceImpl.java">
+<violation beginline="54" endline="54" begincolumn="25" endcolumn="113" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.service.impl" class="RegionServiceImpl" method="getRegionByParent" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="70" endline="70" begincolumn="25" endcolumn="113" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.service.impl" class="RegionServiceImpl" method="getRegionByType" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="81" endline="81" begincolumn="25" endcolumn="106" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.service.impl" class="RegionServiceImpl" method="getRegionByName" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+<violation beginline="92" endline="92" begincolumn="25" endcolumn="102" rule="PreserveStackTrace" ruleset="Design Rules" package="com.voucher.service.impl" class="RegionServiceImpl" method="getRegionById" externalInfoUrl="http://pmd.sourceforge.net/rules/design.html#PreserveStackTrace" priority="3">
+New exception is thrown in catch block, original stack trace may be lost
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\sys\SysModuleService.java">
+<violation beginline="13" endline="13" begincolumn="16" endcolumn="51" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="15" endline="15" begincolumn="16" endcolumn="36" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="50" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="19" endline="19" begincolumn="16" endcolumn="92" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="21" endline="21" begincolumn="16" endcolumn="35" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="23" endline="23" begincolumn="16" endcolumn="55" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="25" endline="25" begincolumn="16" endcolumn="49" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="27" endline="27" begincolumn="16" endcolumn="51" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="29" endline="29" begincolumn="16" endcolumn="39" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="31" endline="31" begincolumn="16" endcolumn="72" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="33" endline="33" begincolumn="16" endcolumn="73" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="35" endline="35" begincolumn="16" endcolumn="55" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysModuleService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\service\sys\SysUserService.java">
+<violation beginline="17" endline="17" begincolumn="16" endcolumn="39" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="18" endline="18" begincolumn="16" endcolumn="61" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="19" endline="19" begincolumn="16" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="20" endline="20" begincolumn="16" endcolumn="63" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="21" endline="21" begincolumn="16" endcolumn="41" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="22" endline="22" begincolumn="16" endcolumn="48" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="23" endline="23" begincolumn="16" endcolumn="85" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="24" endline="24" begincolumn="16" endcolumn="82" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="25" endline="25" begincolumn="16" endcolumn="35" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="26" endline="26" begincolumn="16" endcolumn="43" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+<violation beginline="27" endline="27" begincolumn="16" endcolumn="48" rule="UnusedModifier" ruleset="Controversial Rules" package="com.voucher.service.sys" class="SysUserService" externalInfoUrl="http://pmd.sourceforge.net/rules/controversial.html#UnusedModifier" priority="5">
+Avoid modifiers which are implied by the context
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\util\Base64Encoder.java">
+<violation beginline="29" endline="29" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.util" class="Base64Encoder" method="decode" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\util\DateConvertEditor.java">
+<violation beginline="41" endline="42" begincolumn="17" endcolumn="34" rule="IfStmtsMustUseBraces" ruleset="Braces Rules" package="com.voucher.util" class="DateConvertEditor" method="getAsText" externalInfoUrl="http://pmd.sourceforge.net/rules/braces.html#IfStmtsMustUseBraces" priority="3">
+Avoid using if statements without curly braces
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\util\DistanceUtil.java">
+<violation beginline="4" endline="4" begincolumn="24" endcolumn="54" rule="SuspiciousConstantFieldName" ruleset="Naming Rules" package="com.voucher.util" class="DistanceUtil" variable="EARTH_RADIUS" externalInfoUrl="http://pmd.sourceforge.net/rules/naming.html#SuspiciousConstantFieldName" priority="3">
+The field name indicates a constant but its modifiers do not
+</violation>
+<violation beginline="29" endline="29" begincolumn="17" endcolumn="34" rule="SystemPrintln" ruleset="Java Logging Rules" package="com.voucher.util" class="DistanceUtil" method="main" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#SystemPrintln" priority="3">
+System.out.print is used
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\util\JackJson.java">
+<violation beginline="50" endline="50" begincolumn="38" endcolumn="61" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer Rules" package="com.voucher.util" class="JackJson" externalInfoUrl="http://pmd.sourceforge.net/rules/strings.html#AvoidDuplicateLiterals" priority="3">
+The String literal &quot;JsonMappingException: &quot; appears 7 times in this file; the first occurrence is on line 50
+</violation>
+<violation beginline="52" endline="52" begincolumn="38" endcolumn="52" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer Rules" package="com.voucher.util" class="JackJson" externalInfoUrl="http://pmd.sourceforge.net/rules/strings.html#AvoidDuplicateLiterals" priority="3">
+The String literal &quot;IOException: &quot; appears 7 times in this file; the first occurrence is on line 52
+</violation>
+<violation beginline="98" endline="98" begincolumn="38" endcolumn="64" rule="AvoidDuplicateLiterals" ruleset="String and StringBuffer Rules" package="com.voucher.util" class="JackJson" method="fromObjectToJson" externalInfoUrl="http://pmd.sourceforge.net/rules/strings.html#AvoidDuplicateLiterals" priority="3">
+The String literal &quot;JsonGenerationException: &quot; appears 5 times in this file; the first occurrence is on line 98
+</violation>
+</file>
+<file name="D:\workspace\VoucherSys\src\com\voucher\util\MD5.java">
+<violation beginline="22" endline="22" begincolumn="25" endcolumn="43" rule="AvoidPrintStackTrace" ruleset="Java Logging Rules" package="com.voucher.util" class="MD5" externalInfoUrl="http://pmd.sourceforge.net/rules/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+</pmd>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+	
+		<!-- Enable Hibernate's automatic session context management -->
+		<property name="current_session_context_class">thread</property>
+		<property name="connection.pool_size">1</property>
+		
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+        <property name="cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		
+		<!-- Echo all executed SQL to stdout -->
+		<property name="show_sql">true</property>
+		
+		<!-- show formatted sql -->
+		<property name="format_sql">true</property>
+
+		<!-- Drop and re-create the database schema on startup -->
+		<property name="hbm2ddl.auto">validate</property>
+		
+		<mapping class="com.voucher.entity.User"/>
+		<mapping class="com.voucher.entity.Merchant"/>
+		<mapping class="com.voucher.entity.Shop"/>
+		<mapping class="com.voucher.entity.Region"/>
+		<mapping class="com.voucher.entity.Voucher"/>
+		<mapping class="com.voucher.entity.ShopType"/>
+		<mapping class="com.voucher.entity.Position"/>
+		
+		<mapping class="com.voucher.entity.sys.SysField"/>
+		<mapping class="com.voucher.entity.sys.SysModule"/>
+		<mapping class="com.voucher.entity.sys.SysRole"/>
+		<mapping class="com.voucher.entity.sys.SysRoleModule"/>
+		<mapping class="com.voucher.entity.sys.SysUser"/>
+		<mapping class="com.voucher.entity.sys.SysUserRole"/>
+		
+		<class-cache class="com.voucher.entity.Region" usage="read-only" />
+	</session-factory>
+</hibernate-configuration>

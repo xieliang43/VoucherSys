@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+		<property name="persistenceUnitName" value="jpaUNIT" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+        	<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">  
+            	<property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
+        	</bean>
+    	</property>
+	</bean>
+
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/voucherdb" />
+		<property name="user" value="root" />
+		<property name="password" value="admin" />
+
+		<property name="autoCommitOnClose" value="true" />
+		<property name="initialPoolSize" value="10"/>
+		<property name="minPoolSize" value="10"/>
+		<property name="maxPoolSize" value="50"/>
+		<property name="maxIdleTime" value="25200"/>
+		<property name="maxIdleTimeExcessConnections" value="1800"/>
+		<property name="acquireIncrement" value="5"/>
+		
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->
+	<bean class="com.voucher.util.SpringContextHolder" lazy-init="false" />
+	
+	<bean id="regionDao" class="com.voucher.dao.impl.RegionDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="userDao" class="com.voucher.dao.impl.UserDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="voucherDao" class="com.voucher.dao.impl.VoucherDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="voucherTypeDao" class="com.voucher.dao.impl.VoucherTypeDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="merchantDao" class="com.voucher.dao.impl.MerchantDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="shopDao" class="com.voucher.dao.impl.ShopDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="shopTypeDao" class="com.voucher.dao.impl.ShopTypeDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="sysUserDao" class="com.voucher.dao.sys.impl.SysUserDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="userService" class="com.voucher.service.impl.UserServiceImpl">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+	
+	<bean id="regionService" class="com.voucher.service.impl.RegionServiceImpl">
+		<property name="regionDao" ref="regionDao"/>
+	</bean>
+	
+	<bean id="merchantService" class="com.voucher.service.impl.MerchantServiceImpl">
+		<property name="merchantDao" ref="merchantDao"/>
+	</bean>
+	
+	<bean id="shopService" class="com.voucher.service.impl.ShopServiceImpl">
+		<property name="shopDao" ref="shopDao"/>
+	</bean>
+	
+	<bean id="shopTypeService" class="com.voucher.service.impl.ShopTypeServiceImpl">
+		<property name="shopTypeDao" ref="shopTypeDao"/>
+	</bean>
+	
+	<bean id="sysUserService" class="com.voucher.service.sys.impl.SysUserServiceImpl">
+		<property name="sysUserDao" ref="sysUserDao"/>
+		<property name="sysRoleDao" ref="sysRoleDao"/>
+		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
+	</bean>
+	
+	<bean id="sysModuleDao" class="com.voucher.dao.sys.impl.SysModuleDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="sysUserRoleDao" class="com.voucher.dao.sys.impl.SysUserRoleDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="sysRoleModuleDao" class="com.voucher.dao.sys.impl.SysRoleModuleDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="sysModuleService" class="com.voucher.service.sys.impl.SysModuleServiceImpl">
+		<property name="sysModuleDao" ref="sysModuleDao"/>
+		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
+		<property name="sysRoleModuleDao" ref="sysRoleModuleDao"/>
+		<property name="sysRoleDao" ref="sysRoleDao"/>
+	</bean>
+	
+	<bean id="sysFieldDao" class="com.voucher.dao.sys.impl.SysFieldDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="sysFieldService" class="com.voucher.service.sys.impl.SysFieldServiceImpl">
+		<property name="sysFieldDao" ref="sysFieldDao"/>
+	</bean>
+	
+	<bean id="userAction" class="com.voucher.action.UserAction">
+		<property name="userService" ref="userService"/>
+		<property name="regionService" ref="regionService"/>
+	</bean>
+	
+	<bean id="regionAction" class="com.voucher.action.RegionAction">
+		<property name="regionService" ref="regionService"/>
+	</bean>
+	
+	<bean id="shopAction" class="com.voucher.action.ShopAction">
+		<property name="regionService" ref="regionService"/>
+		<property name="shopTypeService" ref="shopTypeService"/>
+		<property name="shopService" ref="shopService"/>
+		<property name="merchantService" ref="merchantService"/>
+	</bean>
+	
+	<bean id="sysLoginAction" class="com.voucher.action.sys.SysLoginAction">
+		<property name="sysUserService" ref="sysUserService"/>
+		<property name="sysModuleService" ref="sysModuleService"></property>
+	</bean>
+	
+	<bean id="sysUserAction" class="com.voucher.action.sys.SysUserAction">
+		<property name="sysUserService" ref="sysUserService"/>
+	</bean>
+	
+	<bean id="sysFieldAction" class="com.voucher.action.sys.SysFieldAction">
+		<property name="sysFieldService" ref="sysFieldService"/>
+	</bean>
+	
+	<bean id="sysModuleAction" class="com.voucher.action.sys.SysModuleAction">
+		<property name="sysModuleService" ref="sysModuleService"/>
+	</bean>
+	
+	<bean id="sysRoleDao" class="com.voucher.dao.sys.impl.SysRoleDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="sysRoleService" class="com.voucher.service.sys.impl.SysRoleServiceImpl">
+		<property name="sysRoleDao" ref="sysRoleDao"/>
+		<property name="sysRoleModuleDao" ref="sysRoleModuleDao"/>
+		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
+	</bean>
+	
+	<bean id="sysRoleAction" class="com.voucher.action.sys.SysRoleAction">
+		<property name="sysRoleService" ref="sysRoleService"/>
+	</bean>
+	
+	<bean id="shopTypeAction" class="com.voucher.action.ShopTypeAction">
+		<property name="shopTypeService" ref="shopTypeService"/>
+	</bean>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.voucher.service.*.*(..))" id="txPoint"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+	</aop:config>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="find*" propagation="REQUIRED"/>
+			<tx:method name="get*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.voucher.service.sys.*.*(..))" id="sysTxPoint"/>
+		<aop:advisor advice-ref="sysTxAdvice" pointcut-ref="sysTxPoint"/>
+	</aop:config>
+	
+	<tx:advice id="sysTxAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="find*" propagation="REQUIRED"/>
+			<tx:method name="get*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="delete*" propagation="REQUIRES_NEW"/>
+			<tx:method name="*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.textproducer.font.color">red</prop>
+						<prop key="kaptcha.noise.color">blue</prop>
+						<prop key="kaptcha.border">no</prop>
+						<prop key="kaptcha.textproducer.char.space">2</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="captchaImageCreateAction" class="com.voucher.action.sys.CaptchaImageCreateAction">
+		<property name="captchaProducer" ref="captchaProducer"></property>
+	</bean>
+	
+	<bean id="loginInterceptor" class="com.voucher.interceptor.LoginInterceptor"></bean>
+</beans>

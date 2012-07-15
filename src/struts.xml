@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.multipart.maxSize" value="1000000000" />
+	<constant name="struts.custom.i18n.resources" value="messages" />
+
+	<package name="default" extends="struts-default">
+
+		<interceptors>
+			<interceptor name="loginInterceptor" class="loginInterceptor"></interceptor>
+			<interceptor-stack name="loginDefaultStack">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="loginDefaultStack"></default-interceptor-ref>
+
+		<default-action-ref name="index" />
+		<action name="index">
+			<result name="success">/WEB-INF/views/login.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="main">
+			<result name="success">/WEB-INF/views/main.jsp</result>
+			<result name="login">/WEB-INF/views/login.jsp</result>
+		</action>
+		<action name="welcome">
+			<result name="success">/WEB-INF/views/welcome.jsp</result>
+		</action>
+		<action name="header">
+			<result name="success">/WEB-INF/views/header.jsp</result>
+		</action>
+		<action name="myinfo">
+			<result name="success">/WEB-INF/views/user/myinfo.jsp</result>
+		</action>
+		<action name="changepwd">
+			<result name="success">/WEB-INF/views/user/changepwd.jsp</result>
+		</action>
+		<action name="field">
+			<result name="success">/WEB-INF/views/user/field.jsp</result>
+		</action>
+		<!-- -->
+		<action name="sysUserInit">
+			<result name="success">/WEB-INF/views/user/user.jsp</result>
+		</action>
+
+		<action name="role">
+			<result name="success">/WEB-INF/views/user/role.jsp</result>
+		</action>
+
+		<action name="findpwd">
+			<result name="success">/WEB-INF/views/user/findpwd.jsp</result>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="shopTypeInit">
+			<result>/WEB-INF/views/sys/shoptype.jsp</result>
+		</action>
+
+		<action name="userAction" class="userAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="regionAction" class="regionAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="shopAction" class="shopAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<!-- -->
+		<action name="sysLoginAction" class="sysLoginAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="sysUserAction" class="sysUserAction"></action>
+
+		<action name="sysFieldAction" class="sysFieldAction"></action>
+
+		<action name="sysModuleAction" class="sysModuleAction"></action>
+
+		<action name="sysModuleInitAction" class="sysModuleAction"	method="module">
+			<result name="success">/WEB-INF/views/user/module.jsp</result>
+		</action>
+
+		<action name="sysRoleAction" class="sysRoleAction"></action>
+
+		<action name="checkimage" class="captchaImageCreateAction" method="createImage">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="shopTypeAction" class="shopTypeAction"></action>
+	</package>
+
+</struts>
