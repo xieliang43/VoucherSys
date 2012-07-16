@@ -58,6 +58,7 @@ public class ShopTypeAction extends BaseAction {
 			shopType.setId(Integer.valueOf(id));
 			shopTypeService.update(shopType);
 		}
+		sendExtReturn(new ExtReturn(true, "保存成功！"));
 	}
 
 	public void delete() {

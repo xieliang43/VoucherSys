@@ -64,6 +64,8 @@ public class ShopTypeServiceImpl implements ShopTypeService {
 
 	@Override
 	public void update(ShopType shopType) {
+		ShopType oldShopType = this.findShopTypeById(shopType.getId());
+		shopType.setCreateDate(oldShopType.getCreateDate());
 		shopTypeDao.update(shopType);
 	}
 	
