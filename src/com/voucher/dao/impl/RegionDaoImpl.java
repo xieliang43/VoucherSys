@@ -6,15 +6,16 @@ package com.voucher.dao.impl;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.RegionDao;
 import com.voucher.entity.Region;
 import com.voucher.exception.DataNotFoundException;
+import com.voucher.pojo.ExtPager;
 
 /**
- * @author weilin
  *
  */
 public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
@@ -108,6 +109,57 @@ public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
 		}
 		
 		return null;
+	}
+
+	@Override
+	public List<Region> getAllRegions(ExtPager pager) {
+		String hql = "from Region r";
+		hql = this.createQueryString(hql, pager);
+		try {
+			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Region> getAllRegionsByName(ExtPager pager, String name) {
+		String hql = "from Region r where r.name = :name";
+		hql = this.createQueryString(hql, pager);
+		
+		try {
+			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			query.setParameter("name", name);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Region> getAllRegions() {
+		String hql = "from Region r";
+		try {
+			Query query = this.createQuery(hql);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void deleteById(int id) {
+		try {
+			this.getJpaTemplate().remove(this.getJpaTemplate().merge(this.findRegionById(id)));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		} catch (DataNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

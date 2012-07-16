@@ -23,7 +23,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		try {
 			this.getJpaTemplate().persist(user);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -33,7 +32,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		try {
 			this.getJpaTemplate().merge(user);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -43,7 +41,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		try {
 			this.getJpaTemplate().remove(user);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -53,7 +50,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		try {
 			return this.getJpaTemplate().find(User.class, userId);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -70,7 +66,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 				return users.get(0);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

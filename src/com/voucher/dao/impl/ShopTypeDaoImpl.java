@@ -54,6 +54,7 @@ public class ShopTypeDaoImpl extends BaseDaoImpl implements ShopTypeDao {
 		
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			query.setParameter("name", name);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -129,8 +129,10 @@ public class SysModuleServiceImpl implements SysModuleService {
 	public Map<String, Object> getRootSysModules() {
 		List<SysModule> roots = sysModuleDao.getRootSysModules();
 		Map<String, Object> map = new HashMap<String, Object>();
-		for(SysModule module : roots) {
-			map.put(String.valueOf(module.getId()), module.getModuleName());
+		if(roots != null && !roots.isEmpty()) {
+			for(SysModule module : roots) {
+				map.put(String.valueOf(module.getId()), module.getModuleName());
+			}
 		}
 		return map;
 	}

@@ -51,6 +51,22 @@ public class Region {
 		
 	}
 	/**
+	 * @param name
+	 * @param type
+	 * @param regionPrefix
+	 * @param enabled
+	 * @param parent
+	 */
+	public Region(String name, int type, String regionPrefix, short enabled,
+			Region parent) {
+		this.name = name;
+		this.type = type;
+		this.regionPrefix = regionPrefix;
+		this.enabled = enabled;
+		this.parent = parent;
+		this.agencyId = 0;
+	}
+	/**
 	 * @return the id
 	 */
 	public int getId() {
@@ -123,9 +139,6 @@ public class Region {
 		this.children = children;
 	}
 	
-	public String toString(){
-		return this.name;
-	}
 	/**
 	 * @return the regionPrefix
 	 */

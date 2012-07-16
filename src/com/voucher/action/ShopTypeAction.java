@@ -23,13 +23,7 @@ public class ShopTypeAction extends BaseAction {
 	
 	private int start;
 	private int limit;
-	/**
-	 * 大写的ASC or DESC
-	 */
 	private String dir;
-	/**
-	 * 排序的字段
-	 */
 	private String sort;
 	
 	private String id;

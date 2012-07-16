@@ -98,7 +98,7 @@ shoptype.addAction = new Ext.Action({
 			iconCls : 'field_add',
 			handler : function() {
 				shoptype.addWindow.setIconClass('field_add'); // 设置窗口的样式
-				shoptype.addWindow.setTitle('新建字段'); // 设置窗口的名称
+				shoptype.addWindow.setTitle('新建类型'); // 设置窗口的名称
 				shoptype.addWindow.show().center(); // 显示窗口
 				shoptype.formPanel.getForm().reset(); // 清空表单里面的元素的值.
 				shoptype.enabledCombo.clearValue();
@@ -112,7 +112,7 @@ shoptype.editAction = new Ext.Action({
 			handler : function() {
 				var record = shoptype.grid.getSelectionModel().getSelected();
 				shoptype.addWindow.setIconClass('field_edit'); // 设置窗口的样式
-				shoptype.addWindow.setTitle('编辑字段'); // 设置窗口的名称
+				shoptype.addWindow.setTitle('编辑类型'); // 设置窗口的名称
 				shoptype.addWindow.show().center();
 				shoptype.formPanel.getForm().reset();
 				shoptype.formPanel.getForm().loadRecord(record);
@@ -131,7 +131,7 @@ shoptype.deleteAction = new Ext.Action({
 shoptype.searchField = new Ext.ux.form.SearchField({
 			store : shoptype.store,
 			paramName : 'name',
-			emptyText : '请输入字段名称',
+			emptyText : '请输入类型名称',
 			style : 'margin-left: 5px;'
 		});
 
@@ -180,7 +180,7 @@ shoptype.enabledCombo = new Ext.form.ComboBox({
 /** 基本信息-详细信息的form */
 shoptype.formPanel = new Ext.form.FormPanel({
 			frame : false,
-			title : '字段信息',
+			title : '类型信息',
 			bodyStyle : 'padding:10px;border:0px',
 			labelwidth : 50,
 			defaultType : 'textfield',
