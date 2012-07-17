@@ -7,6 +7,8 @@ $(document).ready(function () {
         findpwd: ctx + "/findpwd.action",
         register: ctx + "/register.action"
     };
+    var value = $("#cityMap").html();
+    alert(value);
     // 设置主题
     Share.swapStyle();
     // 用户登录Form
@@ -215,14 +217,11 @@ $(document).ready(function () {
         var left = ($(window).width() - login.loginWindow.getWidth()) / 2;
         login.loginWindow.setPosition(left);
     };
-    // 设置为焦点
-    // $("#account").focus();
-    // Ext.getCmp("account").focus(true, true);
     // 忘记密码
     login.resetPassword = function () {
         // 跳转到忘记密码
         login.findPwdWindow = new Ext.Window({
-            title: '系统将发送重置密码链接到你的注册邮箱！',
+            title: '系统将发送重置密码链接到你的注册手机！',
             width: 300,
             height: 190,
             modal: true,
@@ -237,10 +236,118 @@ $(document).ready(function () {
             }
         }).show();
     };
+    
+    login.sexCombo = new Ext.form.ComboBox({
+		fieldLabel : '性别',
+		name : 'sex',
+		triggerAction : 'all',
+		mode : 'local',
+		store : new Ext.data.ArrayStore({
+					fields : ['v', 't'],
+					data : Share.map2Ary(login.SEX)
+				}),
+		valueField : 'v',
+		displayField : 't',
+		allowBlank : false,
+		editable : false,
+		anchor : '99%'
+	});
+    
+    login.cityCombo = new Ext.form.ComboBox({
+    	fieldLabel : '城市',
+    	name : 'cityId',
+    	triggerAction : 'all',
+    	mode : 'local',
+    	store : new Ext.data.ArrayStore({
+    				fields : ['v', 't'],
+    				data : Share.map2Ary(login.CITYMAP)
+    			}),
+    	valueField : 'v',
+    	displayField : 't',
+    	allowBlank : false,
+    	editable : false,
+    	anchor : '99%'
+    });
+    
+    login.registerFormPanel = new Ext.form.FormPanel({
+		frame : false,
+		title : '注册信息',
+		bodyStyle : 'padding:10px;border:0px',
+		labelwidth : 50,
+		defaultType : 'textfield',
+		items : [{
+					fieldLabel : '用户名',
+					maxLength : 24,
+					allowBlank : false,
+					name : 'account',
+					anchor : '99%'
+				},{
+					inputType: 'password',
+					fieldLabel : '密码',
+					maxLength : 32,
+					allowBlank : false,
+					name : 'password',
+					anchor : '99%'
+				},{
+					fieldLabel : '昵称',
+					maxLength : 64,
+					allowBlank : false,
+					name : 'realName',
+					anchor : '99%'
+				},login.sexCombo,{
+					fieldLabel : '手机号码',
+					xtype : 'numberfield',
+					maxLength : 16,
+					allowBlank : false,
+					name : 'mobile',
+					anchor : '99%'
+				},{
+					fieldLabel : '电话',
+					xtype : 'numberfield',
+					maxLength : 16,
+					allowBlank : false,
+					name : 'officePhone',
+					anchor : '99%'
+				}, login.cityCombo,{
+					fieldLabel : '邮箱',
+					maxLength : 36,
+					allowBlank : false,
+					name : 'displayField',
+					anchor : '99%'
+				},{
+					fieldLabel : 'QQ',
+					xtype : 'numberfield',
+					maxLength : 15,
+					allowBlank : false,
+					name : 'field',
+					anchor : '99%'
+				}]
+	});
     // 注册
     login.register = function () {
         // 跳转到注册
-        location.href = login.register;
+        location.registerWindow = new Ext.Window({
+			layout : 'fit',
+			width : 400,
+			height : 360,
+			closeAction : 'hide',
+			plain : true,
+			modal : true,
+			resizable : true,
+			items : [login.registerFormPanel],
+			buttons : [{
+						text : '注册',
+						handler : function() {
+							login.saveFun();
+						}
+					}, {
+						text : '重置',
+						handler : function() {
+							var form = login.registerFormPanel.getForm();
+							form.reset();
+						}
+					}]
+		}).show();
     };
     //监听事件
 	var events = "beforecopy beforepaste beforedrag contextmenu selectstart drag paste copy cut dragenter";

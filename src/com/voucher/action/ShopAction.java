@@ -12,6 +12,7 @@ import com.voucher.entity.Merchant;
 import com.voucher.entity.Region;
 import com.voucher.entity.Shop;
 import com.voucher.entity.ShopType;
+import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.ObjectTokenVO;
@@ -118,9 +119,9 @@ public class ShopAction extends BaseAction {
 		shop.setImage(shopLogo.getAbsolutePath());
 		
 		shopService.update(shop);
-		Merchant merchant = shop.getMerchant();
-		String tokenInfo = Base64Encoder.encode(merchant.getId() + merchant.getPhoneNo() + merchant.getPassword());
-		ObjectTokenVO utVO = new ObjectTokenVO(tokenInfo, merchant.getId(), shop.getId(), merchant.getCity().getId());
+		SysUser merchant = shop.getMerchant();
+		String tokenInfo = Base64Encoder.encode(merchant.getId() + merchant.getMobile() + merchant.getPassword());
+		ObjectTokenVO utVO = new ObjectTokenVO(tokenInfo, merchant.getId(), shop.getId(), merchant.getCityId());
 		JsonVO jVO = new JsonVO("1", "Update shop Successfully", utVO);
 		
 		String json = this.convertToJson(jVO);

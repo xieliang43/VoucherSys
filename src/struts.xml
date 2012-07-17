@@ -15,13 +15,13 @@
 	<package name="default" extends="struts-default">
 
 		<interceptors>
-			<interceptor name="loginInterceptor" class="loginInterceptor"></interceptor>
-			<interceptor-stack name="loginDefaultStack">
-				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+			<interceptor name="sysLoginInterceptor" class="sysLoginInterceptor"></interceptor>
+			<interceptor-stack name="sysLoginDefaultStack">
+				<interceptor-ref name="sysLoginInterceptor"></interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="loginDefaultStack"></default-interceptor-ref>
+		<default-interceptor-ref name="sysLoginDefaultStack"></default-interceptor-ref>
 
 		<default-action-ref name="index" />
 		<action name="index">
@@ -102,6 +102,13 @@
 		</action>
 		
 		<action name="shopTypeAction" class="shopTypeAction"></action>
+		
+		<action name="adviceAction" class="adviceAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		<action name="publishAction" class="publishAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
 	</package>
 
 </struts>

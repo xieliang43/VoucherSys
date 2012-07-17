@@ -31,6 +31,8 @@
 		<mapping class="com.voucher.entity.Voucher"/>
 		<mapping class="com.voucher.entity.ShopType"/>
 		<mapping class="com.voucher.entity.Position"/>
+		<mapping class="com.voucher.entity.Advice"/>
+		<mapping class="com.voucher.entity.Publish"/>
 		
 		<mapping class="com.voucher.entity.sys.SysField"/>
 		<mapping class="com.voucher.entity.sys.SysModule"/>

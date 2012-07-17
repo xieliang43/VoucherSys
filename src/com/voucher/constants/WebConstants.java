@@ -11,4 +11,5 @@ public interface WebConstants {
 	public static final String CURRENT_USER = "CURRENT_USER";
 	
 	public static final String FIELDS = "fields";
+	public static final String CITYMAP = "cityMap";
 }

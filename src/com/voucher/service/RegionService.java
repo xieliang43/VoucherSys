@@ -23,6 +23,7 @@ public interface RegionService {
 	public List<Region> findRegionsByParentAndType(int parentId, int type);
 	public List<RegionVO> getRegionsByName(ExtPager pager, String name);
 	public Map<String, Object> getAllRegions();
+	public Map<String, Object> getAllEnabledCities();
 	public int getTotalCount();
 	public Region findRegionByParentId(int parentId);
 	public void saveRegion(Region region);

@@ -2,12 +2,17 @@ package com.voucher.entity.sys;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.voucher.entity.Shop;
 
 /**
  * 用户表
@@ -78,11 +83,23 @@ public class SysUser implements Serializable {
 	 */
 	@Column(name="LAST_LOGIN_IP")
 	private String lastLoginIp;
+	
+	@Column(name="QQ_NO")
+	private String qqNo;
+	
+	@OneToMany(mappedBy="merchant")
+	private Set<Shop> shops = new HashSet<Shop>();
+	
+	@Column(name="CITY_ID")
+	private int cityId;
 
 	/**
 	 * 备注
 	 */
 	private String remark;
+	
+	@Column(name="CREATE_DATE")
+	private Date createDate;
 
 	/**
 	 * 
@@ -278,6 +295,62 @@ public class SysUser implements Serializable {
 	 */
 	public void setLastLoginIp(String lastLoginIp) {
 		this.lastLoginIp = lastLoginIp;
+	}
+
+	/**
+	 * @return the qqNo
+	 */
+	public String getQqNo() {
+		return qqNo;
+	}
+
+	/**
+	 * @param qqNo the qqNo to set
+	 */
+	public void setQqNo(String qqNo) {
+		this.qqNo = qqNo;
+	}
+
+	/**
+	 * @return the shops
+	 */
+	public Set<Shop> getShops() {
+		return shops;
+	}
+
+	/**
+	 * @param shops the shops to set
+	 */
+	public void setShops(Set<Shop> shops) {
+		this.shops = shops;
+	}
+
+	/**
+	 * @return the cityId
+	 */
+	public int getCityId() {
+		return cityId;
+	}
+
+	/**
+	 * @param cityId the cityId to set
+	 */
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+
+	/**
+	 * @return the createDate
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	/**
+	 * @param createDate the createDate to set
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	/**

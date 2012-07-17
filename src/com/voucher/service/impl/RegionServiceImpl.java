@@ -169,4 +169,18 @@ public class RegionServiceImpl implements RegionService {
 	public void deleteById(int id) {
 		regionDao.deleteById(id);
 	}
+
+	@Override
+	public Map<String, Object> getAllEnabledCities() {
+		Map<String, Object> map = new TreeMap<String, Object>();
+		List<Region> regions = regionDao.findRegionsByType(2);
+		if(regions != null && !regions.isEmpty()) {
+			for(Region r : regions) {
+				if(r.getEnabled() == 1){
+					map.put(String.valueOf(r.getId()), r.getName());
+				}
+			}
+		}
+		return map;
+	}
 }

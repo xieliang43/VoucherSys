@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.voucher.entity.sys.SysUser;
+
 /**
  *
  */
@@ -31,7 +33,7 @@ public class Shop {
 	private String description;
 	@ManyToOne
 	@JoinColumn(name="MERCHANT_ID")
-	private Merchant merchant;
+	private SysUser merchant;
 	@OneToOne
 	@JoinColumn(name="SHOP_TYPE_ID")
 	private ShopType shopType;
@@ -102,13 +104,13 @@ public class Shop {
 	/**
 	 * @return the merchant
 	 */
-	public Merchant getMerchant() {
+	public SysUser getMerchant() {
 		return merchant;
 	}
 	/**
 	 * @param merchant the merchant to set
 	 */
-	public void setMerchant(Merchant merchant) {
+	public void setMerchant(SysUser merchant) {
 		this.merchant = merchant;
 	}
 	/**

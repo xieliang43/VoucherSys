@@ -12,7 +12,7 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.voucher.constants.WebConstants;
 
-public class LoginInterceptor extends AbstractInterceptor {
+public class SysLoginInterceptor extends AbstractInterceptor {
 
 	/**
 	 * 

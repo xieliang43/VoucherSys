@@ -184,6 +184,30 @@
 		<property name="shopTypeService" ref="shopTypeService"/>
 	</bean>
 	
+	<bean id="adviceDao" class="com.voucher.dao.impl.AdviceDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="adviceService" class="com.voucher.service.impl.AdviceServiceImpl">
+		<property name="adviceDao" ref="adviceDao"/>
+	</bean>
+	
+	<bean id="adviceAction" class="com.voucher.action.AdviceAction">
+		<property name="adviceService" ref="adviceService"/>
+	</bean>
+	
+	<bean id="publishDao" class="com.voucher.dao.impl.PublishDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="publishService" class="com.voucher.service.impl.PublishServiceImpl">
+		<property name="publishDao" ref="publishDao"/>
+	</bean>
+	
+	<bean id="publishAction" class="com.voucher.action.PublishAction">
+		<property name="publishService" ref="publishService"/>
+	</bean>
+	
 	<aop:config>
 		<aop:pointcut expression="execution(* com.voucher.service.*.*(..))" id="txPoint"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
@@ -237,5 +261,5 @@
 		<property name="captchaProducer" ref="captchaProducer"></property>
 	</bean>
 	
-	<bean id="loginInterceptor" class="com.voucher.interceptor.LoginInterceptor"></bean>
+	<bean id="sysLoginInterceptor" class="com.voucher.interceptor.SysLoginInterceptor"></bean>
 </beans>
