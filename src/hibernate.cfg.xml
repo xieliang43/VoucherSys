@@ -39,6 +39,8 @@
 		<mapping class="com.voucher.entity.sys.SysUser"/>
 		<mapping class="com.voucher.entity.sys.SysUserRole"/>
 		
-		<class-cache class="com.voucher.entity.Region" usage="read-only" />
+		<class-cache class="com.voucher.entity.Region" usage="read-write" />
+		<class-cache class="com.voucher.entity.ShopType" usage="read-write" />
+		<class-cache class="com.voucher.entity.Shop" usage="read-write" />
 	</session-factory>
 </hibernate-configuration>
