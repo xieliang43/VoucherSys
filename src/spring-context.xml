@@ -38,14 +38,12 @@
 		<property name="maxIdleTime" value="25200"/>
 		<property name="maxIdleTimeExcessConnections" value="1800"/>
 		<property name="acquireIncrement" value="5"/>
-		
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	
-	<!-- 用于持有ApplicationContext,可以使用SpringContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->
 	<bean class="com.voucher.util.SpringContextHolder" lazy-init="false" />
 	
 	<bean id="regionDao" class="com.voucher.dao.impl.RegionDaoImpl">

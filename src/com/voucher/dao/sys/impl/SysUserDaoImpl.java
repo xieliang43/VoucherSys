@@ -117,4 +117,36 @@ public class SysUserDaoImpl extends BaseDaoImpl implements SysUserDao {
 		return new ArrayList<SysUser>();
 	}
 
+	@Override
+	public SysUser findUserByAccount(String account) {
+		String hql = "from SysUser su where su.account = :account";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("account", account);
+			List<SysUser> users = query.getResultList();
+			if(users !=null && !users.isEmpty()) {
+				return users.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public SysUser findUserByPhoneNo(String mobile) {
+		String hql = "from SysUser su where su.mobile = :mobile";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("mobile", mobile);
+			List<SysUser> users = query.getResultList();
+			if(users !=null && !users.isEmpty()) {
+				return users.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

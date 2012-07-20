@@ -1,6 +1,5 @@
 package com.voucher.service.sys.impl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,7 +12,6 @@ import com.voucher.entity.sys.SysUser;
 import com.voucher.entity.sys.SysUserRole;
 import com.voucher.pojo.ExtPager;
 import com.voucher.service.sys.SysUserService;
-import com.voucher.util.DateUtil;
 import com.voucher.util.MD5;
 
 public class SysUserServiceImpl implements SysUserService {
@@ -148,6 +146,27 @@ public class SysUserServiceImpl implements SysUserService {
 	 */
 	public void setSysUserRoleDao(SysUserRoleDao sysUserRoleDao) {
 		this.sysUserRoleDao = sysUserRoleDao;
+	}
+
+	@Override
+	public SysUser findUserByAccount(String account) {
+		return sysUserDao.findUserByAccount(account);
+	}
+
+	@Override
+	public SysUser findUserByPhoneNo(String mobile) {
+		return sysUserDao.findUserByPhoneNo(mobile);
+	}
+
+	@Override
+	public void register(SysUser user) {
+		this.save(user);
+		SysRole role = sysRoleDao.getSysRoleByRoleName("provider");
+		SysUserRole userRole = new SysUserRole();
+		userRole.setRole(role);
+		userRole.setUser(user);
+		
+		this.sysUserRoleDao.save(userRole);
 	}
 
 }

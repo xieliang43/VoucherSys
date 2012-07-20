@@ -1,5 +1,7 @@
 package com.voucher.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,8 @@ public class Publish {
 	@Column(name="PHONE_NO")
 	private String phoneNo;
 	private String msg;
+	@Column(name="CREATE_DATE")
+	private Date createDate;
 	/**
 	 * @return the id
 	 */
@@ -50,5 +54,17 @@ public class Publish {
 	 */
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+	/**
+	 * @return the createDate
+	 */
+	public Date getCreateDate() {
+		return createDate;
+	}
+	/**
+	 * @param createDate the createDate to set
+	 */
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 }

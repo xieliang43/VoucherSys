@@ -7,13 +7,14 @@ import java.util.List;
 
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.UserDao;
 import com.voucher.entity.User;
+import com.voucher.pojo.ExtPager;
 
 /**
- * @author LL
  *
  */
 public class UserDaoImpl extends BaseDaoImpl implements UserDao {
@@ -82,6 +83,54 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			if(users !=null && !users.isEmpty()) {
 				return users.get(0);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<User> findUsersByPhoneNo(ExtPager pager, String phoneNo) {
+		String hql = "from User u where u.phoneNo like :phoneNo";
+		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
+			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
+		}
+		try {
+			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			query.setParameter("phoneNo", "%" + phoneNo + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<User> findUsers(ExtPager pager) {
+		String hql = "from User u";
+		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
+			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
+		}
+		try {
+			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public int getTotalCount() {
+		return findAll().size();
+	}
+
+	@Override
+	public List<User> findAll() {
+		String hql = "from User u";
+		try {
+			Query query = this.createQuery(hql);
+			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

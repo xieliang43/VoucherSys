@@ -50,7 +50,7 @@
 		reader : new Ext.data.JsonReader({// 数据读取器
 			totalProperty : 'results', // 记录总数
 			root : 'rows' // Json中的列表数据根节点
-		}, [ 'id', 'account', 'realName', 'sex', 'email', 'mobile', 'officePhone', 'lastLoginTime', 'lastLoginIp', 'remark' ]),
+		}, [ 'id', 'account', 'realName', 'sex', 'email', 'mobile', 'officePhone', 'qqNo', 'lastLoginTime', 'lastLoginIp', 'remark' ]),
 		listeners : {
 			'load' : function(store, records, options) {
 				user.alwaysFun();
@@ -108,6 +108,9 @@
 		}, {
 			header : '办公电话',
 			dataIndex : 'officePhone'
+		}, {
+			header : 'QQ',
+			dataIndex : 'qqNo'
 		}, {
 			header : '上次登录时间',
 			dataIndex : 'lastLoginTime'
@@ -288,6 +291,12 @@
 			maxLength : 14,
 			allowBlank : false,
 			name : 'officePhone',
+			anchor : '99%'
+		}, {
+			fieldLabel : 'QQ',
+			maxLength : 14,
+			allowBlank : false,
+			name : 'qqNo',
 			anchor : '99%'
 		}, {
 			xtype : 'textarea',

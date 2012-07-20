@@ -19,7 +19,7 @@
 	<div id="login-win-div"></div>
 	<c:set var="fields" value="${applicationScope.fields}" />
 	<c:set var="cityMap" value="${applicationScope.cityMap}" />
-	<div id="fieldsMap" style="display:none"><c:out value="${fields }"></c:out></div>
+	<div id="sexMap" style="display:none"><c:out value="${fields.sex }"></c:out></div>
 	<div id="cityMap" style="display:none"><c:out value="${cityMap }"></c:out></div>
 </body>
 </html>

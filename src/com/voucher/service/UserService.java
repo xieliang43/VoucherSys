@@ -3,10 +3,12 @@
  */
 package com.voucher.service;
 
+import java.util.List;
+
 import com.voucher.entity.User;
+import com.voucher.pojo.ExtPager;
 
 /**
- * @author LL
  *
  */
 public interface UserService {
@@ -16,4 +18,7 @@ public interface UserService {
 	public User findUserById(int userId);
 	public User findUserByPhoneNo(String phoneNo);
 	public User findUserByPhoneAndPassword(String phoneNo, String password);
+	public List<User> findUsersByPhoneNo(ExtPager pager, String phoneNo);
+	public int getTotalCount();
+	public void deleteById(int id);
 }

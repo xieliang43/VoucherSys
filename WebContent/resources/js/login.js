@@ -3,12 +3,11 @@ $(document).ready(function () {
     login = Ext.Authority.login; // 定义命名空间的别名
     login = {
         login: ctx + "/sysLoginAction!login.action",
+        save: ctx + "/sysLoginAction!register.action",
         main: ctx + "/main.action",
         findpwd: ctx + "/findpwd.action",
         register: ctx + "/register.action"
     };
-    var value = $("#cityMap").html();
-    alert(value);
     // 设置主题
     Share.swapStyle();
     // 用户登录Form
@@ -237,14 +236,40 @@ $(document).ready(function () {
         }).show();
     };
     
+    login.SEX = function(){
+    	var list = new Array();
+    	var sexMap = $("#sexMap").html();
+    	var pairs = sexMap.substr(1, sexMap.length - 2);
+    	var kvs = pairs.split(",");
+    	for(var i=0; i<kvs.length; i++) {
+    		var kv = kvs[i].split(":");
+    		var arr = [kv[0].substr(1, 1), kv[1].substr(1, kv[1].length - 2)];
+    		list.push(arr);
+    	}
+    	return list;
+    };
+    login.CITYMAP = function(){
+    	var list = [];
+    	var cityMap = $("#cityMap").html();
+    	var pairs = cityMap.substr(1, cityMap.length - 2);
+    	var kvs = pairs.split(",");
+    	for(var i=0; i<kvs.length; i++) {
+    		var kv = kvs[i].split("=");
+    		var arr = [kv[0].trim(), kv[1]];
+    		list.push(arr);
+    	}
+    	return list;
+    };
+    
     login.sexCombo = new Ext.form.ComboBox({
 		fieldLabel : '性别',
 		name : 'sex',
+		hiddenName : 'sex',
 		triggerAction : 'all',
 		mode : 'local',
 		store : new Ext.data.ArrayStore({
 					fields : ['v', 't'],
-					data : Share.map2Ary(login.SEX)
+					data : [[0, "男"], [1, "女"]]
 				}),
 		valueField : 'v',
 		displayField : 't',
@@ -256,11 +281,12 @@ $(document).ready(function () {
     login.cityCombo = new Ext.form.ComboBox({
     	fieldLabel : '城市',
     	name : 'cityId',
+    	hiddenName : 'cityId',
     	triggerAction : 'all',
     	mode : 'local',
     	store : new Ext.data.ArrayStore({
     				fields : ['v', 't'],
-    				data : Share.map2Ary(login.CITYMAP)
+    				data : login.CITYMAP
     			}),
     	valueField : 'v',
     	displayField : 't',
@@ -308,46 +334,63 @@ $(document).ready(function () {
 					allowBlank : false,
 					name : 'officePhone',
 					anchor : '99%'
-				}, login.cityCombo,{
+				},{
 					fieldLabel : '邮箱',
 					maxLength : 36,
 					allowBlank : false,
-					name : 'displayField',
+					regex : /^[a-zA-Z0-9_\.\-]+\@([a-zA-Z0-9\-]+\.)+[a-zA-Z0-9]{2,4}$/,
+					regexText : '请输入有效的邮箱地址',
+					name : 'email',
 					anchor : '99%'
 				},{
 					fieldLabel : 'QQ',
 					xtype : 'numberfield',
 					maxLength : 15,
 					allowBlank : false,
-					name : 'field',
+					name : 'qqNo',
 					anchor : '99%'
+				}]
+	});
+    login.registerWindow = new Ext.Window({
+		layout : 'fit',
+		width : 400,
+		height : 360,
+		closeAction : 'hide',
+		plain : true,
+		modal : true,
+		resizable : true,
+		items : [login.registerFormPanel],
+		buttons : [{
+					text : '注册',
+					handler : function() {
+						login.saveFun();
+					}
+				}, {
+					text : '重置',
+					handler : function() {
+						var form = login.registerFormPanel.getForm();
+						form.reset();
+					}
 				}]
 	});
     // 注册
     login.register = function () {
         // 跳转到注册
-        location.registerWindow = new Ext.Window({
-			layout : 'fit',
-			width : 400,
-			height : 360,
-			closeAction : 'hide',
-			plain : true,
-			modal : true,
-			resizable : true,
-			items : [login.registerFormPanel],
-			buttons : [{
-						text : '注册',
-						handler : function() {
-							login.saveFun();
-						}
-					}, {
-						text : '重置',
-						handler : function() {
-							var form = login.registerFormPanel.getForm();
-							form.reset();
-						}
-					}]
-		}).show();
+        location.registerWindow = login.registerWindow.show();
+    };
+    login.saveFun = function() {
+    	var form = login.registerFormPanel.getForm();
+    	if (!form.isValid()) {
+    		return;
+    	}
+    	// 发送请求
+    	Share.AjaxRequest({
+    				url : login.save,
+    				params : form.getValues(),
+    				callback : function(json) {
+    					login.registerWindow.hide();
+    				}
+    			});
     };
     //监听事件
 	var events = "beforecopy beforepaste beforedrag contextmenu selectstart drag paste copy cut dragenter";

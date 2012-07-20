@@ -100,4 +100,19 @@ public class SysRoleDaoImpl extends BaseDaoImpl implements SysRoleDao {
 		return null;
 	}
 
+	@Override
+	public SysRole getSysRoleByRoleName(String roleName) {
+		String hql = "from SysRole sr where sr.roleName = :roleName";
+		try {
+			Query query = this.createQuery(hql);
+			List<SysRole> roles = query.getResultList();
+			if(roles != null && !roles.isEmpty()) {
+				return roles.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

@@ -23,4 +23,6 @@ public interface SysUserDao {
 	public List<SysUser> findUsers(ExtPager pager);
 	public List<SysUser> findUsers();
 	public int getTotalCount();
+	public SysUser findUserByAccount(String account);
+	public SysUser findUserByPhoneNo(String mobile);
 }

@@ -12,11 +12,11 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.voucher.action.BaseAction;
 import com.voucher.constants.WebConstants;
 import com.voucher.entity.sys.SysUser;
-import com.voucher.exception.SystemException;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.Tree;
 import com.voucher.service.sys.SysModuleService;
 import com.voucher.service.sys.SysUserService;
+import com.voucher.util.MD5;
 
 public class SysLoginAction extends BaseAction implements SessionAware {
 
@@ -27,6 +27,12 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	
 	private String account;
 	private String password;
+	private String realName;
+	private String sex;
+	private String email;
+	private String mobile;
+	private String officePhone;
+	private String qqNo;
 
 	private SysUserService sysUserService;
 	private SysModuleService sysModuleService;
@@ -56,15 +62,66 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 			sendExtReturn(new ExtReturn(true, "success"));
 		} catch(Exception e) {
 			e.printStackTrace();
-			throw new SystemException("Exception in find user");
 		}
+	}
+	
+	public void register() {
+		if (StringUtils.isBlank(account)) {
+			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(password)) {
+			this.sendExtReturn(new ExtReturn(false, "密码不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(realName)) {
+			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(sex)) {
+			this.sendExtReturn(new ExtReturn(false, "性别不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(email)) {
+			this.sendExtReturn(new ExtReturn(false, "邮箱不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(mobile)) {
+			this.sendExtReturn(new ExtReturn(false, "手机不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(officePhone)) {
+			this.sendExtReturn(new ExtReturn(false, "电话不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(qqNo)) {
+			this.sendExtReturn(new ExtReturn(false, "QQ不能为空！"));
+			return;
+		}
+		SysUser existAccountUser = sysUserService.findUserByAccount(account);
+		if(existAccountUser != null) {
+			this.sendExtReturn(new ExtReturn(false, "此用户名已存在，请从新输入！"));
+			return;
+		}
+		SysUser existPhoneUser = sysUserService.findUserByPhoneNo(mobile);
+		if(existPhoneUser != null) {
+			this.sendExtReturn(new ExtReturn(false, "此电话用户已存在，请从新输入！"));
+			return;
+		}
+		String encPassword = MD5.getInstance().encrypt(password);
+		SysUser user = new SysUser(account, encPassword, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, "普通商家");
+		user.setCreateDate(new Date());
+		user.setLastLoginIp("0.0.0.0");
+		
+		sysUserService.register(user);
+		sendExtReturn(new ExtReturn(true, "注册成功！"));
 	}
 	
 	public void treeMenu() {
 		SysUser user = (SysUser) session.get(WebConstants.CURRENT_USER);
 		// 得到的是根菜单
 		if(user == null) {
-			this.sendExtReturn(new ExtReturn(false, "User is null"));
+			this.sendExtReturn(new ExtReturn(false, "用户不能为空！"));
 			return;
 		}
 		Tree tree = sysModuleService.getModulesByUser(user);
@@ -159,5 +216,89 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+	/**
+	 * @return the realName
+	 */
+	public String getRealName() {
+		return realName;
+	}
+
+	/**
+	 * @param realName the realName to set
+	 */
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	/**
+	 * @return the sex
+	 */
+	public String getSex() {
+		return sex;
+	}
+
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	/**
+	 * @return the mobile
+	 */
+	public String getMobile() {
+		return mobile;
+	}
+
+	/**
+	 * @param mobile the mobile to set
+	 */
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	/**
+	 * @return the officePhone
+	 */
+	public String getOfficePhone() {
+		return officePhone;
+	}
+
+	/**
+	 * @param officePhone the officePhone to set
+	 */
+	public void setOfficePhone(String officePhone) {
+		this.officePhone = officePhone;
+	}
+
+	/**
+	 * @return the qqNo
+	 */
+	public String getQqNo() {
+		return qqNo;
+	}
+
+	/**
+	 * @param qqNo the qqNo to set
+	 */
+	public void setQqNo(String qqNo) {
+		this.qqNo = qqNo;
 	}
 }

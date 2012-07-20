@@ -65,8 +65,19 @@
 			<result>/WEB-INF/views/sys/shoptype.jsp</result>
 		</action>
 		
+		<action name="myAdviceInit">
+			<result>/WEB-INF/views/sys/advice.jsp</result>
+		</action>
+		
+		<action name="myPublishInit">
+			<result>/WEB-INF/views/sys/publish.jsp</result>
+		</action>
+		
 		<action name="areaInit" class="regionAction" method="area">
 			<result name="success">/WEB-INF/views/sys/area.jsp</result>
+		</action>
+		<action name="cmnUserInit" class="userAction" method="initUserCities">
+			<result name="success">/WEB-INF/views/sys/cmnuser.jsp</result>
 		</action>
 
 		<action name="userAction" class="userAction">

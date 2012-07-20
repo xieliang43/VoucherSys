@@ -14,4 +14,5 @@ public interface SysRoleDao {
 	void update(SysRole role);
 	void deleteById(int id);
 	SysRole findById(int id);
+	SysRole getSysRoleByRoleName(String roleName);
 }

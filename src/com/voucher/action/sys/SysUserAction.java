@@ -43,6 +43,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	private String email;
 	private String mobile;
 	private String officePhone;
+	private String qqNo;
 	private String remark;
 	
 	private List<String> roleIds;
@@ -120,7 +121,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 		}
 		
 		if(StringUtils.isBlank(id)) {
-			SysUser user = new SysUser(account, password, realName, Short.valueOf(sex), email, mobile, officePhone, remark);
+			SysUser user = new SysUser(account, password, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, remark);
 			sysUserService.save(user, roleIds);
 		} else {
 			SysUser oldUser = sysUserService.findUserById(Integer.valueOf(id));
@@ -131,6 +132,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			oldUser.setMobile(mobile);
 			oldUser.setOfficePhone(officePhone);
 			oldUser.setRemark(remark);
+			oldUser.setQqNo(qqNo);
 			
 			sysUserService.update(oldUser, roleIds);
 		}
@@ -429,5 +431,19 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	 */
 	public void setRoleIds(List<String> roleIds) {
 		this.roleIds = roleIds;
+	}
+
+	/**
+	 * @return the qqNo
+	 */
+	public String getQqNo() {
+		return qqNo;
+	}
+
+	/**
+	 * @param qqNo the qqNo to set
+	 */
+	public void setQqNo(String qqNo) {
+		this.qqNo = qqNo;
 	}
 }

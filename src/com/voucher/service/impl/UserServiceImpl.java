@@ -1,7 +1,12 @@
 package com.voucher.service.impl;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
 import com.voucher.dao.UserDao;
 import com.voucher.entity.User;
+import com.voucher.pojo.ExtPager;
 import com.voucher.service.UserService;
 
 public class UserServiceImpl implements UserService {
@@ -43,6 +48,28 @@ public class UserServiceImpl implements UserService {
 
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
+	}
+
+	@Override
+	public List<User> findUsersByPhoneNo(ExtPager pager, String phoneNo) {
+		List<User> users = null;
+		if(StringUtils.isBlank(phoneNo)) {
+			users = userDao.findUsers(pager);
+		} else {
+			users = userDao.findUsersByPhoneNo(pager, phoneNo);
+		}
+		return users;
+	}
+
+	@Override
+	public int getTotalCount() {
+		return userDao.getTotalCount();
+	}
+
+	@Override
+	public void deleteById(int id) {
+		User user = this.findUserById(id);
+		this.delete(user);
 	}
 
 }

@@ -108,20 +108,10 @@ public class SysUser implements Serializable {
 	}
 
 	/**
-	 * @param account
-	 * @param password
-	 * @param realName
-	 * @param sex
-	 * @param email
-	 * @param mobile
-	 * @param officePhone
-	 * @param errorCount
-	 * @param lastLoginTime
-	 * @param lastLoginIp
-	 * @param remark
+	 * 
 	 */
 	public SysUser(String account, String password, String realName, Short sex,
-			String email, String mobile, String officePhone, String remark) {
+			String email, String mobile, String officePhone, String qqNo, String remark) {
 		this.account = account;
 		this.password = password;
 		this.realName = realName;
@@ -129,7 +119,9 @@ public class SysUser implements Serializable {
 		this.email = email;
 		this.mobile = mobile;
 		this.officePhone = officePhone;
+		this.qqNo = qqNo;
 		this.remark = remark;
+		this.errorCount = 0;
 	}
 
 	/**
