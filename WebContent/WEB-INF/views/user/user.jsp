@@ -57,7 +57,6 @@
 			}
 		}
 	});
-	//user.store.load(); 
 	/** 基本信息-选择模式 */
 	user.selModel = new Ext.grid.CheckboxSelectionModel({
 		singleSelect : true,

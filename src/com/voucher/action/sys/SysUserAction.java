@@ -12,7 +12,9 @@ import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
+import com.voucher.pojo.MerchantVO;
 import com.voucher.service.sys.SysUserService;
+import com.voucher.util.MD5;
 
 public class SysUserAction extends BaseAction implements SessionAware {
 
@@ -75,11 +77,13 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "用户未找到!"));
 			return;
 		}
-		if(!oldPassword.equals(user.getPassword())) {
+		String encOldPassword = MD5.getInstance().encrypt(oldPassword);
+		if(!encOldPassword.equals(user.getPassword())) {
 			this.sendExtReturn(new ExtReturn(false, "原密码不正确！请重新输入！"));
 			return;
 		}
-		user.setPassword(newPassword);
+		String encNewPassword = MD5.getInstance().encrypt(newPassword);
+		user.setPassword(encNewPassword);
 		sysUserService.update(user);
 		
 		session.remove(WebConstants.CURRENT_USER);
@@ -88,7 +92,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	
 	public void loadAll() {
 		ExtPager pager = new ExtPager(limit, start, dir, sort);
-		List<SysUser> list = sysUserService.findUsersByRealName(pager, realName);
+		List<MerchantVO> list = sysUserService.findUsersByRealName(pager, realName);
 		int total = sysUserService.getTotalCount();
 		
 		sendExtGridReturn(new ExtGridReturn(total, list));

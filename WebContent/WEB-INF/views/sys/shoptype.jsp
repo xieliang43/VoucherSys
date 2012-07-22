@@ -89,7 +89,8 @@ shoptype.colModel = new Ext.grid.ColumnModel({
 						dataIndex : 'description'
 					}, {
 						header : '创建日期',
-						dataIndex : 'createDate'
+						dataIndex : 'createDate',
+						renderer: Ext.util.Format.dateRenderer('Y-m-d')
 					}]
 		});
 /** 新建 */

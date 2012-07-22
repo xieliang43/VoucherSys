@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 @Entity
 @Table(name="T_VOUCHER_INSTANCE")
@@ -15,12 +16,14 @@ public class VoucherInstance {
 	@GeneratedValue
 	private int id;
 	@Column(name="V_KEY")
-	private String vKey;
+	private String vchKey;
 	@ManyToOne
 	@JoinColumn(name="VOUCHER_ID")
 	private Voucher voucher;
 	@Column(name="IS_BOUGHT")
 	private short isBought;
+	@Version
+	private int version;
 	/**
 	 * @return the id
 	 */
@@ -58,15 +61,27 @@ public class VoucherInstance {
 		this.isBought = isBought;
 	}
 	/**
-	 * @return the vKey
+	 * @return the version
 	 */
-	public String getvKey() {
-		return vKey;
+	public int getVersion() {
+		return version;
 	}
 	/**
-	 * @param vKey the vKey to set
+	 * @param version the version to set
 	 */
-	public void setvKey(String vKey) {
-		this.vKey = vKey;
+	public void setVersion(int version) {
+		this.version = version;
+	}
+	/**
+	 * @return the vchKey
+	 */
+	public String getVchKey() {
+		return vchKey;
+	}
+	/**
+	 * @param vchKey the vchKey to set
+	 */
+	public void setVchKey(String vchKey) {
+		this.vchKey = vchKey;
 	}
 }

@@ -4,6 +4,8 @@
 package com.voucher.entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -41,6 +44,30 @@ public class Shop {
 	private Date createDate;
 	@OneToOne(mappedBy="shop")
 	private Position position;
+	@OneToMany(mappedBy="shop")
+	private Set<Voucher> vouchers = new HashSet<Voucher>();
+	
+	public Shop(){
+		
+	}
+	/**
+	 * @param shopName
+	 * @param shopAddress
+	 * @param image
+	 * @param description
+	 * @param merchant
+	 * @param shopType
+	 * @param createDate
+	 */
+	public Shop(String shopName, String shopAddress, String image,
+			String description, ShopType shopType) {
+		this.shopName = shopName;
+		this.shopAddress = shopAddress;
+		this.image = image;
+		this.description = description;
+		this.shopType = shopType;
+		this.position = null;
+	}
 	/**
 	 * @return the id
 	 */
@@ -208,5 +235,17 @@ public class Shop {
 		} else if (!shopName.equals(other.shopName))
 			return false;
 		return true;
+	}
+	/**
+	 * @return the vouchers
+	 */
+	public Set<Voucher> getVouchers() {
+		return vouchers;
+	}
+	/**
+	 * @param vouchers the vouchers to set
+	 */
+	public void setVouchers(Set<Voucher> vouchers) {
+		this.vouchers = vouchers;
 	}
 }

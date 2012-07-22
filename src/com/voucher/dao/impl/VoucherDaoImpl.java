@@ -8,6 +8,8 @@ import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.VoucherDao;
 import com.voucher.entity.Voucher;
+import com.voucher.entity.sys.SysUser;
+import com.voucher.pojo.ExtPager;
 
 public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 
@@ -16,7 +18,6 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 		try {
 			this.getJpaTemplate().persist(voucher);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -26,7 +27,6 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 		try {
 			this.getJpaTemplate().remove(voucher);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -36,7 +36,6 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 		try {
 			this.getJpaTemplate().merge(voucher);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -45,7 +44,6 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 		try {
 			return this.getJpaTemplate().find(Voucher.class, voucherId);
 		} catch (DataAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -57,10 +55,66 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 			Query query = this.createQuery(hql);
 			return query.getResultList();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public List<Voucher> getCurrentMerchantVouchers(ExtPager pager,
+			SysUser merchant) {
+		String hql = "from Voucher v where v.shop.merchant.id = :id";
+		hql = this.createQueryString(hql, pager);
+		try {
+			Query query = this.createQuery(hql);
+			if(pager != null) {
+				query.setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			}
+			query.setParameter("id", merchant.getId());
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Voucher> getCurrentMerchantVouchersByShopName(ExtPager pager,
+			SysUser merchant, String shopName) {
+		String hql = "from Voucher v where v.shop.merchant.id = :id and v.shop.shopName like :shopName";
+		hql = this.createQueryString(hql, pager);
+		try {
+			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			query.setParameter("id", merchant.getId());
+			query.setParameter("shopName", "%" + shopName + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Voucher> getCurrentMerchantVouchers(SysUser merchant) {
+		return this.getCurrentMerchantVouchers(null, merchant);
+	}
+
+	@Override
+	public void deleteById(int id) {
+		try {
+			this.getJpaTemplate().remove(this.findVoucherById(id));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void save(Voucher voucher) {
+		try {
+			this.getJpaTemplate().persist(voucher);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

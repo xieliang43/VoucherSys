@@ -89,4 +89,16 @@ public class ShopTypeDaoImpl extends BaseDaoImpl implements ShopTypeDao {
 		}
 	}
 
+	@Override
+	public List<ShopType> getEnabledShopTypes() {
+		String hql = "from ShopType st where st.enabled = 1";
+		try {
+			Query query = this.createQuery(hql);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

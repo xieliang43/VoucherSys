@@ -21,7 +21,7 @@
 				<interceptor-ref name="defaultStack"></interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
-		<default-interceptor-ref name="sysLoginDefaultStack"></default-interceptor-ref>
+		<default-interceptor-ref name="sysLoginDefaultStack"/>
 
 		<default-action-ref name="index" />
 		<action name="index">
@@ -96,29 +96,73 @@
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 
-		<action name="sysUserAction" class="sysUserAction"></action>
+		<action name="sysUserAction" class="sysUserAction">
+			<result name="login">index.jsp</result>
+		</action>
 
-		<action name="sysFieldAction" class="sysFieldAction"></action>
+		<action name="sysFieldAction" class="sysFieldAction">
+			<result name="login">index.jsp</result>
+		</action>
 
-		<action name="sysModuleAction" class="sysModuleAction"></action>
+		<action name="sysModuleAction" class="sysModuleAction">
+			<result name="login">index.jsp</result>
+		</action>
 
 		<action name="sysModuleInitAction" class="sysModuleAction"	method="module">
 			<result name="success">/WEB-INF/views/user/module.jsp</result>
 		</action>
 
-		<action name="sysRoleAction" class="sysRoleAction"></action>
+		<action name="sysRoleAction" class="sysRoleAction">
+			<result name="login">index.jsp</result>
+		</action>
 
 		<action name="checkimage" class="captchaImageCreateAction" method="createImage">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		
-		<action name="shopTypeAction" class="shopTypeAction"></action>
+		<action name="shopTypeAction" class="shopTypeAction">
+			<result name="login">index.jsp</result>
+		</action>
 		
 		<action name="adviceAction" class="adviceAction">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		<action name="publishAction" class="publishAction">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="provider" class="merchantAction" method="initMerchant">
+			<result name="success">/WEB-INF/views/sys/merchant.jsp</result>
+		</action>
+		<action name="merchantAction" class="merchantAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="myshopinfo" class="merchantShopAction" method="initShop">
+			<result name="success">/WEB-INF/views/sys/shop.jsp</result>
+		</action>
+		
+		<action name="merchantShopAction" class="merchantShopAction">
+		</action>
+		
+		<action name="myvoucherinfo" class="voucherAction" method="initVoucher">
+			<result name="success">/WEB-INF/views/sys/voucher.jsp</result>
+		</action>
+		
+		<action name="mydistance">
+			<result>/WEB-INF/views/sys/distance.jsp</result>
+		</action>
+		
+		<action name="distanceAction" class="distanceAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="voucherAction" class="voucherAction">
+			<interceptor-ref name="fileUpload">  
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>  
+                <param name="maximumSize">20000000000</param>  
+            </interceptor-ref> 
+            <interceptor-ref name="sysLoginDefaultStack"/>
 		</action>
 	</package>
 

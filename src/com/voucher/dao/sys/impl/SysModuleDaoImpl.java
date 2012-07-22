@@ -21,7 +21,6 @@ public class SysModuleDaoImpl extends BaseDaoImpl implements SysModuleDao {
 			Query query = this.createQuery(hql);
 			return query.getResultList();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;

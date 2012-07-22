@@ -7,6 +7,7 @@ Ext.ns("Ext.Authority.cmnuser"); // 自定义一个命名空间
 cmnuser = Ext.Authority.cmnuser; // 定义命名空间的别名
 cmnuser = {
 	all : ctx + '/userAction!loadAll.action',// 加载所有
+	save : ctx + "/userAction!save.action",//保存
 	del : ctx + "/userAction!delete.action",//删除
 	AREAMAP :eval('(${userAreaMap})'),
 	pageSize : 20, // 每页显示的记录数
@@ -120,7 +121,8 @@ cmnuser.colModel = new Ext.grid.ColumnModel({
 						}
 					}, {
 						header : '创建日期',
-						dataIndex : 'createDate'
+						dataIndex : 'createDate',
+						renderer: Ext.util.Format.dateRenderer('Y-m-d')
 					}]
 		});
 

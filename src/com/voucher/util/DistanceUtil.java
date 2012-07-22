@@ -7,6 +7,14 @@ public class DistanceUtil {
 		return d * Math.PI / 180.0;
 	}
 
+	/**
+	 * 
+	 * @param lat1
+	 * @param lng1
+	 * @param lat2
+	 * @param lng2
+	 * @return distance(m)
+	 */
 	public static double getDistance(double lat1, double lng1, double lat2,
 			double lng2) {
 		double radLat1 = rad(lat1);
@@ -17,15 +25,7 @@ public class DistanceUtil {
 				+ Math.cos(radLat1) * Math.cos(radLat2)
 				* Math.pow(Math.sin(b / 2), 2)));
 		s = s * EARTH_RADIUS;
-		s = Math.round(s * 10000) / 10000;
+		s = Math.round(s * 10000) / 10;
 		return s;
-	}
-	
-	public static void main(String args[]) {
-		double lat1 = 30.67, lng1 = 104.06, lat2 = 30.671, lng2 = 104.0507;
-		
-		double d = getDistance(lat1, lng1, lat2, lng2);
-		
-		System.out.println(d);
 	}
 }

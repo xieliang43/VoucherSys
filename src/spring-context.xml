@@ -70,6 +70,10 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	
+	<bean id="distanceDao" class="com.voucher.dao.impl.DistanceDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
 	<bean id="shopTypeDao" class="com.voucher.dao.impl.ShopTypeDaoImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
@@ -90,8 +94,17 @@
 		<property name="merchantDao" ref="merchantDao"/>
 	</bean>
 	
+	<bean id="distanceService" class="com.voucher.service.impl.DistanceServiceImpl">
+		<property name="distanceDao" ref="distanceDao"/>
+	</bean>
+	
+	<bean id="positionDao" class="com.voucher.dao.impl.PositionDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
 	<bean id="shopService" class="com.voucher.service.impl.ShopServiceImpl">
 		<property name="shopDao" ref="shopDao"/>
+		<property name="positionDao" ref="positionDao"/>
 	</bean>
 	
 	<bean id="shopTypeService" class="com.voucher.service.impl.ShopTypeServiceImpl">
@@ -144,7 +157,7 @@
 		<property name="regionService" ref="regionService"/>
 		<property name="shopTypeService" ref="shopTypeService"/>
 		<property name="shopService" ref="shopService"/>
-		<property name="merchantService" ref="merchantService"/>
+		<property name="distanceService" ref="distanceService"/>
 	</bean>
 	
 	<bean id="sysLoginAction" class="com.voucher.action.sys.SysLoginAction">
@@ -204,6 +217,34 @@
 	
 	<bean id="publishAction" class="com.voucher.action.PublishAction">
 		<property name="publishService" ref="publishService"/>
+	</bean>
+	
+	<bean id="merchantAction" class="com.voucher.action.MerchantAction">
+		<property name="regionService" ref="regionService"/>
+		<property name="sysUserService" ref="sysUserService"/>
+	</bean>
+	
+	<bean id="merchantShopAction" class="com.voucher.action.MerchantShopAction">
+		<property name="shopTypeService" ref="shopTypeService"/>
+		<property name="shopService" ref="shopService"/>
+	</bean>
+	
+	<bean id="voucherInstanceDao" class="com.voucher.dao.impl.VoucherInstanceDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
+	<bean id="voucherService" class="com.voucher.service.impl.VoucherServiceImpl">
+		<property name="voucherDao" ref="voucherDao"/>
+		<property name="voucherInstanceDao" ref="voucherInstanceDao"/>
+	</bean>
+	
+	<bean id="voucherAction" class="com.voucher.action.VoucherAction">
+		<property name="voucherService" ref="voucherService"/>
+		<property name="shopService" ref="shopService"/>
+	</bean>
+	
+	<bean id="distanceAction" class="com.voucher.action.DistanceAction">
+		<property name="distanceService" ref="distanceService"/>
 	</bean>
 	
 	<aop:config>

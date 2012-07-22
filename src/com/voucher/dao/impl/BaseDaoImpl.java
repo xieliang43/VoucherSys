@@ -31,4 +31,13 @@ public abstract class BaseDaoImpl extends JpaDaoSupport {
 		}
 		return tmpHql;
 	}
+	
+	protected Query createPagerQuery(String hql, ExtPager pager) {
+		String tmpHql = this.createQueryString(hql, pager);
+		Query query = this.createQuery(tmpHql);
+		if(pager != null) {
+			query = query.setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+		}
+		return query;
+	}
 }

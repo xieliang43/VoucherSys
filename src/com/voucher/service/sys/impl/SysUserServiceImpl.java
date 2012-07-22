@@ -1,5 +1,6 @@
 package com.voucher.service.sys.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -11,6 +12,7 @@ import com.voucher.entity.sys.SysRole;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.entity.sys.SysUserRole;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.MerchantVO;
 import com.voucher.service.sys.SysUserService;
 import com.voucher.util.MD5;
 
@@ -62,14 +64,24 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 
 	@Override
-	public List<SysUser> findUsersByRealName(ExtPager pager, String realName) {
+	public List<MerchantVO> findUsersByRealName(ExtPager pager, String realName) {
 		List<SysUser> list = null;
+		List<MerchantVO> resList = new ArrayList<MerchantVO>();
 		if(StringUtils.isBlank(realName)) {
 			list = sysUserDao.findUsers(pager);
 		} else {
 			list = sysUserDao.findUsersByRealName(pager, realName);
 		}
-		return list;
+		if(list != null && !list.isEmpty()){
+			for(SysUser user : list) {
+				MerchantVO mvo = new MerchantVO(user.getId(), user.getAccount(), user.getPassword(),
+						user.getRealName(), user.getSex(), user.getEmail(), user.getMobile(),
+						user.getOfficePhone(), user.getErrorCount(), user.getLastLoginTime(), user.getLastLoginIp(),
+						user.getQqNo(), user.getCityId(), user.getRemark(), user.getCreateDate());
+				resList.add(mvo);
+			}
+		}
+		return resList;
 	}
 
 	@Override

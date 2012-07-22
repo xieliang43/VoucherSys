@@ -13,4 +13,5 @@ public interface ShopTypeDao {
 	public void deleteById(int id);
 	public void saveShopType(ShopType shopType);
 	public void update(ShopType shopType);
+	public List<ShopType> getEnabledShopTypes();
 }

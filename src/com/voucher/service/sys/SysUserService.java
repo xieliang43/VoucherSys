@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.MerchantVO;
 
 
 /**
@@ -22,7 +23,7 @@ public interface SysUserService {
 	public SysUser findUserById(int userId);
 	public SysUser findUserByAccount(String account);
 	public SysUser findUserByAccountAndPassword(String account, String password);
-	public List<SysUser> findUsersByRealName(ExtPager pager, String realName);
+	public List<MerchantVO> findUsersByRealName(ExtPager pager, String realName);
 	public int getTotalCount();
 	public void deleteById(int userId);
 	public void resetPassword(SysUser user);

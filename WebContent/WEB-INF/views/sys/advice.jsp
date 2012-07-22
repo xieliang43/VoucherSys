@@ -77,7 +77,8 @@ advice.colModel = new Ext.grid.ColumnModel({
 						dataIndex : 'msg'
 					}, {
 						header : '创建日期',
-						dataIndex : 'createDate'
+						dataIndex : 'createDate',
+						renderer: Ext.util.Format.dateRenderer('Y-m-d')
 					}]
 		});
 /** 编辑 */

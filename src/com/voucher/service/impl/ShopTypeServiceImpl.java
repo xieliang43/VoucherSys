@@ -1,6 +1,8 @@
 package com.voucher.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -67,6 +69,23 @@ public class ShopTypeServiceImpl implements ShopTypeService {
 		ShopType oldShopType = this.findShopTypeById(shopType.getId());
 		shopType.setCreateDate(oldShopType.getCreateDate());
 		shopTypeDao.update(shopType);
+	}
+
+	@Override
+	public Map<String, Object> getAllEnabledShopTypes() {
+		List<ShopType> list = shopTypeDao.getEnabledShopTypes();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(list != null && !list.isEmpty()) {
+			for(ShopType st : list) {
+				map.put(String.valueOf(st.getId()), st.getName());
+			}
+		}
+		return map;
+	}
+
+	@Override
+	public ShopType getShopTypeById(int id) {
+		return shopTypeDao.findShopTypeById(id);
 	}
 	
 }

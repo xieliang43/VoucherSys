@@ -29,10 +29,12 @@
 		<mapping class="com.voucher.entity.Shop"/>
 		<mapping class="com.voucher.entity.Region"/>
 		<mapping class="com.voucher.entity.Voucher"/>
+		<mapping class="com.voucher.entity.VoucherInstance"/>
 		<mapping class="com.voucher.entity.ShopType"/>
 		<mapping class="com.voucher.entity.Position"/>
 		<mapping class="com.voucher.entity.Advice"/>
 		<mapping class="com.voucher.entity.Publish"/>
+		<mapping class="com.voucher.entity.Distance"/>
 		
 		<mapping class="com.voucher.entity.sys.SysField"/>
 		<mapping class="com.voucher.entity.sys.SysModule"/>
@@ -44,5 +46,6 @@
 		<class-cache class="com.voucher.entity.Region" usage="read-write" />
 		<class-cache class="com.voucher.entity.ShopType" usage="read-write" />
 		<class-cache class="com.voucher.entity.Shop" usage="read-write" />
+		<class-cache class="com.voucher.entity.Distance" usage="read-write" />
 	</session-factory>
 </hibernate-configuration>

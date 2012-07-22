@@ -12,4 +12,7 @@ public interface WebConstants {
 	
 	public static final String FIELDS = "fields";
 	public static final String CITYMAP = "cityMap";
+	
+	public static final String LAT = "lat";
+	public static final String LNG = "lng";
 }
