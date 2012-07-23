@@ -24,6 +24,7 @@ public interface RegionService {
 	public List<RegionVO> getRegionsByName(ExtPager pager, String name);
 	public Map<String, Object> getAllRegions();
 	public Map<String, Object> getAllEnabledCities();
+	public Map<String, Object> getAllEnabledDistricts();
 	public Map<String, Object> getAllCities();
 	public int getTotalCount();
 	public Region findRegionByParentId(int parentId);

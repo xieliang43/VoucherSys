@@ -6,10 +6,14 @@ import com.voucher.entity.VoucherInstance;
 
 public interface VoucherInstanceDao {
 
-	int getActiveCountByVoucher(int id);
+	int getActiveCountByVoucher(int vchId);
 	
-	List<VoucherInstance> getActiveVouchersById(int id);
+	List<VoucherInstance> getActiveVoucherInstancesByVoucher(int vchId);
 
 	void save(VoucherInstance vi);
+
+	int getVoucherInstanceCountByVoucher(int vchId);
+	
+	List<VoucherInstance> getVoucherInstancesByVoucher(int vchId);
 
 }

@@ -10,6 +10,7 @@ import com.voucher.dao.ShopDao;
 import com.voucher.entity.Shop;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ShopPager;
 
 public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 
@@ -20,7 +21,7 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
@@ -56,7 +57,7 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 
 	@Override
 	public List<Shop> getShopsByCityId(int cityId) {
-		String hql ="from Shop s where s.merchant.cityId = :cityId";
+		String hql = "from Shop s where s.merchant.cityId = :cityId";
 		try {
 			Query query = this.createQuery(hql);
 			query.setParameter("cityId", cityId);
@@ -72,7 +73,9 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		String hql = "from Shop s where s.merchant.id = :id";
 		hql = this.createQueryString(hql, pager);
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createQuery(hql)
+					.setFirstResult(pager.getStart())
+					.setMaxResults(pager.getLimit());
 			query.setParameter("id", merchant.getId());
 			return query.getResultList();
 		} catch (Exception e) {
@@ -82,11 +85,14 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 	}
 
 	@Override
-	public List<Shop> getAllShopsByShopName(ExtPager pager, SysUser merchant, String shopName) {
+	public List<Shop> getAllShopsByShopName(ExtPager pager, SysUser merchant,
+			String shopName) {
 		String hql = "from Shop s where s.merchant.id = :id and s.shopName like :shopName";
 		hql = this.createQueryString(hql, pager);
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createQuery(hql)
+					.setFirstResult(pager.getStart())
+					.setMaxResults(pager.getLimit());
 			query.setParameter("id", merchant.getId());
 			query.setParameter("shopName", "%" + shopName + "%");
 			return query.getResultList();
@@ -109,4 +115,43 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		return null;
 	}
 
+	@Override
+	public List<Shop> getShopsByShopPager(ShopPager shopPager) {
+		String hql = "from Shop s where";
+		if(shopPager.getAreaId() != null) {
+			hql = hql + " s.area.id = :areaId";
+		} else {
+			if(shopPager.getCityId() != null) {
+				hql = hql + " s.city.id = :cityId";
+			}
+		}
+		if (shopPager.getKeyword() != null) {
+			hql = hql + " and s.shopName like :shopName";
+		}
+		if (shopPager.getStart() == null) {
+			shopPager.setStart(0);
+		}
+		if (shopPager.getLimit() == null) {
+			shopPager.setLimit(15);
+		}
+		try {
+			Query query = this.createQuery(hql)
+					.setFirstResult(shopPager.getStart())
+					.setMaxResults(shopPager.getLimit());
+			if(shopPager.getAreaId() != null) {
+				query.setParameter("areaId", shopPager.getAreaId());
+			} else {
+				if(shopPager.getCityId() != null) {
+					query.setParameter("cityId", shopPager.getCityId());
+				}
+			}
+			if (shopPager.getKeyword() != null) {
+				query.setParameter("shopName", "%" + shopPager.getKeyword() + "%");
+			}
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

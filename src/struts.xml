@@ -125,9 +125,11 @@
 		</action>
 		
 		<action name="adviceAction" class="adviceAction">
+		<result name="login">index.jsp</result>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		<action name="publishAction" class="publishAction">
+		<result name="login">index.jsp</result>
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		
@@ -143,6 +145,7 @@
 		</action>
 		
 		<action name="merchantShopAction" class="merchantShopAction">
+			<result name="login">index.jsp</result>
 		</action>
 		
 		<action name="myvoucherinfo" class="voucherAction" method="initVoucher">

@@ -17,7 +17,7 @@ public class Position {
 	@GeneratedValue
 	private int id;
 	private double longitude;
-	private double lattitude;
+	private double latitude;
 	@Column(name="CREATE_DATE")
 	private Date createDate;
 	@OneToOne
@@ -50,14 +50,14 @@ public class Position {
 	/**
 	 * @return the lattitude
 	 */
-	public double getLattitude() {
-		return lattitude;
+	public double getLatitude() {
+		return latitude;
 	}
 	/**
 	 * @param lattitude the lattitude to set
 	 */
-	public void setLattitude(double lattitude) {
-		this.lattitude = lattitude;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 	/**
 	 * @return the createDate

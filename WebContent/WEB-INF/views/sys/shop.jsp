@@ -9,7 +9,9 @@ shop = {
 	all : ctx + '/merchantShopAction!loadAll.action',// 加载所有
 	save : ctx + "/merchantShopAction!save.action",//保存
 	del : ctx + "/merchantShopAction!delete.action",//删除
-	SHOPTYPE :eval('(${shopTypeMap})'),
+	SHOPTYPE : eval('(${shopTypeMap})'),
+	AREAMAP : eval('(${shopAreaMap})'),
+	CITYMAP : eval('(${shopCityMap})'),
 	pageSize : 20, // 每页显示的记录数
 };
 
@@ -44,8 +46,8 @@ shop.store = new Ext.data.Store({
 			reader : new Ext.data.JsonReader({// 数据读取器
 				totalProperty : 'results', // 记录总数
 				root : 'rows' // Json中的列表数据根节点
-			}, ['id', 'shopName', 'shopAddress', 'shopTypeId', 'image',
-					'description', 'createDate']),
+			}, ['id', 'shopName', 'shopAddress', 'telNo', 'shopTypeId', 'image',
+					'description', 'cityId', 'areaId', 'createDate']),
 			listeners : {
 				'load' : function(store, records, options) {
 					shop.alwaysFun();
@@ -62,6 +64,40 @@ shop.shopTypeCombo = new Ext.form.ComboBox({
 	store : new Ext.data.ArrayStore({
 				fields : ['v', 't'],
 				data : Share.map2Ary(shop.SHOPTYPE)
+			}),
+	valueField : 'v',
+	displayField : 't',
+	allowBlank : false,
+	editable : false,
+	anchor : '99%'
+});
+shop.cityCombo = new Ext.form.ComboBox({
+	emptyText : '请选择城市...',
+	fieldLabel : '城市',
+	hiddenName : 'cityId',
+	name : 'cityId',
+	triggerAction : 'all',
+	mode : 'local',
+	store : new Ext.data.ArrayStore({
+				fields : ['v', 't'],
+				data : Share.map2Ary(shop.CITYMAP)
+			}),
+	valueField : 'v',
+	displayField : 't',
+	allowBlank : false,
+	editable : false,
+	anchor : '99%'
+});
+shop.areaCombo = new Ext.form.ComboBox({
+	emptyText : '请选择区...',
+	fieldLabel : '区',
+	hiddenName : 'areaId',
+	name : 'areaId',
+	triggerAction : 'all',
+	mode : 'local',
+	store : new Ext.data.ArrayStore({
+				fields : ['v', 't'],
+				data : Share.map2Ary(shop.AREAMAP)
 			}),
 	valueField : 'v',
 	displayField : 't',
@@ -105,8 +141,23 @@ shop.colModel = new Ext.grid.ColumnModel({
 						header : '地址',
 						dataIndex : 'shopAddress'
 					}, {
+						header : '联系电话',
+						dataIndex : 'telNo'
+					}, {
 						header : '描述',
 						dataIndex : 'description'
+					}, {
+						header : '城市',
+						dataIndex : 'cityId',
+						renderer : function(v) {
+							return Share.map(v, shop.CITYMAP, '');
+						}
+					}, {
+						header : '区',
+						dataIndex : 'areaId',
+						renderer : function(v) {
+							return Share.map(v, shop.AREAMAP, '');
+						}
 					}, {
 						header : '图片',
 						dataIndex : 'image'
@@ -126,6 +177,8 @@ shop.addAction = new Ext.Action({
 				shop.addWindow.show().center(); // 显示窗口
 				shop.formPanel.getForm().reset(); // 清空表单里面的元素的值.
 				shop.shopTypeCombo.clearValue();
+				shop.cityCombo.clearValue();
+				shop.areaCombo.clearValue();
 			}
 		});
 /** 编辑 */
@@ -207,6 +260,7 @@ shop.formPanel = new Ext.form.FormPanel({
 						maxLength : 64,
 						allowBlank : false,
 						name : 'shopAddress',
+						 blankText:'请准确填写您的商铺地址',
 						anchor : '99%'
 					}, {
 						fieldLabel : '描述',
@@ -215,6 +269,12 @@ shop.formPanel = new Ext.form.FormPanel({
 						name : 'description',
 						anchor : '99%'
 					}, {
+						fieldLabel : '联系电话',
+						maxLength : 512,
+						allowBlank : false,
+						name : 'telNo',
+						anchor : '99%'
+					}, shop.cityCombo, shop.areaCombo, {
 						fieldLabel : '图片',
 						maxLength : 64,
 						allowBlank : false,

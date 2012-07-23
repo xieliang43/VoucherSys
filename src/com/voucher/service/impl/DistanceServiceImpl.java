@@ -1,5 +1,7 @@
 package com.voucher.service.impl;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +16,16 @@ public class DistanceServiceImpl implements DistanceService {
 
 	@Override
 	public List<Distance> getEnabledDistances() {
-		return getDistanceDao().getEnabledDistances();
+		List<Distance> list = getDistanceDao().getEnabledDistances();
+		Collections.sort(list, new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				Distance d1 = (Distance)o1;
+				Distance d2 = (Distance)o2;
+				return Integer.valueOf(d1.getName()) - Integer.valueOf(d2.getName());
+			}});
+		return list;
 	}
 
 	/**

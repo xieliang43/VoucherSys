@@ -47,7 +47,7 @@ voucher.store = new Ext.data.Store({
 				root : 'rows' // Json中的列表数据根节点
 			}, ['id', 'name', 'shopId', 'price', 'quantity',
 					'restQty', 'startDate', 'endDate', 'deadTime',
-					'enabled', 'image', 'description', 'createDate']),
+					'enabled', 'image', 'vchKey', 'description', 'createDate']),
 			listeners : {
 				'load' : function(store, records, options) {
 					voucher.alwaysFun();
@@ -123,6 +123,9 @@ voucher.colModel = new Ext.grid.ColumnModel({
 					}, {
 						header : '截至提示',
 						dataIndex : 'deadTime'
+					}, {
+						header : '序号前缀',
+						dataIndex : 'vchKey'
 					}, {
 						header : '是否启用',
 						dataIndex : 'enabled',
@@ -245,8 +248,10 @@ voucher.endDate = new Ext.form.DateField({
 /** 基本信息-详细信息的form */
 voucher.formPanel = new Ext.form.FormPanel({
 			frame : false,
-			title : '模块信息',
+			title : '代金券信息',
 			bodyStyle : 'padding:10px;border:0px',
+			fileUpload : true,
+			uploadfile : true,
 			labelwidth : 50,
 			defaultType : 'textfield',
 			items : [{
@@ -280,6 +285,12 @@ voucher.formPanel = new Ext.form.FormPanel({
 							allowBlank : false,
 							name : 'deadTime',
 							anchor : '99%'
+					}, {
+						fieldLabel : '序号前缀',
+						maxLength : 64,
+						allowBlank : false,
+						name : 'vchKey',
+						anchor : '99%'
 					}, voucher.enabledCombo, {
 						fieldLabel : '描述',
 						maxLength : 64,
@@ -287,7 +298,6 @@ voucher.formPanel = new Ext.form.FormPanel({
 						name : 'description',
 						anchor : '99%'
 					}, {
-						id: 'file-idx',
 						name : 'upload',
 				        inputType : "file",
 				        fieldLabel : '上传图片',

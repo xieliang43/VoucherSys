@@ -6,6 +6,7 @@ package com.voucher.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -188,6 +189,18 @@ public class RegionServiceImpl implements RegionService {
 	public Map<String, Object> getAllCities() {
 		Map<String, Object> map = new TreeMap<String, Object>();
 		List<Region> regions = regionDao.findRegionsByType(2);
+		if(regions != null && !regions.isEmpty()) {
+			for(Region r : regions) {
+				map.put(String.valueOf(r.getId()), r.getName());
+			}
+		}
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> getAllEnabledDistricts() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Region> regions = regionDao.findRegionsByType(3);
 		if(regions != null && !regions.isEmpty()) {
 			for(Region r : regions) {
 				map.put(String.valueOf(r.getId()), r.getName());

@@ -34,7 +34,7 @@
 		<property name="autoCommitOnClose" value="true" />
 		<property name="initialPoolSize" value="10"/>
 		<property name="minPoolSize" value="10"/>
-		<property name="maxPoolSize" value="50"/>
+		<property name="maxPoolSize" value="100"/>
 		<property name="maxIdleTime" value="25200"/>
 		<property name="maxIdleTimeExcessConnections" value="1800"/>
 		<property name="acquireIncrement" value="5"/>
@@ -158,6 +158,7 @@
 		<property name="shopTypeService" ref="shopTypeService"/>
 		<property name="shopService" ref="shopService"/>
 		<property name="distanceService" ref="distanceService"/>
+		<property name="voucherService" ref="voucherService"/>
 	</bean>
 	
 	<bean id="sysLoginAction" class="com.voucher.action.sys.SysLoginAction">
@@ -227,6 +228,7 @@
 	<bean id="merchantShopAction" class="com.voucher.action.MerchantShopAction">
 		<property name="shopTypeService" ref="shopTypeService"/>
 		<property name="shopService" ref="shopService"/>
+		<property name="regionService" ref="regionService"/>
 	</bean>
 	
 	<bean id="voucherInstanceDao" class="com.voucher.dao.impl.VoucherInstanceDaoImpl">

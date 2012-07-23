@@ -12,6 +12,7 @@ public class VoucherVO {
 	private Date startDate;
 	private Date endDate;
 	private String deadTime;
+	private String vchKey;
 	private short enabled;
 	private String image;
 	private String description;
@@ -38,7 +39,7 @@ public class VoucherVO {
 	 * @param shopId
 	 */
 	public VoucherVO(int id, String name, double price, int quantity,
-			int restQty, Date startDate, Date endDate, String deadTime,
+			int restQty, Date startDate, Date endDate, String deadTime, String vchKey,
 			short enabled, String image, String description, Date createDate,
 			int shopId) {
 		this.id = id;
@@ -49,6 +50,7 @@ public class VoucherVO {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.deadTime = deadTime;
+		this.vchKey = vchKey;
 		this.enabled = enabled;
 		this.image = image;
 		this.description = description;
@@ -236,5 +238,19 @@ public class VoucherVO {
 	 */
 	public void setShopId(int shopId) {
 		this.shopId = shopId;
+	}
+
+	/**
+	 * @return the vchKey
+	 */
+	public String getVchKey() {
+		return vchKey;
+	}
+
+	/**
+	 * @param vchKey the vchKey to set
+	 */
+	public void setVchKey(String vchKey) {
+		this.vchKey = vchKey;
 	}
 }

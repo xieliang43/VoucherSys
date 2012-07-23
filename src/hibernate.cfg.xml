@@ -47,5 +47,6 @@
 		<class-cache class="com.voucher.entity.ShopType" usage="read-write" />
 		<class-cache class="com.voucher.entity.Shop" usage="read-write" />
 		<class-cache class="com.voucher.entity.Distance" usage="read-write" />
+		<class-cache class="com.voucher.entity.Position" usage="read-write"/>
 	</session-factory>
 </hibernate-configuration>

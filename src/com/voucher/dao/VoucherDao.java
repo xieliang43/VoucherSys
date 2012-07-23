@@ -19,4 +19,6 @@ public interface VoucherDao {
 	public List<Voucher> getCurrentMerchantVouchers(SysUser merchant);
 	public void deleteById(int id);
 	public void save(Voucher voucher);
+	public List<Voucher> findAllEnabledVouchers();
+	public List<Voucher> getEnabledVouchersByShop(int shopId);
 }

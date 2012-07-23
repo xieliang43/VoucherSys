@@ -11,12 +11,14 @@ import com.voucher.entity.Region;
 import com.voucher.entity.ShopType;
 import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.JsonVO;
+import com.voucher.pojo.ShopPager;
 import com.voucher.pojo.ShopVO;
+import com.voucher.pojo.VchInstVO;
 import com.voucher.service.DistanceService;
 import com.voucher.service.RegionService;
 import com.voucher.service.ShopService;
 import com.voucher.service.ShopTypeService;
-
+import com.voucher.service.VoucherService;
 
 public class ShopAction extends BaseAction {
 
@@ -24,25 +26,28 @@ public class ShopAction extends BaseAction {
 	 * 
 	 */
 	private static final long serialVersionUID = 7881853394576176768L;
-	
+
 	private String cityId;
 	private String shopId;
 	private String shopTypeId;
 	private String areaId;
 	private String shopName;
-	
+	private String keyword;
 	private String distance;
 	private String longitude;
-	private String lattitude;
-	
+	private String latitude;
+	private String start;
+	private String limit;
+
 	private RegionService regionService;
 	private ShopService shopService;
 	private ShopTypeService shopTypeService;
 	private DistanceService distanceService;
-	
+	private VoucherService voucherService;
+
 	public void getShopTypes() throws IOException {
 		List<ShopType> shopTypes = shopTypeService.getShopTypes();
-		if(null == shopTypes || shopTypes.isEmpty()) {
+		if (null == shopTypes || shopTypes.isEmpty()) {
 			JsonVO jErrorVO = new JsonVO("0", "系统错误，未载入商业类型！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
@@ -52,23 +57,24 @@ public class ShopAction extends BaseAction {
 		String json = this.convertToJson(jVO);
 		sendJSonReturn(json);
 	}
-	
+
 	public void getShopAreas() throws IOException {
-		if(StringUtils.isBlank(cityId)) {
+		if (StringUtils.isBlank(cityId)) {
 			JsonVO jErrorVO = new JsonVO("0", "请输入城市！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
 		}
-		List<Region> regions = regionService.findRegionsByParentAndType(Integer.valueOf(cityId), 3);
-		if(null == regions || regions.isEmpty()) {
+		List<Region> regions = regionService.findRegionsByParentAndType(
+				Integer.valueOf(cityId), 3);
+		if (null == regions || regions.isEmpty()) {
 			JsonVO jErrorVO = new JsonVO("0", "系统错误，未载入城市！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
 		}
 		List<AreaVO> areas = new ArrayList<AreaVO>();
-		for(Region r : regions) {
+		for (Region r : regions) {
 			AreaVO area = new AreaVO(r.getId(), r.getName());
 			areas.add(area);
 		}
@@ -76,37 +82,68 @@ public class ShopAction extends BaseAction {
 		String json = this.convertToJson(jVO);
 		sendJSonReturn(json);
 	}
-	
-	public void getShops() throws IOException {
-		List<ShopVO> shops = shopService.getShops();
-		if(null == shops || shops.isEmpty()) {
-			JsonVO jErrorVO = new JsonVO("0", "系统错误，未载入商铺！", null);
+
+	public void getShops() {
+		if (StringUtils.isBlank(cityId) && StringUtils.isBlank(areaId)) {
+			JsonVO jErrorVO = new JsonVO("0", "无地区输入!", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
 		}
-		JsonVO jVO = new JsonVO("1", "商铺列表", shops);
-		String json = this.convertToJson(jVO);
-		sendJSonReturn(json);
-	}
-	
-	public void getNearbyShops() {
-		if(StringUtils.isBlank(lattitude) || StringUtils.isBlank(longitude)) {
-			JsonVO jErrorVO = new JsonVO("0", "无经纬度输入!", null);
-			String json = this.convertToJson(jErrorVO);
-			sendJSonReturn(json);
-			return;
+		ShopPager shopPager = new ShopPager();
+		if(!StringUtils.isBlank(cityId)) {
+			shopPager.setCityId(Integer.valueOf(cityId));
 		}
-		List<ShopVO> shops = shopService.getNearbyShops(Integer.valueOf(cityId), Integer.valueOf(distance), Double.valueOf(lattitude), Double.valueOf(longitude));
+		if(!StringUtils.isBlank(shopTypeId)) {
+			shopPager.setShopTypeId(Integer.valueOf(shopTypeId));
+		}
+		if(!StringUtils.isBlank(areaId)) {
+			shopPager.setAreaId(Integer.valueOf(areaId));
+		}
+		if(!StringUtils.isBlank(limit)) {
+			shopPager.setLimit(Integer.valueOf(limit));
+		}
+		if(!StringUtils.isBlank(start)) {
+			shopPager.setStart(Integer.valueOf(start));
+		}
+		if(!StringUtils.isBlank(distance)) {
+			shopPager.setDistance(Integer.valueOf(distance));
+		} else {
+			shopPager.setDistance(Integer.MAX_VALUE);
+		}
+		if(!StringUtils.isBlank(keyword)) {
+			shopPager.setKeyword(keyword);
+		}
+		if(!StringUtils.isBlank(latitude)) {
+			shopPager.setLatitude(Double.valueOf(latitude));
+		}
+		if(!StringUtils.isBlank(longitude)) {
+			shopPager.setLongitude(Double.valueOf(longitude));
+		}
+		
+		List<ShopVO> shops = shopService.getNearbyShops(shopPager);
 		JsonVO jVO = new JsonVO("1", "商铺列表", shops);
 		String json = this.convertToJson(jVO);
 		sendJSonReturn(json);
 	}
-	
+
 	public void getShopDistances() throws IOException {
 		List<Distance> list = distanceService.getEnabledDistances();
-		
+
 		JsonVO jVO = new JsonVO("1", "距离", list);
+		String json = this.convertToJson(jVO);
+		this.sendJSonReturn(json);
+	}
+	
+	public void getVouchers() {
+		if (StringUtils.isBlank(shopId)) {
+			JsonVO jErrorVO = new JsonVO("0", "商店不能为空！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		VchInstVO vchs = voucherService.getEnabledVouchersByShop(Integer.valueOf(shopId));
+		JsonVO jVO = new JsonVO("1", "代金券信息", vchs);
 		String json = this.convertToJson(jVO);
 		this.sendJSonReturn(json);
 	}
@@ -119,7 +156,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param cityId the cityId to set
+	 * @param cityId
+	 *            the cityId to set
 	 */
 	public void setCityId(String cityId) {
 		this.cityId = cityId;
@@ -133,7 +171,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param shopId the shopId to set
+	 * @param shopId
+	 *            the shopId to set
 	 */
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
@@ -147,7 +186,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param longitude the longitude to set
+	 * @param longitude
+	 *            the longitude to set
 	 */
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
@@ -156,15 +196,16 @@ public class ShopAction extends BaseAction {
 	/**
 	 * @return the lattitude
 	 */
-	public String getLattitude() {
-		return lattitude;
+	public String getLatitude() {
+		return latitude;
 	}
 
 	/**
-	 * @param lattitude the lattitude to set
+	 * @param lattitude
+	 *            the lattitude to set
 	 */
-	public void setLattitude(String lattitude) {
-		this.lattitude = lattitude;
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 
 	/**
@@ -175,7 +216,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param shopTypeId the shopTypeId to set
+	 * @param shopTypeId
+	 *            the shopTypeId to set
 	 */
 	public void setShopTypeId(String shopTypeId) {
 		this.shopTypeId = shopTypeId;
@@ -189,7 +231,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param areaId the areaId to set
+	 * @param areaId
+	 *            the areaId to set
 	 */
 	public void setAreaId(String areaId) {
 		this.areaId = areaId;
@@ -203,12 +246,13 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param shopName the shopName to set
+	 * @param shopName
+	 *            the shopName to set
 	 */
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
 	}
-	
+
 	/**
 	 * @return the regionService
 	 */
@@ -217,7 +261,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param regionService the regionService to set
+	 * @param regionService
+	 *            the regionService to set
 	 */
 	public void setRegionService(RegionService regionService) {
 		this.regionService = regionService;
@@ -231,7 +276,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param shopService the shopService to set
+	 * @param shopService
+	 *            the shopService to set
 	 */
 	public void setShopService(ShopService shopService) {
 		this.shopService = shopService;
@@ -245,10 +291,56 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param shopTypeService the shopTypeService to set
+	 * @param shopTypeService
+	 *            the shopTypeService to set
 	 */
 	public void setShopTypeService(ShopTypeService shopTypeService) {
 		this.shopTypeService = shopTypeService;
+	}
+
+	/**
+	 * @return the keyword
+	 */
+	public String getKeyword() {
+		return keyword;
+	}
+
+	/**
+	 * @param keyword
+	 *            the keyword to set
+	 */
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	/**
+	 * @return the start
+	 */
+	public String getStart() {
+		return start;
+	}
+
+	/**
+	 * @param start
+	 *            the start to set
+	 */
+	public void setStart(String start) {
+		this.start = start;
+	}
+
+	/**
+	 * @return the limit
+	 */
+	public String getLimit() {
+		return limit;
+	}
+
+	/**
+	 * @param limit
+	 *            the limit to set
+	 */
+	public void setLimit(String limit) {
+		this.limit = limit;
 	}
 
 	/**
@@ -259,7 +351,8 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param distanceService the distanceService to set
+	 * @param distanceService
+	 *            the distanceService to set
 	 */
 	public void setDistanceService(DistanceService distanceService) {
 		this.distanceService = distanceService;
@@ -273,9 +366,24 @@ public class ShopAction extends BaseAction {
 	}
 
 	/**
-	 * @param distance the distance to set
+	 * @param distance
+	 *            the distance to set
 	 */
 	public void setDistance(String distance) {
 		this.distance = distance;
+	}
+
+	/**
+	 * @return the voucherService
+	 */
+	public VoucherService getVoucherService() {
+		return voucherService;
+	}
+
+	/**
+	 * @param voucherService the voucherService to set
+	 */
+	public void setVoucherService(VoucherService voucherService) {
+		this.voucherService = voucherService;
 	}
 }

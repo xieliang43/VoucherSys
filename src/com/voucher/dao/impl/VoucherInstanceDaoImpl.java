@@ -12,8 +12,8 @@ import com.voucher.entity.VoucherInstance;
 public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstanceDao {
 
 	@Override
-	public int getActiveCountByVoucher(int id) {
-		List<VoucherInstance> list = this.getActiveVouchersById(id);
+	public int getActiveCountByVoucher(int vchId) {
+		List<VoucherInstance> list = this.getActiveVoucherInstancesByVoucher(vchId);
 		if(list != null) {
 			return list.size();
 		}
@@ -21,11 +21,11 @@ public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstan
 	}
 
 	@Override
-	public List<VoucherInstance> getActiveVouchersById(int id) {
+	public List<VoucherInstance> getActiveVoucherInstancesByVoucher(int vchId) {
 		String hql = "from VoucherInstance vi where vi.voucher.id = :id and vi.isBought = :isBought";
 		try {
 			Query query = this.createQuery(hql);
-			query.setParameter("id", id);
+			query.setParameter("id", vchId);
 			query.setParameter("isBought", (short)0);
 			return query.getResultList();
 		} catch (Exception e) {
@@ -41,6 +41,28 @@ public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstan
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public int getVoucherInstanceCountByVoucher(int vchId) {
+		List<VoucherInstance> list = this.getVoucherInstancesByVoucher(vchId);
+		if(list != null) {
+			return list.size();
+		}
+		return 0;
+	}
+
+	@Override
+	public List<VoucherInstance> getVoucherInstancesByVoucher(int vchId) {
+		String hql = "from VoucherInstance vi where vi.voucher.id = :id ";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("id", vchId);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

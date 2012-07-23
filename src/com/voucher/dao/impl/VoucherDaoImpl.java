@@ -117,4 +117,31 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 		}
 	}
 
+	@Override
+	public List<Voucher> findAllEnabledVouchers() {
+		String hql = "from Voucher v where v.enabled = :enabled";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("enabled", (short)1);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Voucher> getEnabledVouchersByShop(int shopId) {
+		String hql = "from Voucher v where v.enabled = :enabled and v.shop.id = :shopId";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("enabled", (short)1);
+			query.setParameter("shopId", shopId);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

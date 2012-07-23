@@ -64,7 +64,7 @@ public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
 	}
 
 	public List<Region> findRegionsByType(int type) throws DataNotFoundException {
-		String hql = "from Region r where r.type = ? order by r.regionPrefix";
+		String hql = "from Region r where r.type = ? order by r.regionPrefix asc";
 		List<Region> regions = null;
 		try {
 			regions = this.getJpaTemplate().find(hql, type);

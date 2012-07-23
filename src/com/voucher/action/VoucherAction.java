@@ -27,12 +27,12 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	 * 
 	 */
 	private static final long serialVersionUID = -3834209328822135526L;
-	
+
 	private int start;
 	private int limit;
 	private String dir;
 	private String sort;
-	
+
 	private String id;
 	private String name;
 	private String price;
@@ -40,45 +40,49 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	private String startDate;
 	private String endDate;
 	private String deadTime;
+	private String vchKey;
 	private String enabled;
 	private String image;
 	private String description;
 	private String shopId;
 	private String shopName;
-	
+
 	private File upload;
 	private String uploadContentType;
 	private String uploadFileName;
-	
+
 	private ShopService shopService;
 	private VoucherService voucherService;
-	
+
 	private Map<String, Object> session;
-	
+
 	public String initVoucher() {
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		if(merchant == null) {
+		if (merchant == null) {
 			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
 			return Action.NONE;
 		}
-		Map<String, Object> shopMap = getShopService().getAllEnabledShopsByCurrentMerchant(merchant);
+		Map<String, Object> shopMap = getShopService()
+				.getAllEnabledShopsByCurrentMerchant(merchant);
 		session.put("vchShopMap", JackJson.fromObjectToJson(shopMap));
 		return SUCCESS;
 	}
 
 	public void loadAll() {
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		if(merchant == null) {
+		if (merchant == null) {
 			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
 			return;
 		}
 		ExtPager pager = new ExtPager(limit, start, dir, sort);
-		List<VoucherVO> list = voucherService.getCurrentMerchantVouchersByShopName(pager, merchant, getShopName());
+		List<VoucherVO> list = voucherService
+				.getCurrentMerchantVouchersByShopName(pager, merchant,
+						getShopName());
 		int total = voucherService.getCurrentMerchantTotalCount(merchant);
-		
+
 		sendExtGridReturn(new ExtGridReturn(total, list));
 	}
-	
+
 	public void save() {
 		if (StringUtils.isBlank(name)) {
 			this.sendExtReturn(new ExtReturn(false, "店名不能为空！"));
@@ -108,19 +112,23 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "图像不能为空！"));
 			return;
 		}
-		Voucher voucher = new Voucher(name, Double.valueOf(price), Integer.valueOf(quantity), new Date(startDate), new Date(endDate), deadTime, Short.valueOf(enabled), image, description);
+		Voucher voucher = new Voucher(name, Double.valueOf(price),
+				Integer.valueOf(quantity), new Date(startDate), new Date(
+						endDate), deadTime, vchKey, Short.valueOf(enabled), image,
+				description);
 		Shop shop = shopService.findShopById(Integer.valueOf(shopId));
 		voucher.setShop(shop);
-//		if(StringUtils.isBlank(id)) {
-//			voucher.setCreateDate(new Date());
-//			voucherService.saveVoucher(voucher);
-//		} else {
-//			voucher.setId(Integer.valueOf(id));
-//			voucherService.updateVoucher(voucher);
-//		}
+		if (StringUtils.isBlank(id)) {
+			voucher.setCreateDate(new Date());
+			voucherService.saveVoucher(voucher);
+		} else {
+			voucher.setId(Integer.valueOf(id));
+			voucherService.updateVoucher(voucher);
+		}
+
 		sendExtReturn(new ExtReturn(true, "保存成功！"));
 	}
-	
+
 	public void delete() {
 		if (StringUtils.isBlank(id)) {
 			this.sendExtReturn(new ExtReturn(false, "ID不能为空！"));
@@ -143,7 +151,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param shopService the shopService to set
+	 * @param shopService
+	 *            the shopService to set
 	 */
 	public void setShopService(ShopService shopService) {
 		this.shopService = shopService;
@@ -157,7 +166,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param voucherService the voucherService to set
+	 * @param voucherService
+	 *            the voucherService to set
 	 */
 	public void setVoucherService(VoucherService voucherService) {
 		this.voucherService = voucherService;
@@ -171,7 +181,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param start the start to set
+	 * @param start
+	 *            the start to set
 	 */
 	public void setStart(int start) {
 		this.start = start;
@@ -185,7 +196,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param limit the limit to set
+	 * @param limit
+	 *            the limit to set
 	 */
 	public void setLimit(int limit) {
 		this.limit = limit;
@@ -199,7 +211,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param dir the dir to set
+	 * @param dir
+	 *            the dir to set
 	 */
 	public void setDir(String dir) {
 		this.dir = dir;
@@ -213,7 +226,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param sort the sort to set
+	 * @param sort
+	 *            the sort to set
 	 */
 	public void setSort(String sort) {
 		this.sort = sort;
@@ -227,7 +241,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -241,7 +256,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
@@ -255,7 +271,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param endDate the endDate to set
+	 * @param endDate
+	 *            the endDate to set
 	 */
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
@@ -269,7 +286,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param deadTime the deadTime to set
+	 * @param deadTime
+	 *            the deadTime to set
 	 */
 	public void setDeadTime(String deadTime) {
 		this.deadTime = deadTime;
@@ -283,7 +301,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param image the image to set
+	 * @param image
+	 *            the image to set
 	 */
 	public void setImage(String image) {
 		this.image = image;
@@ -297,7 +316,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description
+	 *            the description to set
 	 */
 	public void setDescription(String description) {
 		this.description = description;
@@ -311,7 +331,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param shopName the shopName to set
+	 * @param shopName
+	 *            the shopName to set
 	 */
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
@@ -325,7 +346,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -339,7 +361,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param price the price to set
+	 * @param price
+	 *            the price to set
 	 */
 	public void setPrice(String price) {
 		this.price = price;
@@ -353,7 +376,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param quantity the quantity to set
+	 * @param quantity
+	 *            the quantity to set
 	 */
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
@@ -367,7 +391,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param enabled the enabled to set
+	 * @param enabled
+	 *            the enabled to set
 	 */
 	public void setEnabled(String enabled) {
 		this.enabled = enabled;
@@ -381,24 +406,11 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param shopId the shopId to set
+	 * @param shopId
+	 *            the shopId to set
 	 */
 	public void setShopId(String shopId) {
 		this.shopId = shopId;
-	}
-
-	/**
-	 * @return the upload
-	 */
-	public File getUpload() {
-		return upload;
-	}
-
-	/**
-	 * @param upload the upload to set
-	 */
-	public void setUpload(File upload) {
-		this.upload = upload;
 	}
 
 	/**
@@ -409,7 +421,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param uploadFileName the uploadFileName to set
+	 * @param uploadFileName
+	 *            the uploadFileName to set
 	 */
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
@@ -423,9 +436,39 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param uploadContentType the uploadContentType to set
+	 * @param uploadContentType
+	 *            the uploadContentType to set
 	 */
 	public void setUploadContentType(String uploadContentType) {
 		this.uploadContentType = uploadContentType;
+	}
+
+	/**
+	 * @return the upload
+	 */
+	public File getUpload() {
+		return upload;
+	}
+
+	/**
+	 * @param upload
+	 *            the upload to set
+	 */
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	/**
+	 * @return the vchKey
+	 */
+	public String getVchKey() {
+		return vchKey;
+	}
+
+	/**
+	 * @param vchKey the vchKey to set
+	 */
+	public void setVchKey(String vchKey) {
+		this.vchKey = vchKey;
 	}
 }

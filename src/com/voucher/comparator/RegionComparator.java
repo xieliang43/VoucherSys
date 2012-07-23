@@ -11,7 +11,6 @@ import java.util.Comparator;
 import com.voucher.entity.Region;
 
 /**
- * @author LL
  * 
  */
 public class RegionComparator implements Comparator<Region> {

@@ -5,6 +5,7 @@ import java.util.List;
 import com.voucher.entity.Shop;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ShopPager;
 
 public interface ShopDao {
 	public Shop findShopById(int shopId);
@@ -15,4 +16,5 @@ public interface ShopDao {
 	public List<Shop> getShopsByCityId(int cityId);
 	public List<Shop> getAllShops(ExtPager pager, SysUser merchant);
 	public List<Shop> getAllShopsByShopName(ExtPager pager, SysUser merchant, String shopName);
+	public List<Shop> getShopsByShopPager(ShopPager shopPager);
 }

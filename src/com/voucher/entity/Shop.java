@@ -37,6 +37,8 @@ public class Shop {
 	@ManyToOne
 	@JoinColumn(name="MERCHANT_ID")
 	private SysUser merchant;
+	@Column(name="TEL_NO")
+	private String telNo;
 	@OneToOne
 	@JoinColumn(name="SHOP_TYPE_ID")
 	private ShopType shopType;
@@ -46,6 +48,12 @@ public class Shop {
 	private Position position;
 	@OneToMany(mappedBy="shop")
 	private Set<Voucher> vouchers = new HashSet<Voucher>();
+	@OneToOne
+	@JoinColumn(name="CITY_ID")
+	private Region city;
+	@OneToOne
+	@JoinColumn(name="AREA_ID")
+	private Region area;
 	
 	public Shop(){
 		
@@ -59,11 +67,12 @@ public class Shop {
 	 * @param shopType
 	 * @param createDate
 	 */
-	public Shop(String shopName, String shopAddress, String image,
+	public Shop(String shopName, String shopAddress, String image, String telNo,
 			String description, ShopType shopType) {
 		this.shopName = shopName;
 		this.shopAddress = shopAddress;
 		this.image = image;
+		this.telNo = telNo;
 		this.description = description;
 		this.shopType = shopType;
 		this.position = null;
@@ -247,5 +256,41 @@ public class Shop {
 	 */
 	public void setVouchers(Set<Voucher> vouchers) {
 		this.vouchers = vouchers;
+	}
+	/**
+	 * @return the city
+	 */
+	public Region getCity() {
+		return city;
+	}
+	/**
+	 * @param city the city to set
+	 */
+	public void setCity(Region city) {
+		this.city = city;
+	}
+	/**
+	 * @return the area
+	 */
+	public Region getArea() {
+		return area;
+	}
+	/**
+	 * @param area the area to set
+	 */
+	public void setArea(Region area) {
+		this.area = area;
+	}
+	/**
+	 * @return the telNo
+	 */
+	public String getTelNo() {
+		return telNo;
+	}
+	/**
+	 * @param telNo the telNo to set
+	 */
+	public void setTelNo(String telNo) {
+		this.telNo = telNo;
 	}
 }

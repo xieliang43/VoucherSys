@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.voucher.constants.WebConstants;
+import com.voucher.entity.Region;
 import com.voucher.entity.Shop;
 import com.voucher.entity.ShopType;
 import com.voucher.entity.sys.SysUser;
@@ -15,6 +16,7 @@ import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.ShopVO;
+import com.voucher.service.RegionService;
 import com.voucher.service.ShopService;
 import com.voucher.service.ShopTypeService;
 import com.voucher.util.JackJson;
@@ -34,18 +36,26 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	private String id;
 	private String shopName;
 	private String shopAddress;
+	private String telNo;
 	private String image;
 	private String description;
 	private String shopTypeId;
+	private String cityId;
+	private String areaId;
 	
 	private ShopTypeService shopTypeService;
 	private ShopService shopService;
+	private RegionService regionService;
 
 	private Map<String, Object> session;
 	
 	public String initShop() {
 		Map<String, Object> shopTypeMap = shopTypeService.getAllEnabledShopTypes();
+		Map<String, Object> shopCityMap = regionService.getAllEnabledCities();
+		Map<String, Object> shopAreaMap = regionService.getAllEnabledDistricts();
 		session.put("shopTypeMap", JackJson.fromObjectToJson(shopTypeMap));
+		session.put("shopCityMap", JackJson.fromObjectToJson(shopCityMap));
+		session.put("shopAreaMap", JackJson.fromObjectToJson(shopAreaMap));
 		return SUCCESS;
 	}
 	
@@ -71,6 +81,14 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 			sendExtReturn(new ExtReturn(false, "类型不能为空！"));
 			return;
 		}
+		if (StringUtils.isBlank(getCityId())) {
+			sendExtReturn(new ExtReturn(false, "城市不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(getAreaId())) {
+			sendExtReturn(new ExtReturn(false, "区不能为空！"));
+			return;
+		}
 		if (StringUtils.isBlank(getShopAddress())) {
 			sendExtReturn(new ExtReturn(false, "地址不能为空！"));
 			return;
@@ -81,15 +99,21 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		}
 		
 		ShopType shopType = shopTypeService.getShopTypeById(Integer.valueOf(shopTypeId));
+		Region city = regionService.getRegionById(Integer.valueOf(cityId));
+		Region area = regionService.getRegionById(Integer.valueOf(areaId));
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		Shop shop = new Shop(shopName, shopAddress, image, description, shopType);
+		Shop shop = new Shop(shopName, shopAddress, image, telNo, description, shopType);
 		
 		if(StringUtils.isBlank(id)) {
 			shop.setCreateDate(new Date());
 			shop.setMerchant(merchant);
+			shop.setCity(city);
+			shop.setArea(area);
 			shopService.save(shop);
 		} else {
 			shop.setId(Integer.valueOf(id));
+			shop.setCity(city);
+			shop.setArea(area);
 			shopService.update(shop);
 		}
 		sendExtReturn(new ExtReturn(true, "保存成功！"));
@@ -270,5 +294,47 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+	/**
+	 * @return the regionService
+	 */
+	public RegionService getRegionService() {
+		return regionService;
+	}
+
+	/**
+	 * @param regionService the regionService to set
+	 */
+	public void setRegionService(RegionService regionService) {
+		this.regionService = regionService;
+	}
+
+	/**
+	 * @return the cityId
+	 */
+	public String getCityId() {
+		return cityId;
+	}
+
+	/**
+	 * @param cityId the cityId to set
+	 */
+	public void setCityId(String cityId) {
+		this.cityId = cityId;
+	}
+
+	/**
+	 * @return the areaId
+	 */
+	public String getAreaId() {
+		return areaId;
+	}
+
+	/**
+	 * @param areaId the areaId to set
+	 */
+	public void setAreaId(String areaId) {
+		this.areaId = areaId;
 	}
 }

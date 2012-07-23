@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
@@ -51,12 +52,19 @@ public class RegionAction extends BaseAction implements SessionAware {
 			this.sendJSonReturn(json);
 			return;
 		}
-		List<AreaVO> areas = new ArrayList<AreaVO>();
+		Map<String, List<AreaVO>> map = new TreeMap<String, List<AreaVO>>();
 		for(Region r : regions) {
-			AreaVO area = new AreaVO(r.getId(), r.getName(), r.getRegionPrefix());
-			areas.add(area);
+			String prefix = r.getRegionPrefix();
+			AreaVO area = new AreaVO(r.getId(), r.getName(), prefix);
+			if(map.get(prefix) != null) {
+				map.get(prefix).add(area);
+			} else {
+				List<AreaVO> areas = new ArrayList<AreaVO>();
+				areas.add(area);
+				map.put(r.getRegionPrefix(), areas);
+			}
 		}
-		JsonVO vo = new JsonVO("1", "获取城市成功", areas);
+		JsonVO vo = new JsonVO("1", "获取城市成功", map);
 		String json = this.convertToJson(vo);
 		this.sendJSonReturn(json);
 	}

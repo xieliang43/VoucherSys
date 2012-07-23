@@ -7,10 +7,13 @@ public class ShopVO {
 	private String shopName;
 	private String shopAddress;
 	private String image;
+	private String telNo;
 	private String description;
 	private int shopTypeId;
 	private Date createDate;
 	private int distance;
+	private int cityId;
+	private int areaId;
 	
 	public ShopVO(){
 		
@@ -24,16 +27,19 @@ public class ShopVO {
 	 * @param shopTypeId
 	 * @param createDate
 	 */
-	public ShopVO(int id, String shopName, String shopAddress, String image,
-			String description, int shopTypeId, int distance, Date createDate) {
+	public ShopVO(int id, String shopName, String shopAddress, String telNo, String image,
+			String description, int shopTypeId, int distance, int cityId, int areaId, Date createDate) {
 		super();
 		this.id = id;
 		this.shopName = shopName;
 		this.shopAddress = shopAddress;
+		this.telNo = telNo;
 		this.image = image;
 		this.description = description;
 		this.shopTypeId = shopTypeId;
 		this.distance = distance;
+		this.setCityId(cityId);
+		this.setAreaId(areaId);
 		this.createDate = createDate;
 	}
 	/**
@@ -131,5 +137,41 @@ public class ShopVO {
 	 */
 	public void setDistance(int distance) {
 		this.distance = distance;
+	}
+	/**
+	 * @return the cityId
+	 */
+	public int getCityId() {
+		return cityId;
+	}
+	/**
+	 * @param cityId the cityId to set
+	 */
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+	/**
+	 * @return the areaId
+	 */
+	public int getAreaId() {
+		return areaId;
+	}
+	/**
+	 * @param areaId the areaId to set
+	 */
+	public void setAreaId(int areaId) {
+		this.areaId = areaId;
+	}
+	/**
+	 * @return the telNo
+	 */
+	public String getTelNo() {
+		return telNo;
+	}
+	/**
+	 * @param telNo the telNo to set
+	 */
+	public void setTelNo(String telNo) {
+		this.telNo = telNo;
 	}
 }

@@ -24,7 +24,6 @@ public class ExtPager {
 	 * @param sort
 	 */
 	public ExtPager(Integer limit, Integer start, String dir, String sort) {
-		super();
 		this.limit = limit;
 		this.start = start;
 		this.dir = dir;

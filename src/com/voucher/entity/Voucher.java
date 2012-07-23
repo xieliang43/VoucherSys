@@ -33,6 +33,8 @@ public class Voucher {
 	private String deadTime;
 	private short enabled;
 	private String image;
+	@Column(name="VCH_KEY")
+	private String vchKey;
 	private String description;
 	@Column(name="CREATE_DATE")
 	private Date createDate;
@@ -58,7 +60,7 @@ public class Voucher {
 	 * @param createDate
 	 */
 	public Voucher(String name, double price, int quantity, Date startDate,
-			Date endDate, String deadTime, short enabled, String image,
+			Date endDate, String deadTime, String vchKey, short enabled, String image,
 			String description) {
 		this.name = name;
 		this.price = price;
@@ -66,6 +68,7 @@ public class Voucher {
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.deadTime = deadTime;
+		this.vchKey = vchKey;
 		this.enabled = enabled;
 		this.image = image;
 		this.description = description;
@@ -219,6 +222,18 @@ public class Voucher {
 	 */
 	public void setShop(Shop shop) {
 		this.shop = shop;
+	}
+	/**
+	 * @return the vchKey
+	 */
+	public String getVchKey() {
+		return vchKey;
+	}
+	/**
+	 * @param vchKey the vchKey to set
+	 */
+	public void setVchKey(String vchKey) {
+		this.vchKey = vchKey;
 	}
 	
 }

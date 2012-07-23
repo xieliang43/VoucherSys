@@ -5,6 +5,7 @@ import java.util.List;
 import com.voucher.entity.Voucher;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.VchInstVO;
 import com.voucher.pojo.VoucherVO;
 
 public interface VoucherService {
@@ -19,5 +20,9 @@ public interface VoucherService {
 	public void updateVoucher(Voucher voucher);
 
 	public void deleteById(int id);
+
+	public List<Voucher> getEnabledVouchersLessThanCurrentDate();
+
+	public VchInstVO getEnabledVouchersByShop(int shoId);
 
 }
