@@ -4,7 +4,6 @@
 package com.voucher.exception;
 
 /**
- * @author unix
  *
  */
 public class DataNotFoundException extends SystemException {

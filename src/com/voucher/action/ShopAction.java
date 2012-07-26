@@ -10,9 +10,9 @@ import com.voucher.entity.Distance;
 import com.voucher.entity.Region;
 import com.voucher.entity.ShopType;
 import com.voucher.pojo.AreaVO;
+import com.voucher.pojo.ExtShopVO;
 import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.ShopPager;
-import com.voucher.pojo.ShopVO;
 import com.voucher.pojo.VchInstVO;
 import com.voucher.service.DistanceService;
 import com.voucher.service.RegionService;
@@ -121,8 +121,8 @@ public class ShopAction extends BaseAction {
 			shopPager.setLongitude(Double.valueOf(longitude));
 		}
 		
-		List<ShopVO> shops = shopService.getNearbyShops(shopPager);
-		JsonVO jVO = new JsonVO("1", "商铺列表", shops);
+		ExtShopVO extShopVO = shopService.getNearbyShops(shopPager);
+		JsonVO jVO = new JsonVO("1", "商铺列表", extShopVO);
 		String json = this.convertToJson(jVO);
 		sendJSonReturn(json);
 	}

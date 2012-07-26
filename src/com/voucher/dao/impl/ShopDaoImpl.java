@@ -154,4 +154,52 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		}
 		return null;
 	}
+
+	@Override
+	public int getTotalEnabledShops(ShopPager shopPager) {
+		List list = null;
+		String hql = "from Shop s where";
+		if(shopPager.getAreaId() != null) {
+			hql = hql + " s.area.id = :areaId";
+		} else {
+			if(shopPager.getCityId() != null) {
+				hql = hql + " s.city.id = :cityId";
+			}
+		}
+		if (shopPager.getKeyword() != null) {
+			hql = hql + " and s.shopName like :shopName";
+		}
+		if(shopPager.getShopTypeId() != null) {
+			hql = hql + " and s.shopType.id = :shopTypeId";
+		}
+		if (shopPager.getStart() == null) {
+			shopPager.setStart(0);
+		}
+		if (shopPager.getLimit() == null) {
+			shopPager.setLimit(15);
+		}
+		try {
+			Query query = this.createQuery(hql);
+			if(shopPager.getAreaId() != null) {
+				query.setParameter("areaId", shopPager.getAreaId());
+			} else {
+				if(shopPager.getCityId() != null) {
+					query.setParameter("cityId", shopPager.getCityId());
+				}
+			}
+			if (shopPager.getKeyword() != null) {
+				query.setParameter("shopName", "%" + shopPager.getKeyword() + "%");
+			}
+			if(shopPager.getShopTypeId() != null) {
+				query.setParameter("shopTypeId", shopPager.getShopTypeId());
+			}
+			list = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(list != null) {
+			return list.size();
+		}
+		return 0;
+	}
 }

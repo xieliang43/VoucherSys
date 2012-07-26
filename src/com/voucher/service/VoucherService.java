@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.voucher.entity.Voucher;
 import com.voucher.entity.sys.SysUser;
+import com.voucher.exception.DataExistException;
+import com.voucher.exception.DataNotFoundException;
+import com.voucher.exception.ServiceConcurrentException;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.VchInstVO;
 import com.voucher.pojo.VoucherVO;
@@ -24,5 +27,9 @@ public interface VoucherService {
 	public List<Voucher> getEnabledVouchersLessThanCurrentDate();
 
 	public VchInstVO getEnabledVouchersByShop(int shoId);
+
+	public void purchaseVoucher(int userId, int viId)
+			throws ServiceConcurrentException, DataExistException,
+			DataNotFoundException;
 
 }

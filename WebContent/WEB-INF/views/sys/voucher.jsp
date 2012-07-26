@@ -9,6 +9,7 @@ voucher = {
 	all : ctx + '/voucherAction!loadAll.action',// 加载所有
 	save : ctx + "/voucherAction!save.action",//保存
 	del : ctx + "/voucherAction!delete.action",//删除
+	upload : ctx + "/voucherAction!uploadImage.action",
 	SHOPMAP :eval('(${vchShopMap})'),
 	pageSize : 20, // 每页显示的记录数
 	ENABLED : eval('(${fields.enabled==null?"{}":fields.enabled})'),
@@ -126,13 +127,13 @@ voucher.colModel = new Ext.grid.ColumnModel({
 					}, {
 						header : '序号前缀',
 						dataIndex : 'vchKey'
-					}, {
+					}, /*{
 						header : '是否启用',
 						dataIndex : 'enabled',
 						renderer : function(v) {
 							return Share.map(v, voucher.ENABLED, '');
 						}
-					}, {
+					}, */{
 						header : '图片',
 						dataIndex : 'image'
 					}, {
@@ -153,6 +154,7 @@ voucher.addAction = new Ext.Action({
 				voucher.addWindow.setTitle('新建模块'); // 设置窗口的名称
 				voucher.addWindow.show().center(); // 显示窗口
 				voucher.formPanel.getForm().reset(); // 清空表单里面的元素的值.
+				voucher.imageForm.getForm().reset();
 				voucher.shopCombo.clearValue();
 			}
 		});
@@ -232,26 +234,47 @@ voucher.enabledCombo = new Ext.form.ComboBox({
 voucher.startDate = new Ext.form.DateField({
 	fieldLabel : '开始时间',
 	name: 'startDate',
+	startDateField : 'startDate',
 	width: 160,
 	allowBlank : false,
 	format: 'Y-m-d',
-	emptyText: '选择开始日期'
+	emptyText: '选择开始日期',
+	menuListeners : {
+        beforeshow : function() {
+            var myDate=new Date();
+            myDate.setFullYear(1970,0,1);
+            this.menu.picker.setValue(this.getValue()||myDate);  
+        },
+        select : function(m, d) {
+            this.setValue(this.menu.picker.getValue());
+        }
+    }
 });
 voucher.endDate = new Ext.form.DateField({
 	fieldLabel : '结束时间',
 	name: 'endDate',
+	startDateField : 'endDate',
 	width: 160,
 	allowBlank : false,
 	format: 'Y-m-d',
-	emptyText: '选择结束日期'
+	emptyText: '选择结束日期',
+	menuListeners : {
+        beforeshow : function() {
+            var myDate=new Date();
+            myDate.setFullYear(1970,0,1);
+            this.menu.picker.setValue(this.getValue()||myDate);  
+        },
+        select : function(m, d) {
+            this.setValue(this.menu.picker.getValue());
+        }
+    }
 });
 /** 基本信息-详细信息的form */
 voucher.formPanel = new Ext.form.FormPanel({
 			frame : false,
 			title : '代金券信息',
-			bodyStyle : 'padding:10px;border:0px',
-			fileUpload : true,
-			uploadfile : true,
+			bodyStyle : 'padding: 10px; border: 0px none;',
+			style: "width: 464px; height: 247px;",
 			labelwidth : 50,
 			defaultType : 'textfield',
 			items : [{
@@ -260,7 +283,7 @@ voucher.formPanel = new Ext.form.FormPanel({
 						name : 'id',
 						anchor : '99%'
 					}, {
-						fieldLabel : '商店名称',
+						fieldLabel : '代金券名称',
 						maxLength : 64,
 						allowBlank : false,
 						name : 'name',
@@ -291,32 +314,136 @@ voucher.formPanel = new Ext.form.FormPanel({
 						allowBlank : false,
 						name : 'vchKey',
 						anchor : '99%'
-					}, voucher.enabledCombo, {
+					}, {
 						fieldLabel : '描述',
 						maxLength : 64,
 						allowBlank : false,
 						name : 'description',
 						anchor : '99%'
 					}, {
-						name : 'upload',
-				        inputType : "file",
-				        fieldLabel : '上传图片',
-				        allowBlank : false,
-				        xtype : 'textfield',
-				        blankText:'请选择上传图片',
-				        anchor : '100%'
+						fieldLabel : '图片',
+						maxLength : 64,
+						allowBlank : false,
+						name : 'image',
+						anchor : '99%'
 					}]
 		});
+
+voucher.imageForm = new Ext.form.FormPanel({
+	   id: 'imageform',
+	   labelWidth: 80, 
+	   labelAlign : 'right',
+	   border : false,
+	   fileUpload: true,
+	   bodyStyle : 'padding:10px 8px 8px 8px;',
+	   items:[{
+	    		 xtype: 'fieldset',
+	             title: '上传图片',
+	             collapsible: true,
+	             labelWidth: 69,
+	             collapsed: true,
+	             layout:'form',
+	             items: [{
+	            	 id : 'upload',  
+	                 name : 'upload',  
+	                 inputType : "file",  
+	                 fieldLabel : '上传图片',
+	                 xtype : 'textfield',
+	                 anchor : '96%'
+	             },{
+	             	 border:false,
+	                 layout:'form',
+	                 fieldLabel : "预览图片",
+	                 items:[{
+	                     xtype:'panel',
+	                     border:false,
+	                     layout:'column',
+	                     items:[{
+	                       xtype : 'box',
+	                       id : 'browseImage',
+	                       columnWidth:.35,
+	                       bodyStyle:'padding:10px 10px 10px 10px;',
+	                       autoEl : {
+	                           width : 102,
+	                           height : 125,
+	                           tag : 'img',
+	                           src : ''
+	                       }
+	                     },{
+	                     columnWidth:.5,
+	                     labelAlign :'left',
+	                     border:false,
+	                     buttonAlign:'center',
+	                     bodyStyle:'margin-left:10px;padding:5px',
+	                     items:[{
+				              xtype : 'label',
+				              fieldLabel:'',
+				              html: '<ul><li>1、图片格式只能是jpg格式。</li></ul><br/>'
+				            },{
+				              xtype : 'label',
+				              fieldLabel:'',
+				              html: '<ul><li>2、图片大小不超过300K。</li></ul><br/>'
+				            },{
+				              xtype : 'label',
+				              fieldLabel:'',
+				              html: '<ul><li>3、图片默认分辨率为102*125。</li></ul><br/>'
+	                     }],
+	                     buttons:[{
+					         xtype : 'button',
+					         fieldLabel:'',
+					         text:'上传',
+					         handler: function(){
+					           var file_path = Ext.getCmp('upload').getValue();
+					           var str = file_path.substr(file_path.lastIndexOf('.')+1,file_path.length);
+					           if(str!='JPG'&&str!='jpg'){
+					            	Ext.Msg.alert('错误', "上传的图像只能是jpg格式！"); 
+					            	return false;
+					           }
+					           var imgForm = voucher.imageForm.getForm();
+				               if(imgForm.isValid()){
+				            	   imgForm.submit({
+		                            url: voucher.upload,
+		                            success:function(form, action){  
+		                               var isSuc = action.result.success;
+		                               var message = action.result.message;   
+		                               var image_url = "/SchoolManageSystem";
+		                               if(isSuc=='true'){
+		                                     Ext.Msg.alert('消息', message);
+		                               }else{
+		                                     Ext.Msg.alert('错误', message);   
+		                               }
+		                               Ext.getCmp("browseImage").getEl().dom.src=image_url;
+	                                },   
+			                        failure:function(form, action){  
+			                              var isSuc = action.result.success;
+			                              var message = action.result.message;  
+			                              if(isSuc=='true'){
+			                                   Ext.Msg.alert('消息', message);
+			                              }else{
+			                                   Ext.Msg.alert('错误', message);   
+			                              }
+	                                      Ext.getCmp("browseImage").getEl().dom.src=image_url;
+	                          		}
+	                        		});
+	                      		}
+	                   		}
+	                     }]
+	                   }]
+              }]
+         }]
+	   }]
+});
+
 /** 编辑新建窗口 */
 voucher.addWindow = new Ext.Window({
 			layout : 'fit',
 			width : 500,
-			height : 420,
+			height : 400,
 			closeAction : 'hide',
 			plain : true,
 			modal : true,
 			resizable : true,
-			items : [voucher.formPanel],
+			items : [voucher.formPanel, /*voucher.imageForm*/],
 			buttons : [{
 						text : '保存',
 						handler : function() {
@@ -346,6 +473,7 @@ voucher.saveFun = function() {
 	// 发送请求
 	Share.AjaxRequest({
 				url : voucher.save,
+				method : "POST",
 				params : form.getValues(),
 				callback : function(json) {
 					voucher.addWindow.hide();
@@ -377,4 +505,5 @@ voucher.myPanel = new Ext.Panel({
 			height : index.tabPanel.getInnerHeight() - 1,
 			items : [voucher.grid]
 		});
+	
 </script>

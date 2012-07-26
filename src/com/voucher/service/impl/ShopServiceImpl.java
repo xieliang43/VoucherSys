@@ -18,6 +18,7 @@ import com.voucher.entity.Position;
 import com.voucher.entity.Shop;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ExtShopVO;
 import com.voucher.pojo.ShopPager;
 import com.voucher.pojo.ShopVO;
 import com.voucher.service.ShopService;
@@ -183,7 +184,7 @@ public class ShopServiceImpl implements ShopService {
 	}
 
 	@Override
-	public List<ShopVO> getNearbyShops(ShopPager shopPager) {
+	public ExtShopVO getNearbyShops(ShopPager shopPager) {
 		List<ShopVO> list = new ArrayList<ShopVO>();
 		List<Shop> cityShops = shopDao.getShopsByShopPager(shopPager);
 		if (shopPager.getShopTypeId() != null) {
@@ -223,7 +224,9 @@ public class ShopServiceImpl implements ShopService {
 				}
 			}
 		}
+		int total = shopDao.getTotalEnabledShops(shopPager);
 		Collections.sort(list, new ShopVOComparator());
-		return list;
+		ExtShopVO extShopVO = new ExtShopVO(total, list);
+		return extShopVO;
 	}
 }

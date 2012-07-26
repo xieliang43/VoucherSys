@@ -37,6 +37,17 @@ public class DateUtil {
 		}
 		return new Date();
 	}
+	
+	/**
+	 * 获取现在时间
+	 * 
+	 * @return 返回时间类型 yyyy-MM-dd
+	 * @throws  
+	 */
+	public Date getStandardDate(Date date) {
+		String dateString = this.dateToStr(date);
+		return this.strToDate(dateString);
+	}
 
 	/**
 	 * 获取现在时间
@@ -50,6 +61,10 @@ public class DateUtil {
 		ParsePosition pos = new ParsePosition(8);
 		Date currentTime_2 = formatter.parse(dateString, pos);
 		return currentTime_2;
+	}
+	
+	public static void main(String []args) {
+		System.out.println(getInstance().getStandardDate(new Date()));
 	}
 
 	/**
@@ -71,6 +86,17 @@ public class DateUtil {
 	 */
 	public String getStringDateShort() {
 		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(currentTime);
+		return dateString;
+	}
+	
+	/**
+	 * 获取现在时间
+	 * 
+	 * @return 返回短时间字符串格式yyyy-MM-dd
+	 */
+	public String getStringDateShort(Date currentTime) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String dateString = formatter.format(currentTime);
 		return dateString;

@@ -4,25 +4,36 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.voucher.dao.UserVoucherDao;
 import com.voucher.dao.VoucherDao;
 import com.voucher.dao.VoucherInstanceDao;
+import com.voucher.entity.User;
+import com.voucher.entity.UserVoucher;
 import com.voucher.entity.Voucher;
 import com.voucher.entity.VoucherInstance;
 import com.voucher.entity.sys.SysUser;
+import com.voucher.exception.DataExistException;
+import com.voucher.exception.DataNotFoundException;
+import com.voucher.exception.PersistenceConcurrentException;
+import com.voucher.exception.ServiceConcurrentException;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.VchInstVO;
 import com.voucher.pojo.VoucherInstanceVO;
 import com.voucher.pojo.VoucherVO;
+import com.voucher.service.UserService;
 import com.voucher.service.VoucherService;
+import com.voucher.util.DateUtil;
+import com.voucher.util.NumberUtil;
 
 public class VoucherServiceImpl implements VoucherService {
 
 	private VoucherDao voucherDao;
 	private VoucherInstanceDao voucherInstanceDao;
+	private UserService userService;
+	private UserVoucherDao userVoucherDao;
 
 	@Override
 	public List<VoucherVO> getCurrentMerchantVouchersByShopName(ExtPager pager,
@@ -101,8 +112,9 @@ public class VoucherServiceImpl implements VoucherService {
 			VoucherInstance vi = new VoucherInstance();
 			vi.setIsBought((short) 0);
 			vi.setVoucher(voucher);
-			vi.setVchKey(voucher.getVchKey() + ": "
-					+ UUID.randomUUID().toString().toUpperCase());
+			vi.setVchKey(voucher.getVchKey()
+					+ NumberUtil.getInstance().getDateline(
+							voucher.getEndDate() + ""));
 
 			instances.add(vi);
 			voucherInstanceDao.save(vi);
@@ -157,14 +169,81 @@ public class VoucherServiceImpl implements VoucherService {
 		if (viList != null && !viList.isEmpty()) {
 			for (VoucherInstance vi : viList) {
 				VoucherInstanceVO viVO = new VoucherInstanceVO(vi.getId(), vi
-						.getVoucher().getImage(), vi.getVchKey(), vi
-						.getVoucher().getEndDate(), vi.getVoucher().getPrice(),
-						vi.getIsBought());
+						.getVoucher().getImage(), vi.getVchKey()
+						+ String.format("%04d", vi.getId()), DateUtil
+						.getInstance().getStringDateShort(
+								vi.getVoucher().getEndDate()), vi.getVoucher()
+						.getPrice(), vi.getIsBought());
 				viVOList.add(viVO);
 			}
 		}
 		VchInstVO vchInstVO = new VchInstVO(totalVis, totalActive, viVOList);
 		return vchInstVO;
+	}
+
+	@Override
+	public void purchaseVoucher(int userId, int viId)
+			throws ServiceConcurrentException, DataExistException,
+			DataNotFoundException {
+		User user = userService.findUserById(userId);
+		VoucherInstance vchInst = voucherInstanceDao
+				.getVoucherInstancesById(viId);
+		List<UserVoucher> existUserVchInsts = userVoucherDao
+				.findUserInstancese(userId);
+		if (vchInst == null) {
+			throw new DataNotFoundException();
+		} else {
+			if (vchInst.getIsBought() == 1) {
+				throw new ServiceConcurrentException();
+			}
+		}
+		if (existUserVchInsts != null && !existUserVchInsts.isEmpty()) {
+			for (UserVoucher userVoucher : existUserVchInsts) {
+				if (userVoucher.getVoucherInstance().getVoucher().getId() == vchInst
+						.getVoucher().getId()) {
+					throw new DataExistException();
+				}
+			}
+		}
+
+		try {
+			vchInst.setIsBought((short) 1);
+			voucherInstanceDao.update(vchInst);
+			UserVoucher newUserVch = new UserVoucher(user, vchInst, new Date());
+			userVoucherDao.save(newUserVch);
+		} catch (PersistenceConcurrentException e) {
+			throw new ServiceConcurrentException();
+		}
+	}
+
+	/**
+	 * @return the userService
+	 */
+	public UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * @param userService
+	 *            the userService to set
+	 */
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * @return the userVoucherDao
+	 */
+	public UserVoucherDao getUserVoucherDao() {
+		return userVoucherDao;
+	}
+
+	/**
+	 * @param userVoucherDao
+	 *            the userVoucherDao to set
+	 */
+	public void setUserVoucherDao(UserVoucherDao userVoucherDao) {
+		this.userVoucherDao = userVoucherDao;
 	}
 
 }

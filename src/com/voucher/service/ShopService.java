@@ -6,6 +6,7 @@ import java.util.Map;
 import com.voucher.entity.Shop;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ExtShopVO;
 import com.voucher.pojo.ShopPager;
 import com.voucher.pojo.ShopVO;
 
@@ -19,5 +20,5 @@ public interface ShopService {
 	public int getTotalCount();
 	public int getCurrentMerchantTotalCount(SysUser merchant);
 	public Map<String, Object> getAllEnabledShopsByCurrentMerchant(SysUser merchant);
-	public List<ShopVO> getNearbyShops(ShopPager shopPager);
+	public ExtShopVO getNearbyShops(ShopPager shopPager);
 }

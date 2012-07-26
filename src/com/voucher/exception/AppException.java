@@ -4,7 +4,6 @@
 package com.voucher.exception;
 
 /**
- * @author LL
  *
  */
 public class AppException extends Exception {

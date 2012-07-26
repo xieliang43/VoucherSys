@@ -4,7 +4,6 @@
 package com.voucher.exception;
 
 /**
- * @author unix
  *
  */
 public class ServiceException extends SystemException {

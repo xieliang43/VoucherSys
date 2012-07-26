@@ -1,12 +1,11 @@
 package com.voucher.pojo;
 
-import java.util.Date;
 
 public class VoucherInstanceVO {
 	private int viid;
 	private String image;
 	private String vchNo;
-	private Date endDate;
+	private String endDate;
 	private double price;
 	private short isBought;
 	
@@ -20,7 +19,7 @@ public class VoucherInstanceVO {
 	 * @param isBought
 	 */
 	public VoucherInstanceVO(int viid, String image, String vchNo,
-			Date endDate, double price, short isBought) {
+			String endDate, double price, short isBought) {
 		super();
 		this.viid = viid;
 		this.image = image;
@@ -68,13 +67,13 @@ public class VoucherInstanceVO {
 	/**
 	 * @return the endDate
 	 */
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	/**

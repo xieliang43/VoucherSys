@@ -16,7 +16,7 @@
 		<property name="jobClass" value="com.voucher.job.VoucherInstanceQuartzJob" />
 		<property name="jobDataAsMap">
 			<map>
-				<entry key="regionService" value-ref="regionService"/>
+				<entry key="voucherService" value-ref="voucherService"/>
 			</map>
 		</property>
 	</bean>

@@ -160,11 +160,16 @@
 			<result name="login">index.jsp</result>
 		</action>
 		
+		<action name="purchaseAction" class="purchaseAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
 		<action name="voucherAction" class="voucherAction">
 			<interceptor-ref name="fileUpload">  
                 <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>  
                 <param name="maximumSize">20000000000</param>  
-            </interceptor-ref> 
+            </interceptor-ref>
+            <result name="login">index.jsp</result>
             <interceptor-ref name="sysLoginDefaultStack"/>
 		</action>
 	</package>

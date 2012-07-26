@@ -24,20 +24,58 @@
         	</bean>
     	</property>
 	</bean>
+	
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  
+        destroy-method="close" scope="singleton">  
+        <property name="driverClassName">  
+            <value>com.mysql.jdbc.Driver</value>  
+        </property>  
+        <property name="url">  
+            <value>jdbc:mysql://192.168.1.100:3306/voucherdb</value>  
+        </property>  
+        <property name="username">  
+            <value>root</value>  
+        </property>  
+        <property name="password">  
+            <value>admin</value>  
+        </property>  
+        
+        <property name="initialSize">  
+            <value>10</value>  
+        </property>  
+        <property name="minIdle">  
+            <value>10</value>  
+        </property>  
+        <property name="maxActive">  
+            <value>80</value>  
+        </property>  
+        <property name="maxIdle">  
+            <value>25</value>  
+        </property>  
+        
+        <property name="minEvictableIdleTimeMillis">  
+            <value>60000</value>  
+        </property>  
+       
+        <property name="timeBetweenEvictionRunsMillis">  
+            <value>300000</value>  
+        </property>  
+    </bean-->  
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/voucherdb" />
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.1.100:3306/voucherdb" />
 		<property name="user" value="root" />
 		<property name="password" value="admin" />
 
 		<property name="autoCommitOnClose" value="true" />
-		<property name="initialPoolSize" value="10"/>
-		<property name="minPoolSize" value="10"/>
-		<property name="maxPoolSize" value="100"/>
-		<property name="maxIdleTime" value="25200"/>
-		<property name="maxIdleTimeExcessConnections" value="1800"/>
-		<property name="acquireIncrement" value="5"/>
+		<property name="initialPoolSize" value="3"/>
+		<property name="minPoolSize" value="3"/>
+		<property name="maxPoolSize" value="50"/>
+		<property name="maxIdleTime" value="30"/>
+		<property name="maxIdleTimeExcessConnections" value="30"/>
+		<property name="acquireIncrement" value="1"/>
+		<property name="acquireRetryAttempts" value="0"/>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -144,16 +182,16 @@
 		<property name="sysFieldDao" ref="sysFieldDao"/>
 	</bean>
 	
-	<bean id="userAction" class="com.voucher.action.UserAction">
+	<bean id="userAction" class="com.voucher.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"/>
 		<property name="regionService" ref="regionService"/>
 	</bean>
 	
-	<bean id="regionAction" class="com.voucher.action.RegionAction">
+	<bean id="regionAction" class="com.voucher.action.RegionAction" scope="prototype">
 		<property name="regionService" ref="regionService"/>
 	</bean>
 	
-	<bean id="shopAction" class="com.voucher.action.ShopAction">
+	<bean id="shopAction" class="com.voucher.action.ShopAction" scope="prototype">
 		<property name="regionService" ref="regionService"/>
 		<property name="shopTypeService" ref="shopTypeService"/>
 		<property name="shopService" ref="shopService"/>
@@ -161,20 +199,20 @@
 		<property name="voucherService" ref="voucherService"/>
 	</bean>
 	
-	<bean id="sysLoginAction" class="com.voucher.action.sys.SysLoginAction">
+	<bean id="sysLoginAction" class="com.voucher.action.sys.SysLoginAction" scope="prototype">
 		<property name="sysUserService" ref="sysUserService"/>
 		<property name="sysModuleService" ref="sysModuleService"></property>
 	</bean>
 	
-	<bean id="sysUserAction" class="com.voucher.action.sys.SysUserAction">
+	<bean id="sysUserAction" class="com.voucher.action.sys.SysUserAction" scope="prototype">
 		<property name="sysUserService" ref="sysUserService"/>
 	</bean>
 	
-	<bean id="sysFieldAction" class="com.voucher.action.sys.SysFieldAction">
+	<bean id="sysFieldAction" class="com.voucher.action.sys.SysFieldAction" scope="prototype">
 		<property name="sysFieldService" ref="sysFieldService"/>
 	</bean>
 	
-	<bean id="sysModuleAction" class="com.voucher.action.sys.SysModuleAction">
+	<bean id="sysModuleAction" class="com.voucher.action.sys.SysModuleAction" scope="prototype">
 		<property name="sysModuleService" ref="sysModuleService"/>
 	</bean>
 	
@@ -188,11 +226,11 @@
 		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
 	</bean>
 	
-	<bean id="sysRoleAction" class="com.voucher.action.sys.SysRoleAction">
+	<bean id="sysRoleAction" class="com.voucher.action.sys.SysRoleAction" scope="prototype">
 		<property name="sysRoleService" ref="sysRoleService"/>
 	</bean>
 	
-	<bean id="shopTypeAction" class="com.voucher.action.ShopTypeAction">
+	<bean id="shopTypeAction" class="com.voucher.action.ShopTypeAction" scope="prototype">
 		<property name="shopTypeService" ref="shopTypeService"/>
 	</bean>
 	
@@ -204,7 +242,7 @@
 		<property name="adviceDao" ref="adviceDao"/>
 	</bean>
 	
-	<bean id="adviceAction" class="com.voucher.action.AdviceAction">
+	<bean id="adviceAction" class="com.voucher.action.AdviceAction" scope="prototype">
 		<property name="adviceService" ref="adviceService"/>
 	</bean>
 	
@@ -216,16 +254,16 @@
 		<property name="publishDao" ref="publishDao"/>
 	</bean>
 	
-	<bean id="publishAction" class="com.voucher.action.PublishAction">
+	<bean id="publishAction" class="com.voucher.action.PublishAction" scope="prototype">
 		<property name="publishService" ref="publishService"/>
 	</bean>
 	
-	<bean id="merchantAction" class="com.voucher.action.MerchantAction">
+	<bean id="merchantAction" class="com.voucher.action.MerchantAction" scope="prototype">
 		<property name="regionService" ref="regionService"/>
 		<property name="sysUserService" ref="sysUserService"/>
 	</bean>
 	
-	<bean id="merchantShopAction" class="com.voucher.action.MerchantShopAction">
+	<bean id="merchantShopAction" class="com.voucher.action.MerchantShopAction" scope="prototype">
 		<property name="shopTypeService" ref="shopTypeService"/>
 		<property name="shopService" ref="shopService"/>
 		<property name="regionService" ref="regionService"/>
@@ -235,18 +273,29 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	
+	<bean id="userVoucherDao" class="com.voucher.dao.impl.UserVoucherDaoImpl">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	
 	<bean id="voucherService" class="com.voucher.service.impl.VoucherServiceImpl">
 		<property name="voucherDao" ref="voucherDao"/>
 		<property name="voucherInstanceDao" ref="voucherInstanceDao"/>
+		<property name="userService" ref="userService"/>
+		<property name="userVoucherDao" ref="userVoucherDao"/>
 	</bean>
 	
-	<bean id="voucherAction" class="com.voucher.action.VoucherAction">
+	<bean id="voucherAction" class="com.voucher.action.VoucherAction" scope="prototype">
 		<property name="voucherService" ref="voucherService"/>
 		<property name="shopService" ref="shopService"/>
 	</bean>
 	
-	<bean id="distanceAction" class="com.voucher.action.DistanceAction">
+	<bean id="distanceAction" class="com.voucher.action.DistanceAction" scope="prototype">
 		<property name="distanceService" ref="distanceService"/>
+	</bean>
+	
+	<bean id="purchaseAction" class="com.voucher.action.PurchaseAction" scope="prototype">
+		<property name="voucherService" ref="voucherService"/>
+		<property name="userService" ref="userService"/>
 	</bean>
 	
 	<aop:config>
@@ -298,7 +347,7 @@
 		</property>
 	</bean>
 	
-	<bean id="captchaImageCreateAction" class="com.voucher.action.sys.CaptchaImageCreateAction">
+	<bean id="captchaImageCreateAction" class="com.voucher.action.sys.CaptchaImageCreateAction" scope="prototype">
 		<property name="captchaProducer" ref="captchaProducer"></property>
 	</bean>
 	

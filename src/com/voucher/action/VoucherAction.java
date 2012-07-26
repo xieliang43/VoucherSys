@@ -13,12 +13,16 @@ import com.voucher.constants.WebConstants;
 import com.voucher.entity.Shop;
 import com.voucher.entity.Voucher;
 import com.voucher.entity.sys.SysUser;
+import com.voucher.exception.DataExistException;
+import com.voucher.exception.ServiceConcurrentException;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
+import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.VoucherVO;
 import com.voucher.service.ShopService;
 import com.voucher.service.VoucherService;
+import com.voucher.util.DateUtil;
 import com.voucher.util.JackJson;
 
 public class VoucherAction extends BaseAction implements SessionAware {
@@ -34,6 +38,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	private String sort;
 
 	private String id;
+	private String userId;
+	private String viId;
 	private String name;
 	private String price;
 	private String quantity;
@@ -108,13 +114,13 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "商店不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(getUploadFileName())) {
+		if (StringUtils.isBlank(image)) {
 			this.sendExtReturn(new ExtReturn(false, "图像不能为空！"));
 			return;
 		}
 		Voucher voucher = new Voucher(name, Double.valueOf(price),
-				Integer.valueOf(quantity), new Date(startDate), new Date(
-						endDate), deadTime, vchKey, Short.valueOf(enabled), image,
+				Integer.valueOf(quantity), DateUtil.getInstance().strToDate(startDate), DateUtil.getInstance().strToDate(
+						endDate), deadTime, vchKey, (short)1, uploadFileName,
 				description);
 		Shop shop = shopService.findShopById(Integer.valueOf(shopId));
 		voucher.setShop(shop);
@@ -137,7 +143,7 @@ public class VoucherAction extends BaseAction implements SessionAware {
 		voucherService.deleteById(Integer.valueOf(id));
 		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
-
+	
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -470,5 +476,33 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	 */
 	public void setVchKey(String vchKey) {
 		this.vchKey = vchKey;
+	}
+
+	/**
+	 * @return the viid
+	 */
+	public String getViId() {
+		return viId;
+	}
+
+	/**
+	 * @param viid the viid to set
+	 */
+	public void setViId(String viId) {
+		this.viId = viId;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public String getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @param userId the userId to set
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

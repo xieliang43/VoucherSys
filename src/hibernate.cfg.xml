@@ -20,6 +20,8 @@
 		
 		<!-- show formatted sql -->
 		<property name="format_sql">true</property>
+		
+		<property name="release_mode">after_transcation</property> 
 
 		<!-- Drop and re-create the database schema on startup -->
 		<property name="hbm2ddl.auto">validate</property>

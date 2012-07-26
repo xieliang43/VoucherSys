@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.VoucherInstanceDao;
 import com.voucher.entity.VoucherInstance;
+import com.voucher.exception.PersistenceConcurrentException;
 
 public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstanceDao {
 
@@ -54,7 +55,7 @@ public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstan
 
 	@Override
 	public List<VoucherInstance> getVoucherInstancesByVoucher(int vchId) {
-		String hql = "from VoucherInstance vi where vi.voucher.id = :id ";
+		String hql = "from VoucherInstance vi where vi.voucher.id = :id order by vi.isBought asc, vi.id asc";
 		try {
 			Query query = this.createQuery(hql);
 			query.setParameter("id", vchId);
@@ -63,6 +64,25 @@ public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstan
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public VoucherInstance getVoucherInstancesById(int viId) {
+		try {
+			return this.getJpaTemplate().find(VoucherInstance.class, viId);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void update(VoucherInstance vchInst) throws PersistenceConcurrentException {
+		try {
+			this.getJpaTemplate().merge(vchInst);
+		} catch (DataAccessException e) {
+			throw new PersistenceConcurrentException();
+		}
 	}
 
 }
