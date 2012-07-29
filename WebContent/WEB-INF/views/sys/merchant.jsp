@@ -43,7 +43,7 @@ merchant.store = new Ext.data.Store({
 	reader : new Ext.data.JsonReader({// 数据读取器
 		totalProperty : 'results', // 记录总数
 		root : 'rows' // Json中的列表数据根节点
-	}, [ 'id', 'account', 'realName', 'sex', 'email', 'mobile', 'officePhone', 'qqNo', 'cityId', 'lastLoginTime', 'lastLoginIp', 'remark' ]),
+	}, [ 'id', 'account', 'realName', 'expensePassword', 'sex', 'email', 'mobile', 'officePhone', 'qqNo', 'cityId', 'lastLoginTime', 'lastLoginIp', 'remark' ]),
 	listeners : {
 		'load' : function(store, records, options) {
 			merchant.alwaysFun();
@@ -82,6 +82,9 @@ merchant.colModel = new Ext.grid.ColumnModel({
 		header : '用户姓名',
 		dataIndex : 'realName'
 	}, {
+		header : '消费密码',
+		dataIndex : 'expensePassword'
+	}, {
 		header : '性别',
 		dataIndex : 'sex',
 		renderer : function(v) {
@@ -95,10 +98,7 @@ merchant.colModel = new Ext.grid.ColumnModel({
 		}
 	}, {
 		header : '电子邮件',
-		dataIndex : 'email',
-		renderer : function(value) {
-			return '<span title="点击给 ' + value + ' 发邮件"><a href="mailto:' + value + '">' + value + '</a></span>';
-		}
+		dataIndex : 'email'
 	}, {
 		header : '手机',
 		dataIndex : 'mobile'
@@ -110,7 +110,8 @@ merchant.colModel = new Ext.grid.ColumnModel({
 		dataIndex : 'qqNo'
 	}, {
 		header : '上次登录时间',
-		dataIndex : 'lastLoginTime'
+		dataIndex : 'lastLoginTime',
+		renderer: Ext.util.Format.dateRenderer('Y-m-d')
 	}, {
 		header : '上次登录IP地址',
 		dataIndex : 'lastLoginIp'
@@ -233,6 +234,13 @@ merchant.formPanel = new Ext.form.FormPanel({
 		maxLength : 64,
 		allowBlank : false,
 		name : 'realName',
+		anchor : '99%'
+	}, {
+		fieldLabel : '消费密码',
+		inputType : 'password',
+		maxLength : 32,
+		allowBlank : false,
+		name : 'expensePassword',
 		anchor : '99%'
 	}, merchant.sexCombo, merchant.cityCombo, {
 		fieldLabel : '电子邮件',

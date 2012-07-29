@@ -202,4 +202,13 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		}
 		return 0;
 	}
+
+	@Override
+	public void deleteById(int id) {
+		try {
+			this.getJpaTemplate().remove(this.findShopById(id));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
 }

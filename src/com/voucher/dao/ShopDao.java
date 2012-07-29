@@ -18,4 +18,5 @@ public interface ShopDao {
 	public List<Shop> getAllShopsByShopName(ExtPager pager, SysUser merchant, String shopName);
 	public List<Shop> getShopsByShopPager(ShopPager shopPager);
 	public int getTotalEnabledShops(ShopPager shopPager);
+	public void deleteById(int id);
 }

@@ -1,32 +1,36 @@
 package com.voucher.pojo;
 
 
-public class VoucherInstanceVO {
+public class UserVoucherVO {
 	private int viId;
 	private String image;
 	private String vchNo;
 	private String endDate;
 	private double price;
-	private short isBought;
+	private short isUsed;
+	private short isActive;
 	
-	public VoucherInstanceVO(){}
+	public UserVoucherVO(){
+		
+	}
 	/**
-	 * @param viid
+	 * @param viId
 	 * @param image
 	 * @param vchNo
 	 * @param endDate
 	 * @param price
 	 * @param isBought
+	 * @param isActive
 	 */
-	public VoucherInstanceVO(int viId, String image, String vchNo,
-			String endDate, double price, short isBought) {
-		super();
+	public UserVoucherVO(int viId, String image, String vchNo,
+			String endDate, double price, short isUsed, short isActive) {
 		this.viId = viId;
 		this.image = image;
 		this.vchNo = vchNo;
 		this.endDate = endDate;
 		this.price = price;
-		this.isBought = isBought;
+		this.isUsed = isUsed;
+		this.isActive = isActive;
 	}
 	/**
 	 * @return the viid
@@ -89,15 +93,27 @@ public class VoucherInstanceVO {
 		this.price = price;
 	}
 	/**
-	 * @return the isBought
+	 * @return the isUsed
 	 */
-	public short getIsBought() {
-		return isBought;
+	public short getIsUsed() {
+		return isUsed;
 	}
 	/**
-	 * @param isBought the isBought to set
+	 * @param isUsed the isUsed to set
 	 */
-	public void setIsBought(short isBought) {
-		this.isBought = isBought;
+	public void setIsUsed(short isUsed) {
+		this.isUsed = isUsed;
+	}
+	/**
+	 * @return the isActive
+	 */
+	public short getIsActive() {
+		return isActive;
+	}
+	/**
+	 * @param isActive the isActive to set
+	 */
+	public void setIsActive(short isActive) {
+		this.isActive = isActive;
 	}
 }

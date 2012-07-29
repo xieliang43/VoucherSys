@@ -35,9 +35,11 @@ public class SysUser implements Serializable {
 	private String account;
 
 	/**
-	 * 密码 DigestUtils.md5Hex(DigestUtils.md5Hex(password){account})
 	 */
 	private String password;
+	
+	@Column(name="EXPENSE_PASSWORD")
+	private String expensePassword;
 
 	/**
 	 * 用户真实姓名
@@ -110,10 +112,11 @@ public class SysUser implements Serializable {
 	/**
 	 * 
 	 */
-	public SysUser(String account, String password, String realName, Short sex,
+	public SysUser(String account, String password, String expensePassword, String realName, Short sex,
 			String email, String mobile, String officePhone, String qqNo, String remark) {
 		this.account = account;
 		this.password = password;
+		this.expensePassword = expensePassword;
 		this.realName = realName;
 		this.sex = sex;
 		this.email = email;
@@ -358,5 +361,19 @@ public class SysUser implements Serializable {
 	 */
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	/**
+	 * @return the expensePassword
+	 */
+	public String getExpensePassword() {
+		return expensePassword;
+	}
+
+	/**
+	 * @param expensePassword the expensePassword to set
+	 */
+	public void setExpensePassword(String expensePassword) {
+		this.expensePassword = expensePassword;
 	}
 }

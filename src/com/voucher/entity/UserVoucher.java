@@ -22,6 +22,10 @@ public class UserVoucher {
 	@OneToOne
 	@JoinColumn(name="VCH_INST_ID")
 	private VoucherInstance voucherInstance;
+	@Column(name="IS_USED")
+	private short isUsed;
+	@Column(name="IS_ACTIVE")
+	private short isActive;
 	@Column(name="CREATE_DATE")
 	private Date createDate;
 	
@@ -31,11 +35,12 @@ public class UserVoucher {
 	 * @param voucher
 	 * @param createDate
 	 */
-	public UserVoucher(User user, VoucherInstance voucherInstance, Date createDate) {
-		super();
+	public UserVoucher(User user, VoucherInstance voucherInstance, Date createDate, short isUsed, short isActive) {
 		this.user = user;
 		this.voucherInstance = voucherInstance;
 		this.createDate = createDate;
+		this.isUsed = isUsed;
+		this.isActive = isActive;
 	}
 	/**
 	 * @return the id
@@ -84,5 +89,29 @@ public class UserVoucher {
 	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+	/**
+	 * @return the isUsed
+	 */
+	public short getIsUsed() {
+		return isUsed;
+	}
+	/**
+	 * @param isUsed the isUsed to set
+	 */
+	public void setIsUsed(short isUsed) {
+		this.isUsed = isUsed;
+	}
+	/**
+	 * @return the isActive
+	 */
+	public short getIsActive() {
+		return isActive;
+	}
+	/**
+	 * @param isActive the isActive to set
+	 */
+	public void setIsActive(short isActive) {
+		this.isActive = isActive;
 	}
 }

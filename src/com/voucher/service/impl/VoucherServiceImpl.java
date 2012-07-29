@@ -52,8 +52,10 @@ public class VoucherServiceImpl implements VoucherService {
 						.getActiveCountByVoucher(voucher.getId());
 				VoucherVO vchVO = new VoucherVO(voucher.getId(),
 						voucher.getName(), voucher.getPrice(),
-						voucher.getQuantity(), restQty, voucher.getStartDate(),
-						voucher.getEndDate(), voucher.getDeadTime(),
+						voucher.getQuantity(), restQty, DateUtil.getInstance()
+								.getStringDateShort(voucher.getStartDate()),
+						DateUtil.getInstance().getStringDateShort(
+								voucher.getEndDate()), voucher.getDeadTime(),
 						voucher.getVchKey(), voucher.getEnabled(),
 						voucher.getImage(), voucher.getDescription(),
 						voucher.getCreateDate(), voucher.getShop().getId());
@@ -209,7 +211,7 @@ public class VoucherServiceImpl implements VoucherService {
 		try {
 			vchInst.setIsBought((short) 1);
 			voucherInstanceDao.update(vchInst);
-			UserVoucher newUserVch = new UserVoucher(user, vchInst, new Date());
+			UserVoucher newUserVch = new UserVoucher(user, vchInst, new Date(), (short)0, (short)1);
 			userVoucherDao.save(newUserVch);
 		} catch (PersistenceConcurrentException e) {
 			throw new ServiceConcurrentException();

@@ -9,6 +9,7 @@ shop = {
 	all : ctx + '/merchantShopAction!loadAll.action',// 加载所有
 	save : ctx + "/merchantShopAction!save.action",//保存
 	del : ctx + "/merchantShopAction!delete.action",//删除
+	loadArea: ctx + "/merchantShopAction!loadAreaByCity.action",
 	SHOPTYPE : eval('(${shopTypeMap})'),
 	AREAMAP : eval('(${shopAreaMap})'),
 	CITYMAP : eval('(${shopCityMap})'),
@@ -71,8 +72,10 @@ shop.shopTypeCombo = new Ext.form.ComboBox({
 	editable : false,
 	anchor : '99%'
 });
+
 shop.cityCombo = new Ext.form.ComboBox({
 	emptyText : '请选择城市...',
+	id : 'city_id',
 	fieldLabel : '城市',
 	hiddenName : 'cityId',
 	name : 'cityId',
@@ -86,21 +89,47 @@ shop.cityCombo = new Ext.form.ComboBox({
 	displayField : 't',
 	allowBlank : false,
 	editable : false,
-	anchor : '99%'
+	anchor : '99%',
+	listeners: {
+         select : function(combo, record, index){
+        	 shop.areaCombo.clearValue();
+        	 shop.areaCombo.store.removeAll();
+        	 shop.areaStore.proxy = new Ext.data.HttpProxy({
+                 url : shop.loadArea + '?cityId=' + this.getValue()
+             });
+        	 shop.areaStore.reload();
+        	 shop.areaCombo.store = shop.areaStore;
+         }
+    }
 });
+
+shop.areaStore = new Ext.data.JsonStore({
+    url: shop.loadArea,
+    root:'rows',
+    id:'id',
+    totalProperty:'total',
+    fields:['id', 'name'],
+    remoteSort:true
+});
+
+shop.areaStore.on('beforeload', function() {
+    Ext.apply(this.baseParams);
+});
+
 shop.areaCombo = new Ext.form.ComboBox({
 	emptyText : '请选择区...',
+	id: 'area_id',
 	fieldLabel : '区',
-	hiddenName : 'areaId',
-	name : 'areaId',
 	triggerAction : 'all',
 	mode : 'local',
+	name: 'areaId',
+    hiddenName: 'areaId',
 	store : new Ext.data.ArrayStore({
-				fields : ['v', 't'],
-				data : Share.map2Ary(shop.AREAMAP)
-			}),
-	valueField : 'v',
-	displayField : 't',
+		fields : ['id', 'name'],
+		data : Share.map2Ary(shop.AREAMAP)
+	}),
+	valueField : 'id',
+	displayField : 'name',
 	allowBlank : false,
 	editable : false,
 	anchor : '99%'
@@ -138,14 +167,8 @@ shop.colModel = new Ext.grid.ColumnModel({
 							return Share.map(v, shop.SHOPTYPE, '');
 						}
 					}, {
-						header : '地址',
-						dataIndex : 'shopAddress'
-					}, {
 						header : '联系电话',
 						dataIndex : 'telNo'
-					}, {
-						header : '描述',
-						dataIndex : 'description'
 					}, {
 						header : '城市',
 						dataIndex : 'cityId',
@@ -159,8 +182,14 @@ shop.colModel = new Ext.grid.ColumnModel({
 							return Share.map(v, shop.AREAMAP, '');
 						}
 					}, {
+						header : '地址',
+						dataIndex : 'shopAddress'
+					}, {
 						header : '图片',
 						dataIndex : 'image'
+					}, {
+						header : '描述',
+						dataIndex : 'description'
 					}, {
 						header : '创建日期',
 						dataIndex : 'createDate',
@@ -179,6 +208,9 @@ shop.addAction = new Ext.Action({
 				shop.shopTypeCombo.clearValue();
 				shop.cityCombo.clearValue();
 				shop.areaCombo.clearValue();
+	        	shop.areaCombo.store.removeAll();
+	        	shop.areaStore.reload();
+	        	shop.areaCombo.store = shop.areaStore;
 			}
 		});
 /** 编辑 */
@@ -256,29 +288,29 @@ shop.formPanel = new Ext.form.FormPanel({
 						name : 'shopName',
 						anchor : '99%'
 					}, shop.shopTypeCombo, {
-						fieldLabel : '地址',
-						maxLength : 64,
-						allowBlank : false,
-						name : 'shopAddress',
-						 blankText:'请准确填写您的商铺地址',
-						anchor : '99%'
-					}, {
-						fieldLabel : '描述',
-						maxLength : 512,
-						allowBlank : false,
-						name : 'description',
-						anchor : '99%'
-					}, {
 						fieldLabel : '联系电话',
 						maxLength : 512,
 						allowBlank : false,
 						name : 'telNo',
 						anchor : '99%'
 					}, shop.cityCombo, shop.areaCombo, {
+						fieldLabel : '地址',
+						maxLength : 64,
+						allowBlank : false,
+						name : 'shopAddress',
+						blankText:'请准确填写您的商铺地址',
+						anchor : '99%'
+					}, {
 						fieldLabel : '图片',
 						maxLength : 64,
 						allowBlank : false,
 						name : 'image',
+						anchor : '99%'
+					}, {
+						fieldLabel : '描述',
+						maxLength : 512,
+						allowBlank : false,
+						name : 'description',
 						anchor : '99%'
 					}]
 		});

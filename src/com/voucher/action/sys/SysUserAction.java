@@ -13,6 +13,8 @@ import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.MerchantVO;
+import com.voucher.pojo.UserRoleVO;
+import com.voucher.service.sys.SysUserRoleService;
 import com.voucher.service.sys.SysUserService;
 import com.voucher.util.MD5;
 
@@ -29,6 +31,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	private String comparePassword;
 	
 	private SysUserService sysUserService;
+	private SysUserRoleService sysUserRoleService;
 
 	private Map<String, Object> session;
 	
@@ -40,6 +43,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	private String id;
 	private String account;
 	private String password;
+	private String expensePassword;
 	private String realName;
 	private String sex;
 	private String email;
@@ -111,6 +115,14 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
 			return;
 		}
+		if (StringUtils.isBlank(password)) {
+			this.sendExtReturn(new ExtReturn(false, "密码不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(expensePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
+			return;
+		}
 		if (StringUtils.isBlank(email)) {
 			this.sendExtReturn(new ExtReturn(false, "邮箱不能为空！"));
 			return;
@@ -124,13 +136,18 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			return;
 		}
 		
+		String encExpensePassword = MD5.getInstance().encrypt(expensePassword);
 		if(StringUtils.isBlank(id)) {
-			SysUser user = new SysUser(account, password, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, remark);
+			String encPassword = MD5.getInstance().encrypt(password);
+			SysUser user = new SysUser(account, encPassword, encExpensePassword, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, remark);
 			sysUserService.save(user, roleIds);
 		} else {
 			SysUser oldUser = sysUserService.findUserById(Integer.valueOf(id));
 			oldUser.setAccount(account);
 			oldUser.setRealName(realName);
+			if(!encExpensePassword.equals(oldUser.getExpensePassword())) {
+				oldUser.setExpensePassword(encExpensePassword);
+			}
 			oldUser.setSex(Short.valueOf(sex));
 			oldUser.setEmail(email);
 			oldUser.setMobile(mobile);
@@ -141,6 +158,16 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			sysUserService.update(oldUser, roleIds);
 		}
 		sendExtReturn(new ExtReturn(true, "保存成功！"));
+	}
+	
+	public void loadUserRole() {
+		if (StringUtils.isBlank(id)) {
+			this.sendExtReturn(new ExtReturn(false, "用户ID不能为空！"));
+			return;
+		}
+		List<UserRoleVO> list = sysUserRoleService.getUserRoleByUserId(Integer.valueOf(id));
+		String json = this.convertToJson(list);
+		this.sendJSonReturn(json);
 	}
 	
 	public void delete() {
@@ -449,5 +476,33 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	 */
 	public void setQqNo(String qqNo) {
 		this.qqNo = qqNo;
+	}
+
+	/**
+	 * @return the sysUserRoleService
+	 */
+	public SysUserRoleService getSysUserRoleService() {
+		return sysUserRoleService;
+	}
+
+	/**
+	 * @param sysUserRoleService the sysUserRoleService to set
+	 */
+	public void setSysUserRoleService(SysUserRoleService sysUserRoleService) {
+		this.sysUserRoleService = sysUserRoleService;
+	}
+
+	/**
+	 * @return the expensePassword
+	 */
+	public String getExpensePassword() {
+		return expensePassword;
+	}
+
+	/**
+	 * @param expensePassword the expensePassword to set
+	 */
+	public void setExpensePassword(String expensePassword) {
+		this.expensePassword = expensePassword;
 	}
 }

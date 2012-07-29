@@ -27,6 +27,8 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	
 	private String account;
 	private String password;
+	private String comparePassword;
+	private String expensePassword;
 	private String realName;
 	private String sex;
 	private String email;
@@ -74,6 +76,14 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "密码不能为空！"));
 			return;
 		}
+		if (StringUtils.isBlank(comparePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "确认密码不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(expensePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
+			return;
+		}
 		if (StringUtils.isBlank(realName)) {
 			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
 			return;
@@ -98,6 +108,10 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "QQ不能为空！"));
 			return;
 		}
+		if(!password.equals(comparePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "登陆密码输入不一致！"));
+			return;
+		}
 		SysUser existAccountUser = sysUserService.findUserByAccount(account);
 		if(existAccountUser != null) {
 			this.sendExtReturn(new ExtReturn(false, "此用户名已存在，请从新输入！"));
@@ -109,7 +123,8 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 			return;
 		}
 		String encPassword = MD5.getInstance().encrypt(password);
-		SysUser user = new SysUser(account, encPassword, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, "普通商家");
+		String encExpensePassword = MD5.getInstance().encrypt(expensePassword);
+		SysUser user = new SysUser(account, encPassword, encExpensePassword, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, "普通商家");
 		user.setCreateDate(new Date());
 		user.setLastLoginIp("0.0.0.0");
 		
@@ -300,5 +315,33 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	 */
 	public void setQqNo(String qqNo) {
 		this.qqNo = qqNo;
+	}
+
+	/**
+	 * @return the expensePassword
+	 */
+	public String getExpensePassword() {
+		return expensePassword;
+	}
+
+	/**
+	 * @param expensePassword the expensePassword to set
+	 */
+	public void setExpensePassword(String expensePassword) {
+		this.expensePassword = expensePassword;
+	}
+
+	/**
+	 * @return the comparePassword
+	 */
+	public String getComparePassword() {
+		return comparePassword;
+	}
+
+	/**
+	 * @param comparePassword the comparePassword to set
+	 */
+	public void setComparePassword(String comparePassword) {
+		this.comparePassword = comparePassword;
 	}
 }

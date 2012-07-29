@@ -163,6 +163,9 @@
 		<action name="purchaseAction" class="purchaseAction">
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
+		<action name="walletAction" class="walletAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
 		
 		<action name="voucherAction" class="voucherAction">
 			<interceptor-ref name="fileUpload">  

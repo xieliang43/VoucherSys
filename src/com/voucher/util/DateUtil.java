@@ -62,10 +62,6 @@ public class DateUtil {
 		Date currentTime_2 = formatter.parse(dateString, pos);
 		return currentTime_2;
 	}
-	
-	public static void main(String []args) {
-		System.out.println(getInstance().getStandardDate(new Date()));
-	}
 
 	/**
 	 * 获取现在时间

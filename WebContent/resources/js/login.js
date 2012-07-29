@@ -315,6 +315,21 @@ $(document).ready(function () {
 					name : 'password',
 					anchor : '99%'
 				},{
+					inputType: 'password',
+					fieldLabel : '密码',
+					maxLength : 32,
+					allowBlank : false,
+					name : 'comparePassword',
+					blankText:'请牢记您的消费密码',
+					anchor : '99%'
+				},{
+					inputType: 'password',
+					fieldLabel : '消费密码',
+					maxLength : 32,
+					allowBlank : false,
+					name : 'expensePassword',
+					anchor : '99%'
+				},{
 					fieldLabel : '昵称',
 					maxLength : 64,
 					allowBlank : false,

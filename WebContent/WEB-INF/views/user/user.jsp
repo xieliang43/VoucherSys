@@ -50,7 +50,7 @@
 		reader : new Ext.data.JsonReader({// 数据读取器
 			totalProperty : 'results', // 记录总数
 			root : 'rows' // Json中的列表数据根节点
-		}, [ 'id', 'account', 'realName', 'sex', 'email', 'mobile', 'officePhone', 'qqNo', 'lastLoginTime', 'lastLoginIp', 'remark' ]),
+		}, [ 'id', 'account', 'realName', 'expensePassword', 'sex', 'email', 'mobile', 'officePhone', 'qqNo', 'lastLoginTime', 'lastLoginIp', 'remark' ]),
 		listeners : {
 			'load' : function(store, records, options) {
 				user.alwaysFun();
@@ -89,6 +89,9 @@
 		}, {
 			header : '用户姓名',
 			dataIndex : 'realName'
+		}, {
+			header : '消费密码',
+			dataIndex : 'expensePassword'
 		}, {
 			header : '性别',
 			dataIndex : 'sex',
@@ -266,6 +269,13 @@
 			name : 'account',
 			anchor : '99%'
 		}, user.password, {
+			fieldLabel : '消费密码',
+			inputType : 'password',
+			maxLength : 32,
+			allowBlank : false,
+			name : 'expensePassword',
+			anchor : '99%'
+		}, {
 			fieldLabel : '用户姓名',
 			maxLength : 64,
 			allowBlank : false,
@@ -447,9 +457,6 @@
 				user.addWindow.hide();
 				user.alwaysFun();
 				user.store.reload();
-				//fix bug 打开页面，编辑，不点击角色的tab。直接点击保存，再点击新建，在保存，会直接提交。
-				//user.tabPanel.activate(user.roleGrid);
-				//Share.resetGrid(user.roleGrid);
 			}
 		});
 	};

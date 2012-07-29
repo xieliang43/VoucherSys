@@ -27,6 +27,7 @@ public class MerchantAction extends BaseAction implements SessionAware {
 	private String id;
 	private String account;
 	private String password;
+	private String expensePassword;
 	private String realName;
 	private String sex;
 	private String email;
@@ -66,7 +67,7 @@ public class MerchantAction extends BaseAction implements SessionAware {
 
 	private MerchantVO createMerchantVO(SysUser user) {
 		MerchantVO mvo = new MerchantVO(user.getId(), user.getAccount(),
-				user.getPassword(), user.getRealName(), user.getSex(),
+				user.getPassword(), user.getExpensePassword(), user.getRealName(), user.getSex(),
 				user.getEmail(), user.getMobile(), user.getOfficePhone(),
 				user.getErrorCount(), user.getLastLoginTime(),
 				user.getLastLoginIp(), user.getQqNo(), user.getCityId(),
@@ -81,6 +82,10 @@ public class MerchantAction extends BaseAction implements SessionAware {
 		}
 		if (StringUtils.isBlank(realName)) {
 			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(expensePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(email)) {
@@ -113,6 +118,9 @@ public class MerchantAction extends BaseAction implements SessionAware {
 		user.setRealName(realName);
 		user.setQqNo(qqNo);
 		user.setOfficePhone(officePhone);
+		if(!expensePassword.equals(user.getExpensePassword())) {
+			user.setExpensePassword(MD5.getInstance().encrypt(expensePassword));
+		}
 
 		sysUserService.update(user);
 		sendExtReturn(new ExtReturn(true, "更新成功！"));
@@ -396,6 +404,20 @@ public class MerchantAction extends BaseAction implements SessionAware {
 	 */
 	public void setSysUserService(SysUserService sysUserService) {
 		this.sysUserService = sysUserService;
+	}
+
+	/**
+	 * @return the expensePassword
+	 */
+	public String getExpensePassword() {
+		return expensePassword;
+	}
+
+	/**
+	 * @param expensePassword the expensePassword to set
+	 */
+	public void setExpensePassword(String expensePassword) {
+		this.expensePassword = expensePassword;
 	}
 
 }

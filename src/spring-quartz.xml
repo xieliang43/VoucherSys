@@ -21,7 +21,21 @@
 		</property>
 	</bean>
 	
-	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="voucherTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="voucherQuartzJob" />
+		<property name="cronExpression" value="0 0 0 * * ?" />
+	</bean>
+	
+	<bean id="userVoucherQuartzJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="com.voucher.job.UserVoucherQuartzJob" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="userVoucherService" value-ref="userVoucherService"/>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="userVoucherTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="voucherQuartzJob" />
 		<property name="cronExpression" value="0 0 0 * * ?" />
 	</bean>
@@ -30,7 +44,8 @@
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="cronTrigger" />
+				<ref bean="voucherTrigger" />
+				<ref bean="userVoucherTrigger"/>
 			</list>
 		</property>
 		<property name="quartzProperties">

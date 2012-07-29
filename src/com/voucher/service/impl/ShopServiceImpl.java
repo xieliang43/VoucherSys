@@ -213,7 +213,7 @@ public class ShopServiceImpl implements ShopService {
 				}
 				if ((int) distanceOfShop < shopPager.getDistance()) {
 					String baseImgPath = PropertiesLoader.getInstance()
-							.getBaseImagePath();
+							.getShopImageBaseUrl();
 					ShopVO svo = new ShopVO(shop.getId(), shop.getShopName(),
 							shop.getShopAddress(), shop.getTelNo(), baseImgPath
 									+ shop.getImage(), shop.getDescription(),
@@ -228,5 +228,10 @@ public class ShopServiceImpl implements ShopService {
 		Collections.sort(list, new ShopVOComparator());
 		ExtShopVO extShopVO = new ExtShopVO(total, list);
 		return extShopVO;
+	}
+
+	@Override
+	public void deleteById(int id) {
+		shopDao.deleteById(id);
 	}
 }

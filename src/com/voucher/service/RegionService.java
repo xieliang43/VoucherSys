@@ -8,11 +8,11 @@ import java.util.Map;
 
 import com.voucher.entity.Region;
 import com.voucher.exception.ServiceException;
+import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.RegionVO;
 
 /**
- * @author weilin
  *
  */
 public interface RegionService {
@@ -31,4 +31,6 @@ public interface RegionService {
 	public void saveRegion(Region region);
 	public void update(Region region);
 	public void deleteById(int id);
+	public Map<String, Object> getAllEnabledDistrictsByCity(int cityId);
+	public List<AreaVO> getAreasByParent(int cityId);
 }

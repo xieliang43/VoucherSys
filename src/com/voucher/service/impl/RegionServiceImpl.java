@@ -19,6 +19,7 @@ import com.voucher.dao.RegionDao;
 import com.voucher.entity.Region;
 import com.voucher.exception.DataNotFoundException;
 import com.voucher.exception.ServiceException;
+import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.RegionVO;
 import com.voucher.service.RegionService;
@@ -207,5 +208,30 @@ public class RegionServiceImpl implements RegionService {
 			}
 		}
 		return map;
+	}
+
+	@Override
+	public Map<String, Object> getAllEnabledDistrictsByCity(int cityId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Region> regions = regionDao.findRegionsByParent(cityId);
+		if(regions != null && !regions.isEmpty()) {
+			for(Region r : regions) {
+				map.put(String.valueOf(r.getId()), r.getName());
+			}
+		}
+		return map;
+	}
+
+	@Override
+	public List<AreaVO> getAreasByParent(int cityId) {
+		List<AreaVO> list = new ArrayList<AreaVO>();
+		List<Region> regions = this.getRegionByParent(cityId);
+		if(regions != null && !regions.isEmpty()) {
+			for(Region region : regions) {
+				AreaVO areaVO = new AreaVO(region.getId(), region.getName());
+				list.add(areaVO);
+			}
+		}
+		return list;
 	}
 }

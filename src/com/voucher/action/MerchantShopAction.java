@@ -12,6 +12,7 @@ import com.voucher.entity.Region;
 import com.voucher.entity.Shop;
 import com.voucher.entity.ShopType;
 import com.voucher.entity.sys.SysUser;
+import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
@@ -50,13 +51,27 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	private Map<String, Object> session;
 	
 	public String initShop() {
+		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
+		if(merchant == null) {
+			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
+			return NONE;
+		}
 		Map<String, Object> shopTypeMap = shopTypeService.getAllEnabledShopTypes();
 		Map<String, Object> shopCityMap = regionService.getAllEnabledCities();
-		Map<String, Object> shopAreaMap = regionService.getAllEnabledDistricts();
+		Map<String, Object> shopAreaMap = regionService.getAllEnabledDistrictsByCity(merchant.getCityId());
 		session.put("shopTypeMap", JackJson.fromObjectToJson(shopTypeMap));
 		session.put("shopCityMap", JackJson.fromObjectToJson(shopCityMap));
 		session.put("shopAreaMap", JackJson.fromObjectToJson(shopAreaMap));
 		return SUCCESS;
+	}
+	
+	public void loadAreaByCity() {
+		if (StringUtils.isBlank(getCityId())) {
+			sendExtReturn(new ExtReturn(false, "城市不能为空！"));
+			return;
+		}
+		List<AreaVO> list = regionService.getAreasByParent(Integer.valueOf(cityId));
+		sendExtGridReturn(new ExtGridReturn(list.size(), list));
 	}
 	
 	public void loadAll() {
@@ -120,7 +135,12 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	}
 	
 	public void delete() {
-		
+		if (StringUtils.isBlank(id)) {
+			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
+			return;
+		}
+		shopService.deleteById(Integer.valueOf(id));
+		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
 
 	/**

@@ -9,8 +9,8 @@ public class VoucherVO {
 	private double price;
 	private int quantity;
 	private int restQty;
-	private Date startDate;
-	private Date endDate;
+	private String startDate;
+	private String endDate;
 	private String deadTime;
 	private String vchKey;
 	private short enabled;
@@ -39,7 +39,7 @@ public class VoucherVO {
 	 * @param shopId
 	 */
 	public VoucherVO(int id, String name, double price, int quantity,
-			int restQty, Date startDate, Date endDate, String deadTime, String vchKey,
+			int restQty, String startDate, String endDate, String deadTime, String vchKey,
 			short enabled, String image, String description, Date createDate,
 			int shopId) {
 		this.id = id;
@@ -131,28 +131,28 @@ public class VoucherVO {
 	/**
 	 * @return the startDate
 	 */
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
 	/**
 	 * @return the endDate
 	 */
-	public Date getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
 
 	/**
 	 * @param endDate the endDate to set
 	 */
-	public void setEndDate(Date endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 

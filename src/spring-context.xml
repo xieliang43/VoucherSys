@@ -24,43 +24,6 @@
         	</bean>
     	</property>
 	</bean>
-	
-	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  
-        destroy-method="close" scope="singleton">  
-        <property name="driverClassName">  
-            <value>com.mysql.jdbc.Driver</value>  
-        </property>  
-        <property name="url">  
-            <value>jdbc:mysql://192.168.1.100:3306/voucherdb</value>  
-        </property>  
-        <property name="username">  
-            <value>root</value>  
-        </property>  
-        <property name="password">  
-            <value>admin</value>  
-        </property>  
-        
-        <property name="initialSize">  
-            <value>10</value>  
-        </property>  
-        <property name="minIdle">  
-            <value>10</value>  
-        </property>  
-        <property name="maxActive">  
-            <value>80</value>  
-        </property>  
-        <property name="maxIdle">  
-            <value>25</value>  
-        </property>  
-        
-        <property name="minEvictableIdleTimeMillis">  
-            <value>60000</value>  
-        </property>  
-       
-        <property name="timeBetweenEvictionRunsMillis">  
-            <value>300000</value>  
-        </property>  
-    </bean-->  
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
@@ -70,12 +33,13 @@
 
 		<property name="autoCommitOnClose" value="true" />
 		<property name="initialPoolSize" value="3"/>
-		<property name="minPoolSize" value="3"/>
-		<property name="maxPoolSize" value="50"/>
+		<property name="minPoolSize" value="5"/>
+		<property name="maxPoolSize" value="100"/>
 		<property name="maxIdleTime" value="30"/>
 		<property name="maxIdleTimeExcessConnections" value="30"/>
 		<property name="acquireIncrement" value="1"/>
 		<property name="acquireRetryAttempts" value="0"/>
+		<property name="unreturnedConnectionTimeout" value="30"/>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -206,6 +170,7 @@
 	
 	<bean id="sysUserAction" class="com.voucher.action.sys.SysUserAction" scope="prototype">
 		<property name="sysUserService" ref="sysUserService"/>
+		<property name="sysUserRoleService" ref="sysUserRoleService"/>
 	</bean>
 	
 	<bean id="sysFieldAction" class="com.voucher.action.sys.SysFieldAction" scope="prototype">
@@ -223,6 +188,9 @@
 	<bean id="sysRoleService" class="com.voucher.service.sys.impl.SysRoleServiceImpl">
 		<property name="sysRoleDao" ref="sysRoleDao"/>
 		<property name="sysRoleModuleDao" ref="sysRoleModuleDao"/>
+		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
+	</bean>
+	<bean id="sysUserRoleService" class="com.voucher.service.sys.impl.SysUserRoleServiceImpl">
 		<property name="sysUserRoleDao" ref="sysUserRoleDao"/>
 	</bean>
 	
@@ -284,9 +252,18 @@
 		<property name="userVoucherDao" ref="userVoucherDao"/>
 	</bean>
 	
+	<bean id="userVoucherService" class="com.voucher.service.impl.UserVoucherServiceImpl">
+		<property name="userVoucherDao" ref="userVoucherDao"/>
+	</bean>
+	
 	<bean id="voucherAction" class="com.voucher.action.VoucherAction" scope="prototype">
 		<property name="voucherService" ref="voucherService"/>
 		<property name="shopService" ref="shopService"/>
+	</bean>
+	
+	<bean id="walletAction" class="com.voucher.action.WalletAction" scope="prototype">
+		<property name="userVoucherService" ref="userVoucherService"/>
+		<property name="userService" ref="userService"/>
 	</bean>
 	
 	<bean id="distanceAction" class="com.voucher.action.DistanceAction" scope="prototype">

@@ -17,9 +17,21 @@ public class PropertiesLoader {
 		return instance;
 	}
 	
-	public String getBaseImagePath() {
+	public String getShopImageBaseUrl() {
 		Properties prop = loadProperties();
-		String path = (String) prop.get("base.img.url");
+		String path = (String) prop.get("shop.img.url");
+		return path;
+	}
+	
+	public String getVoucherImageBaseUrl() {
+		Properties prop = loadProperties();
+		String path = (String) prop.get("voucher.img.url");
+		return path;
+	}
+	
+	private String getImagePathByKey(String key) {
+		Properties prop = loadProperties();
+		String path = (String) prop.get(key);
 		return path;
 	}
 	

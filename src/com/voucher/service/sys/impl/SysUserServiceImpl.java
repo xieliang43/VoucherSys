@@ -74,7 +74,7 @@ public class SysUserServiceImpl implements SysUserService {
 		}
 		if(list != null && !list.isEmpty()){
 			for(SysUser user : list) {
-				MerchantVO mvo = new MerchantVO(user.getId(), user.getAccount(), user.getPassword(),
+				MerchantVO mvo = new MerchantVO(user.getId(), user.getAccount(), user.getPassword(), user.getExpensePassword(),
 						user.getRealName(), user.getSex(), user.getEmail(), user.getMobile(),
 						user.getOfficePhone(), user.getErrorCount(), user.getLastLoginTime(), user.getLastLoginIp(),
 						user.getQqNo(), user.getCityId(), user.getRemark(), user.getCreateDate());

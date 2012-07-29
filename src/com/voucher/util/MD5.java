@@ -3,6 +3,8 @@ package com.voucher.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.apache.commons.lang.StringUtils;
+
 public class MD5 {
 	private MessageDigest md5;
 	private static MD5 instance = new MD5();
@@ -29,6 +31,9 @@ public class MD5 {
 	 * @return the MD5 digest of the input <code>String</code>
 	 */
 	public String encrypt(String src) {
+		if(StringUtils.isBlank(src)) {
+			throw new IllegalArgumentException("input string is null.");
+		}
 		char[] charArray = src.toCharArray();
 		byte[] byteArray = new byte[charArray.length];
 		for (int i = 0; i < charArray.length; i++) {

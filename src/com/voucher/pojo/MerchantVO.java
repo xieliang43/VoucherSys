@@ -6,6 +6,7 @@ public class MerchantVO {
 	private int id;
 	private String account;
 	private String password;
+	private String expensePassword;
 	private String realName;
 	private Short sex;
 	private String email;
@@ -40,7 +41,7 @@ public class MerchantVO {
 	 * @param remark
 	 * @param createDate
 	 */
-	public MerchantVO(int id, String account, String password, String realName,
+	public MerchantVO(int id, String account, String password, String expensePassword, String realName,
 			Short sex, String email, String mobile, String officePhone,
 			Short errorCount, Date lastLoginTime, String lastLoginIp,
 			String qqNo, int cityId, String remark, Date createDate) {
@@ -48,6 +49,7 @@ public class MerchantVO {
 		this.id = id;
 		this.account = account;
 		this.password = password;
+		this.expensePassword = expensePassword;
 		this.realName = realName;
 		this.sex = sex;
 		this.email = email;
@@ -270,5 +272,19 @@ public class MerchantVO {
 	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	/**
+	 * @return the expensePassword
+	 */
+	public String getExpensePassword() {
+		return expensePassword;
+	}
+
+	/**
+	 * @param expensePassword the expensePassword to set
+	 */
+	public void setExpensePassword(String expensePassword) {
+		this.expensePassword = expensePassword;
 	}
 }
