@@ -1,6 +1,8 @@
 package com.voucher.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +29,7 @@ import com.voucher.service.UserService;
 import com.voucher.service.VoucherService;
 import com.voucher.util.DateUtil;
 import com.voucher.util.NumberUtil;
+import com.voucher.util.PropertiesLoader;
 
 public class VoucherServiceImpl implements VoucherService {
 
@@ -55,7 +58,7 @@ public class VoucherServiceImpl implements VoucherService {
 						voucher.getQuantity(), restQty, DateUtil.getInstance()
 								.getStringDateShort(voucher.getStartDate()),
 						DateUtil.getInstance().getStringDateShort(
-								voucher.getEndDate()), voucher.getDeadTime(),
+								voucher.getEndDate()), voucher.getUseRule(),
 						voucher.getVchKey(), voucher.getEnabled(),
 						voucher.getImage(), voucher.getDescription(),
 						voucher.getCreateDate(), voucher.getShop().getId());
@@ -168,17 +171,30 @@ public class VoucherServiceImpl implements VoucherService {
 			viList.addAll(voucherInstanceDao.getVoucherInstancesByVoucher(vch
 					.getId()));
 		}
+		
+		Collections.sort(viList, new Comparator(){
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				VoucherInstance vi1 = (VoucherInstance)o1;
+				VoucherInstance vi2 = (VoucherInstance)o2;
+				
+				return vi1.getIsBought() - vi2.getIsBought();
+			}});
+		
 		if (viList != null && !viList.isEmpty()) {
+			String baseVoucherImagePath = PropertiesLoader.getInstance().getVoucherImageBaseUrl();
 			for (VoucherInstance vi : viList) {
-				VoucherInstanceVO viVO = new VoucherInstanceVO(vi.getId(), vi
+				VoucherInstanceVO viVO = new VoucherInstanceVO(vi.getId(), baseVoucherImagePath + vi
 						.getVoucher().getImage(), vi.getVchKey()
-						+ String.format("%04d", vi.getId()), DateUtil
+						+ String.format("%04d", vi.getId()), vi.getVoucher().getUseRule(), DateUtil
 						.getInstance().getStringDateShort(
 								vi.getVoucher().getEndDate()), vi.getVoucher()
 						.getPrice(), vi.getIsBought());
 				viVOList.add(viVO);
 			}
 		}
+		
 		VchInstVO vchInstVO = new VchInstVO(totalVis, totalActive, viVOList);
 		return vchInstVO;
 	}

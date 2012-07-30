@@ -225,6 +225,13 @@ shop.editAction = new Ext.Action({
 				shop.addWindow.show().center();
 				shop.formPanel.getForm().reset();
 				shop.formPanel.getForm().loadRecord(record);
+				shop.areaCombo.clearValue();
+	        	shop.areaCombo.store.removeAll();
+	        	shop.areaStore.proxy = new Ext.data.HttpProxy({
+	                 url : shop.loadArea + '?cityId=' + record.data.cityId
+	             });
+	        	shop.areaStore.reload();
+	        	shop.areaCombo.store = shop.areaStore;
 			}
 		});
 /** 删除 */

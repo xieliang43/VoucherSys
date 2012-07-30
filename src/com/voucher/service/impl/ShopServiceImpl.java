@@ -214,8 +214,9 @@ public class ShopServiceImpl implements ShopService {
 				if ((int) distanceOfShop < shopPager.getDistance()) {
 					String baseImgPath = PropertiesLoader.getInstance()
 							.getShopImageBaseUrl();
+					String cityArea = shop.getCity().getName() + shop.getArea().getName();
 					ShopVO svo = new ShopVO(shop.getId(), shop.getShopName(),
-							shop.getShopAddress(), shop.getTelNo(), baseImgPath
+							cityArea + shop.getShopAddress(), shop.getTelNo(), baseImgPath
 									+ shop.getImage(), shop.getDescription(),
 							shop.getShopType().getId(), (int) distanceOfShop,
 							shop.getCity().getId(), shop.getArea().getId(),

@@ -30,7 +30,7 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 				Voucher vch = vi.getVoucher();
 				String baseVoucherImageUrl = PropertiesLoader.getInstance().getVoucherImageBaseUrl();
 				UserVoucherVO viVo = new UserVoucherVO(userVoucher.getId(),
-						baseVoucherImageUrl + vch.getImage(), vi.getVchKey() + vi.getId(), DateUtil
+						baseVoucherImageUrl + vch.getImage(), vi.getVchKey() + vi.getId(), vch.getUseRule(), DateUtil
 								.getInstance().getStringDateShort(
 										vch.getEndDate()), vch.getPrice(),
 						userVoucher.getIsUsed(), userVoucher.getIsActive());

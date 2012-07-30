@@ -117,7 +117,7 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		Region city = regionService.getRegionById(Integer.valueOf(cityId));
 		Region area = regionService.getRegionById(Integer.valueOf(areaId));
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		Shop shop = new Shop(shopName, shopAddress, image, telNo, description, shopType);
+		Shop shop = new Shop(shopName, shopAddress, image, getTelNo(), description, shopType);
 		
 		if(StringUtils.isBlank(id)) {
 			shop.setCreateDate(new Date());
@@ -356,5 +356,19 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	 */
 	public void setAreaId(String areaId) {
 		this.areaId = areaId;
+	}
+
+	/**
+	 * @return the telNo
+	 */
+	public String getTelNo() {
+		return telNo;
+	}
+
+	/**
+	 * @param telNo the telNo to set
+	 */
+	public void setTelNo(String telNo) {
+		this.telNo = telNo;
 	}
 }

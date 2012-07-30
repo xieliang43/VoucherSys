@@ -18,18 +18,27 @@ public class PropertiesLoader {
 	}
 	
 	public String getShopImageBaseUrl() {
-		Properties prop = loadProperties();
-		String path = (String) prop.get("shop.img.url");
-		return path;
+		return getImagePathByKey("shop.img.url");
 	}
 	
 	public String getVoucherImageBaseUrl() {
-		Properties prop = loadProperties();
-		String path = (String) prop.get("voucher.img.url");
-		return path;
+		return getImagePathByKey("voucher.img.url");
 	}
 	
-	private String getImagePathByKey(String key) {
+	public String getCompanyId() {
+		return getImagePathByKey("com.id");
+	}
+	public String getUserName() {
+		return getImagePathByKey("user.name");
+	}
+	public String getUserPwd() {
+		return getImagePathByKey("user.pwd");
+	}
+	public String getSmsNumber() {
+		return getImagePathByKey("sms.number");
+	}
+	
+	public String getImagePathByKey(String key) {
 		Properties prop = loadProperties();
 		String path = (String) prop.get(key);
 		return path;

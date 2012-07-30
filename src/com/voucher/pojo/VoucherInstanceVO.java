@@ -5,6 +5,7 @@ public class VoucherInstanceVO {
 	private int viId;
 	private String image;
 	private String vchNo;
+	private String useRule;
 	private String endDate;
 	private double price;
 	private short isBought;
@@ -18,12 +19,13 @@ public class VoucherInstanceVO {
 	 * @param price
 	 * @param isBought
 	 */
-	public VoucherInstanceVO(int viId, String image, String vchNo,
+	public VoucherInstanceVO(int viId, String image, String vchNo, String useRule,
 			String endDate, double price, short isBought) {
 		super();
 		this.viId = viId;
 		this.image = image;
 		this.vchNo = vchNo;
+		this.useRule = useRule;
 		this.endDate = endDate;
 		this.price = price;
 		this.isBought = isBought;
@@ -99,5 +101,17 @@ public class VoucherInstanceVO {
 	 */
 	public void setIsBought(short isBought) {
 		this.isBought = isBought;
+	}
+	/**
+	 * @return the useRule
+	 */
+	public String getUseRule() {
+		return useRule;
+	}
+	/**
+	 * @param useRule the useRule to set
+	 */
+	public void setUseRule(String useRule) {
+		this.useRule = useRule;
 	}
 }

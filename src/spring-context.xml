@@ -146,9 +146,12 @@
 		<property name="sysFieldDao" ref="sysFieldDao"/>
 	</bean>
 	
+	<bean id="messageService" class="com.voucher.service.impl.MessageServiceImpl"></bean>
+	
 	<bean id="userAction" class="com.voucher.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"/>
 		<property name="regionService" ref="regionService"/>
+		<property name="messageService" ref="messageService"/>
 	</bean>
 	
 	<bean id="regionAction" class="com.voucher.action.RegionAction" scope="prototype">

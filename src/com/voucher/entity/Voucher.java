@@ -30,7 +30,8 @@ public class Voucher {
 	private Date startDate;
 	@Column(name="END_DATE")
 	private Date endDate;
-	private String deadTime;
+	@Column(name="USE_RULE")
+	private String useRule;
 	private short enabled;
 	private String image;
 	@Column(name="VCH_KEY")
@@ -60,14 +61,14 @@ public class Voucher {
 	 * @param createDate
 	 */
 	public Voucher(String name, double price, int quantity, Date startDate,
-			Date endDate, String deadTime, String vchKey, short enabled, String image,
+			Date endDate, String useRule, String vchKey, short enabled, String image,
 			String description) {
 		this.name = name;
 		this.price = price;
 		this.quantity = quantity;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.deadTime = deadTime;
+		this.useRule = useRule;
 		this.vchKey = vchKey;
 		this.enabled = enabled;
 		this.image = image;
@@ -146,16 +147,16 @@ public class Voucher {
 		this.endDate = endDate;
 	}
 	/**
-	 * @return the deadTime
+	 * @return the useRule
 	 */
-	public String getDeadTime() {
-		return deadTime;
+	public String getUseRule() {
+		return useRule;
 	}
 	/**
-	 * @param deadTime the deadTime to set
+	 * @param useRule the useRule to set
 	 */
-	public void setDeadTime(String deadTime) {
-		this.deadTime = deadTime;
+	public void setUseRule(String useRule) {
+		this.useRule = useRule;
 	}
 	/**
 	 * @return the description

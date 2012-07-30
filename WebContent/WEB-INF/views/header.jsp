@@ -3,7 +3,7 @@
 <div id="headerDiv">
 	<table style="width:100%;height:100%;table-layout:fixed;">
 		<tr>
-			<td width="180px"><a href="${ctx}/"><img src="${ctx}/resources/images/header.png"></img></a></td>
+			<td width="180px"><!-- <a href="${ctx}/"><img src="${ctx}/resources/images/header.jpg"></img></a--></td>
 			<td align="center">
 				<span style="padding:3px 10px 3px 18px;" class="user" style="height:20px;">${user.realName }，<span id="sayHelloSpan"></span></span>
 				<span style="padding:3px 10px 3px 18px;" class="user_edit" style="height:20px;"><a href="javascript:void(0);" id="editUser">账户信息</a></span>

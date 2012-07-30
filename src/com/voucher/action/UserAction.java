@@ -17,6 +17,7 @@ import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.UserVO;
+import com.voucher.service.MessageService;
 import com.voucher.service.RegionService;
 import com.voucher.service.UserService;
 import com.voucher.util.Base64Encoder;
@@ -45,6 +46,7 @@ public class UserAction extends BaseAction implements SessionAware {
 	
 	private UserService userService;
 	private RegionService regionService;
+	private MessageService messageService;
 
 	private Map<String, Object> session;
 	
@@ -131,6 +133,7 @@ public class UserAction extends BaseAction implements SessionAware {
 		}
 		Integer code = (int) (Math.random()*10000);
 		String verifyCode = String.valueOf(code);
+		messageService.sendMessage(phoneNo, verifyCode);
 		JsonVO vo = new JsonVO("1", "获取验证码成功！", verifyCode);
 		String json = this.convertToJson(vo);
 		sendJSonReturn(json);
@@ -352,6 +355,20 @@ public class UserAction extends BaseAction implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+	/**
+	 * @return the messageService
+	 */
+	public MessageService getMessageService() {
+		return messageService;
+	}
+
+	/**
+	 * @param messageService the messageService to set
+	 */
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
 	}
 	
 }
