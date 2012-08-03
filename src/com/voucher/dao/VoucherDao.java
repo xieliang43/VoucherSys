@@ -21,4 +21,6 @@ public interface VoucherDao {
 	public void save(Voucher voucher);
 	public List<Voucher> findAllEnabledVouchers();
 	public List<Voucher> getEnabledVouchersByShop(int shopId);
+	public List<Voucher> getCurrentMerchantVouchersByShopName(SysUser merchant,
+			String shopName);
 }

@@ -1,5 +1,7 @@
 package com.voucher.constants;
 
+import java.io.File;
+
 /**
  * web中使用的常量
  * 
@@ -15,4 +17,13 @@ public interface WebConstants {
 	
 	public static final String LAT = "lat";
 	public static final String LNG = "lng";
+	
+	public static final String SHOP = "shop";
+	public static final String VOUCHER = "voucher";
+	public static final String DOT_REG = "\\.";
+	public static final String DOT = ".";
+	public static final String FILE_SEPARATOR = File.separator;
+	public static final String FORWARD_SLASH = "/";
+	public static final String UPLOAD = "upload";
+	public static final String MINUS = "-";
 }

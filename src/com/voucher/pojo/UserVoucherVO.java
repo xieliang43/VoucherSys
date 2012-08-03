@@ -3,6 +3,7 @@ package com.voucher.pojo;
 
 public class UserVoucherVO {
 	private int viId;
+	private String shopName;
 	private String image;
 	private String vchNo;
 	private String useRule;
@@ -23,9 +24,10 @@ public class UserVoucherVO {
 	 * @param isBought
 	 * @param isActive
 	 */
-	public UserVoucherVO(int viId, String image, String vchNo, String useRule,
+	public UserVoucherVO(int viId, String shopName, String image, String vchNo, String useRule,
 			String endDate, double price, short isUsed, short isActive) {
 		this.viId = viId;
+		this.shopName = shopName;
 		this.image = image;
 		this.vchNo = vchNo;
 		this.useRule = useRule;
@@ -129,5 +131,17 @@ public class UserVoucherVO {
 	 */
 	public void setUseRule(String useRule) {
 		this.useRule = useRule;
+	}
+	/**
+	 * @return the shopName
+	 */
+	public String getShopName() {
+		return shopName;
+	}
+	/**
+	 * @param shopName the shopName to set
+	 */
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 }

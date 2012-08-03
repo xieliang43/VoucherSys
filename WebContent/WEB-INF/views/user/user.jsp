@@ -17,6 +17,7 @@
 		/** 当前正在编辑用户的角色ID数组 */
 		userRoleIds : new Ext.util.MixedCollection(),
 		hasActive : true,
+		ROLEMAP :eval('(${roleMap})'),
 		SEX: eval('(${fields.sex==null?"{}":fields.sex})')//注意括号
 	};
 	/** 改变页的combo*/
@@ -89,7 +90,13 @@
 		}, {
 			header : '用户姓名',
 			dataIndex : 'realName'
-		}, {
+		}, /*{
+			header : '角色',
+			dataIndex : 'roleId',
+			renderer : function(v) {
+				return Share.map(v, user.ROLEMAP, '其他');
+			}
+		},*/ {
 			header : '消费密码',
 			dataIndex : 'expensePassword'
 		}, {
@@ -250,6 +257,22 @@
 		editable : false,
 		anchor : '99%'
 	});
+	user.roleCombo = new Ext.form.ComboBox({
+		fieldLabel : '角色',
+		hiddenName : 'roleId',
+		name : 'roleId',
+		triggerAction : 'all',
+		mode : 'local',
+		store : new Ext.data.ArrayStore({
+					fields : ['v', 't'],
+					data : Share.map2Ary(user.ROLEMAP)
+				}),
+		valueField : 'v',
+		displayField : 't',
+		allowBlank : false,
+		editable : false,
+		anchor : '99%'
+	});
 	/** 基本信息-详细信息的form */
 	user.formPanel = new Ext.form.FormPanel({
 		autoScroll : true,
@@ -388,7 +411,7 @@
 	user.addWindow = new Ext.Window({
 		layout : 'fit',
 		width : 500,
-		height : 400,
+		height : 460,
 		closeAction : 'hide',
 		plain : true,
 		modal : true,

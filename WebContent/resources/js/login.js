@@ -115,8 +115,9 @@ $(document).ready(function () {
     });
 
     // 状态栏HTMl
-    login.bbarHtml = "<a href='javascript:login.resetPassword();'>忘记密码？</a>";
-    login.bbarHtml = login.bbarHtml	+ "&nbsp;&nbsp;<a href='javascript:login.register();'>注册</a>";
+    //login.bbarHtml = "<a href='javascript:login.resetPassword();'>忘记密码？</a>";
+    //login.bbarHtml = login.bbarHtml	+ "&nbsp;&nbsp;<a href='javascript:login.register();'>注册</a>";
+    login.bbarHtml = "<a href='javascript:login.register();'>注册</a>";
     // 用户登录窗口
     login.loginWindow = new Ext.Window({
         renderTo: 'login-win-div',
@@ -295,6 +296,10 @@ $(document).ready(function () {
     	anchor : '99%'
     });
     
+    login.tipLabel =  new Ext.form.Label({
+        text:"消费密码为消费者使用时商家需输入的密码，长度为4！"
+    });
+    
     login.registerFormPanel = new Ext.form.FormPanel({
 		frame : false,
 		title : '注册信息',
@@ -320,16 +325,16 @@ $(document).ready(function () {
 					maxLength : 32,
 					allowBlank : false,
 					name : 'comparePassword',
-					blankText:'请牢记您的消费密码',
 					anchor : '99%'
 				},{
+					xtype : 'numberfield',
 					inputType: 'password',
 					fieldLabel : '消费密码',
-					maxLength : 32,
+					maxLength : 4,
 					allowBlank : false,
 					name : 'expensePassword',
 					anchor : '99%'
-				},{
+				}, login.tipLabel, {
 					fieldLabel : '昵称',
 					maxLength : 64,
 					allowBlank : false,
@@ -369,7 +374,7 @@ $(document).ready(function () {
     login.registerWindow = new Ext.Window({
 		layout : 'fit',
 		width : 400,
-		height : 360,
+		height : 400,
 		closeAction : 'hide',
 		plain : true,
 		modal : true,

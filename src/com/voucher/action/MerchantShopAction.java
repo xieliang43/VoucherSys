@@ -1,5 +1,6 @@
 package com.voucher.action;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,10 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	private String cityId;
 	private String areaId;
 	
+	private File upload;
+	private String uploadContentType;
+	private String uploadFileName;
+	
 	private ShopTypeService shopTypeService;
 	private ShopService shopService;
 	private RegionService regionService;
@@ -58,7 +63,7 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		}
 		Map<String, Object> shopTypeMap = shopTypeService.getAllEnabledShopTypes();
 		Map<String, Object> shopCityMap = regionService.getAllEnabledCities();
-		Map<String, Object> shopAreaMap = regionService.getAllEnabledDistrictsByCity(merchant.getCityId());
+		Map<String, Object> shopAreaMap = regionService.getAllEnabledDistricts();
 		session.put("shopTypeMap", JackJson.fromObjectToJson(shopTypeMap));
 		session.put("shopCityMap", JackJson.fromObjectToJson(shopCityMap));
 		session.put("shopAreaMap", JackJson.fromObjectToJson(shopAreaMap));
@@ -82,7 +87,12 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		}
 		ExtPager pager = new ExtPager(limit, start, dir, sort);
 		List<ShopVO> list = shopService.getCurrentMerchantShopsByShopName(pager, merchant, shopName);
-		int total = shopService.getCurrentMerchantTotalCount(merchant);
+		int total;
+		if(StringUtils.isBlank(shopName)) {
+			total = shopService.getCurrentMerchantTotalCount(merchant);
+		} else {
+			total = shopService.getCurrentMerchantTotalCountByShopName(merchant, shopName);
+		}
 		
 		sendExtGridReturn(new ExtGridReturn(total, list));
 	}
@@ -108,7 +118,7 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 			sendExtReturn(new ExtReturn(false, "地址不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(getImage())) {
+		if (StringUtils.isBlank(getUploadFileName())) {
 			sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 			return;
 		}
@@ -117,15 +127,28 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		Region city = regionService.getRegionById(Integer.valueOf(cityId));
 		Region area = regionService.getRegionById(Integer.valueOf(areaId));
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		Shop shop = new Shop(shopName, shopAddress, image, getTelNo(), description, shopType);
+		Shop shop = new Shop(shopName, shopAddress, getTelNo(), description, shopType);
 		
 		if(StringUtils.isBlank(id)) {
+			if(StringUtils.isBlank(uploadFileName)) {
+				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
+				return;
+			}
+			uploadShopImage(upload, uploadFileName.trim());
+			shop.setImage(buildFileName(uploadFileName.trim()));
 			shop.setCreateDate(new Date());
 			shop.setMerchant(merchant);
 			shop.setCity(city);
 			shop.setArea(area);
 			shopService.save(shop);
 		} else {
+			Shop oldShop = shopService.findShopById(Integer.valueOf(id));
+			if(StringUtils.isBlank(uploadFileName)) {
+				shop.setImage(oldShop.getImage());
+			} else {
+				shop.setImage(buildFileName(uploadFileName.trim()));
+				uploadShopImage(upload, uploadFileName.trim());
+			}
 			shop.setId(Integer.valueOf(id));
 			shop.setCity(city);
 			shop.setArea(area);
@@ -370,5 +393,47 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	 */
 	public void setTelNo(String telNo) {
 		this.telNo = telNo;
+	}
+
+	/**
+	 * @return the upload
+	 */
+	public File getUpload() {
+		return upload;
+	}
+
+	/**
+	 * @param upload the upload to set
+	 */
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	/**
+	 * @return the uploadContentType
+	 */
+	public String getUploadContentType() {
+		return uploadContentType;
+	}
+
+	/**
+	 * @param uploadContentType the uploadContentType to set
+	 */
+	public void setUploadContentType(String uploadContentType) {
+		this.uploadContentType = uploadContentType;
+	}
+
+	/**
+	 * @return the uploadFileName
+	 */
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
+	/**
+	 * @param uploadFileName the uploadFileName to set
+	 */
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
 	}
 }

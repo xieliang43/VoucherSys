@@ -19,4 +19,9 @@ public interface ShopDao {
 	public List<Shop> getShopsByShopPager(ShopPager shopPager);
 	public int getTotalEnabledShops(ShopPager shopPager);
 	public void deleteById(int id);
+	public List<Shop> getCurrentMerchantShopsByShopName(SysUser merchant,
+			String shopName);
+	public List<Shop> getShopsByPager(ExtPager pager);
+	public List<Shop> getShopsByShopName(ExtPager pager, String shopName);
+	public List<Shop> getTotalCountByShopName(String shopName);
 }

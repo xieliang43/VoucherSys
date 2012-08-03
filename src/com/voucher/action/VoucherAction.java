@@ -13,12 +13,9 @@ import com.voucher.constants.WebConstants;
 import com.voucher.entity.Shop;
 import com.voucher.entity.Voucher;
 import com.voucher.entity.sys.SysUser;
-import com.voucher.exception.DataExistException;
-import com.voucher.exception.ServiceConcurrentException;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
-import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.VoucherVO;
 import com.voucher.service.ShopService;
 import com.voucher.service.VoucherService;
@@ -45,10 +42,9 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	private String quantity;
 	private String startDate;
 	private String endDate;
-	private String deadTime;
+	private String useRule;
 	private String vchKey;
 	private String enabled;
-	private String image;
 	private String description;
 	private String shopId;
 	private String shopName;
@@ -84,7 +80,12 @@ public class VoucherAction extends BaseAction implements SessionAware {
 		List<VoucherVO> list = voucherService
 				.getCurrentMerchantVouchersByShopName(pager, merchant,
 						getShopName());
-		int total = voucherService.getCurrentMerchantTotalCount(merchant);
+		int total;
+		if(StringUtils.isBlank(shopName)) {
+			total = voucherService.getCurrentMerchantTotalCount(merchant);
+		} else {
+			total = voucherService.getCurrentMerchantTotalCountByShopName(merchant, shopName);
+		}
 
 		sendExtGridReturn(new ExtGridReturn(total, list));
 	}
@@ -114,26 +115,38 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "商店不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(image)) {
-			this.sendExtReturn(new ExtReturn(false, "图像不能为空！"));
-			return;
-		}
 		Voucher voucher = new Voucher(name, Double.valueOf(price),
-				Integer.valueOf(quantity), DateUtil.getInstance().strToDate(startDate), DateUtil.getInstance().strToDate(
-						endDate), deadTime, vchKey, (short)1, uploadFileName,
-				description);
+				Integer.valueOf(quantity), DateUtil.getInstance().strToDate(
+						startDate), DateUtil.getInstance().strToDate(endDate),
+				useRule, vchKey, (short) 1, description);
 		Shop shop = shopService.findShopById(Integer.valueOf(shopId));
 		voucher.setShop(shop);
+		
 		if (StringUtils.isBlank(id)) {
+			if(StringUtils.isBlank(uploadFileName)) {
+				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
+				return;
+			}
 			voucher.setCreateDate(new Date());
+			voucher.setImage(buildFileName(uploadFileName));
+			uploadVoucherImage(upload, uploadFileName.trim());
 			voucherService.saveVoucher(voucher);
 		} else {
+			Voucher oldVoucher = voucherService.findVoucherById(Integer.valueOf(id));
+			if(StringUtils.isBlank(uploadFileName)) {
+				voucher.setImage(oldVoucher.getImage());
+			} else {
+				voucher.setImage(buildFileName(uploadFileName.trim()));
+				uploadVoucherImage(upload, uploadFileName.trim());
+			}
+			voucher.setCreateDate(oldVoucher.getCreateDate());
 			voucher.setId(Integer.valueOf(id));
 			voucherService.updateVoucher(voucher);
 		}
 
 		sendExtReturn(new ExtReturn(true, "保存成功！"));
 	}
+	
 
 	public void delete() {
 		if (StringUtils.isBlank(id)) {
@@ -144,6 +157,7 @@ public class VoucherAction extends BaseAction implements SessionAware {
 		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
 	
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -285,33 +299,18 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @return the deadTime
+	 * @return the useRule
 	 */
-	public String getDeadTime() {
-		return deadTime;
+	public String getUseRule() {
+		return useRule;
 	}
 
 	/**
-	 * @param deadTime
-	 *            the deadTime to set
+	 * @param useRule
+	 *            the useRule to set
 	 */
-	public void setDeadTime(String deadTime) {
-		this.deadTime = deadTime;
-	}
-
-	/**
-	 * @return the image
-	 */
-	public String getImage() {
-		return image;
-	}
-
-	/**
-	 * @param image
-	 *            the image to set
-	 */
-	public void setImage(String image) {
-		this.image = image;
+	public void setUseRule(String useRule) {
+		this.useRule = useRule;
 	}
 
 	/**
@@ -472,7 +471,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param vchKey the vchKey to set
+	 * @param vchKey
+	 *            the vchKey to set
 	 */
 	public void setVchKey(String vchKey) {
 		this.vchKey = vchKey;
@@ -486,7 +486,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param viid the viid to set
+	 * @param viid
+	 *            the viid to set
 	 */
 	public void setViId(String viId) {
 		this.viId = viId;
@@ -500,7 +501,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param userId the userId to set
+	 * @param userId
+	 *            the userId to set
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;

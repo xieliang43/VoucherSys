@@ -48,7 +48,7 @@
 			<result name="success">/WEB-INF/views/user/field.jsp</result>
 		</action>
 		<!-- -->
-		<action name="sysUserInit">
+		<action name="sysUserInit" class="sysUserAction" method="sysUserInit">
 			<result name="success">/WEB-INF/views/user/user.jsp</result>
 		</action>
 
@@ -145,7 +145,27 @@
 		</action>
 		
 		<action name="merchantShopAction" class="merchantShopAction">
-			<result name="login">index.jsp</result>
+			<interceptor-ref name="fileUpload">
+			     <!--拦截器strut2自带的, 指定上传文件的格式,如果不符合规定，将会自动拦截下来 -->
+			     <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+			     <param name="maximumSize">5120000</param>
+		     </interceptor-ref>
+            <result name="login">index.jsp</result>
+            <interceptor-ref name="sysLoginDefaultStack"/>
+		</action>
+		
+		<action name="sysShopInit" class="sysShopAction" method="initShop">
+			<result name="success">/WEB-INF/views/sys/merchantshops.jsp</result>
+		</action>
+		
+		<action name="sysShopAction" class="sysShopAction">
+			<interceptor-ref name="fileUpload">
+			     <!--拦截器strut2自带的, 指定上传文件的格式,如果不符合规定，将会自动拦截下来 -->
+			     <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+			     <param name="maximumSize">5120000</param>
+		     </interceptor-ref>
+            <result name="login">index.jsp</result>
+            <interceptor-ref name="sysLoginDefaultStack"/>
 		</action>
 		
 		<action name="myvoucherinfo" class="voucherAction" method="initVoucher">
@@ -168,10 +188,11 @@
 		</action>
 		
 		<action name="voucherAction" class="voucherAction">
-			<interceptor-ref name="fileUpload">  
-                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg</param>  
-                <param name="maximumSize">20000000000</param>  
-            </interceptor-ref>
+			 <interceptor-ref name="fileUpload">
+			     <!--拦截器strut2自带的, 指定上传文件的格式,如果不符合规定，将会自动拦截下来 -->
+			     <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+			     <param name="maximumSize">5120000</param>
+		     </interceptor-ref>
             <result name="login">index.jsp</result>
             <interceptor-ref name="sysLoginDefaultStack"/>
 		</action>

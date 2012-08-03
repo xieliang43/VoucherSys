@@ -1,6 +1,15 @@
 package com.voucher.action;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -8,6 +17,8 @@ import org.apache.struts2.ServletActionContext;
 
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionSupport;
+import com.voucher.constants.WebConstants;
+import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.JsonVO;
@@ -45,6 +56,7 @@ public class BaseAction extends ActionSupport {
 	protected void sendExtReturn(ExtReturn extReturn){
 		String json = this.convertToJson(extReturn);
 		getHttpServletResponse().setCharacterEncoding("UTF-8");
+		getHttpServletResponse().setContentType("application/json;charset=UTF-8");
 		try {
 			getHttpServletResponse().getWriter().println(json);
 			getHttpServletResponse().getWriter().flush();
@@ -74,6 +86,76 @@ public class BaseAction extends ActionSupport {
 			getHttpServletResponse().getWriter().flush();
 			getHttpServletResponse().getWriter().close();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void uploadVoucherImage(File srcFile, String fileName) {
+		Map<String, Object> session = ServletActionContext.getContext().getSession();
+		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
+		
+		String webBaseSrc = ServletActionContext.getServletContext().getRealPath(WebConstants.UPLOAD) + WebConstants.FILE_SEPARATOR;
+		String uploadDir = webBaseSrc + WebConstants.VOUCHER + WebConstants.FILE_SEPARATOR + merchant.getAccount();
+		checkDir(uploadDir);
+		String toFileName = uploadDir + WebConstants.FILE_SEPARATOR + buildFileName(fileName);
+		File dst = new File(toFileName);
+		writeFile(srcFile, dst);
+	}
+	
+	protected void uploadShopImage(File srcFile, String fileName) {
+		Map<String, Object> session = ServletActionContext.getContext().getSession();
+		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
+		
+		String webBaseSrc = ServletActionContext.getServletContext().getRealPath(WebConstants.UPLOAD) + WebConstants.FILE_SEPARATOR;
+		String uploadDir = webBaseSrc + WebConstants.SHOP + WebConstants.FILE_SEPARATOR + merchant.getAccount();
+		checkDir(uploadDir);
+		String toFileName = uploadDir + WebConstants.FILE_SEPARATOR + buildFileName(fileName);
+		File dst = new File(toFileName);
+		writeFile(srcFile, dst);
+	}
+	
+	protected String buildFileName(String fileName) {
+		String []str = fileName.split(WebConstants.DOT_REG);
+		if(str == null || str.length < 2) {
+			throw new IllegalArgumentException("input parameter is invalid");
+		}
+		String uuidStr = UUID.randomUUID().toString();
+		return str[0] + WebConstants.MINUS + uuidStr + WebConstants.DOT + str[1];
+	}
+	
+	private void checkDir(String dir) {
+		File dirFile = new File(dir);
+		if(!dirFile.exists()) {
+			dirFile.mkdir();
+		}
+	}
+	
+
+	private static final int BUFFER_SIZE = 1024 * 1024;
+
+	private static void writeFile(File src, File dst) {
+		try {
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				in = new BufferedInputStream(new FileInputStream(src), // 获得要上传的文件
+						BUFFER_SIZE);
+				out = new BufferedOutputStream(new FileOutputStream(dst), // 指定要上传到的位置
+						BUFFER_SIZE);
+				byte[] buffer = new byte[BUFFER_SIZE];
+				// 开始写入
+				while (in.read(buffer) > 0) {
+					out.write(buffer);
+				}
+			} finally {
+				if (null != in) {
+					in.close();
+				}
+				if (null != out) {
+					out.close();
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -76,7 +76,7 @@ publish.colModel = new Ext.grid.ColumnModel({
 						header : '手机号码',
 						dataIndex : 'phoneNo'
 					}, {
-						header : '建议',
+						header : '消息',
 						dataIndex : 'msg'
 					}, {
 						header : '创建日期',

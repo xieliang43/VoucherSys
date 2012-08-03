@@ -105,6 +105,7 @@ public class SysRoleDaoImpl extends BaseDaoImpl implements SysRoleDao {
 		String hql = "from SysRole sr where sr.roleName = :roleName";
 		try {
 			Query query = this.createQuery(hql);
+			query.setParameter("roleName", roleName);
 			List<SysRole> roles = query.getResultList();
 			if(roles != null && !roles.isEmpty()) {
 				return roles.get(0);

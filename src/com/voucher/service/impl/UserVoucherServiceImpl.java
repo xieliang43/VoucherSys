@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import com.voucher.constants.WebConstants;
 import com.voucher.dao.UserVoucherDao;
 import com.voucher.entity.UserVoucher;
 import com.voucher.entity.Voucher;
@@ -28,8 +29,9 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 			for (UserVoucher userVoucher : userVouchers) {
 				VoucherInstance vi = userVoucher.getVoucherInstance();
 				Voucher vch = vi.getVoucher();
-				String baseVoucherImageUrl = PropertiesLoader.getInstance().getVoucherImageBaseUrl();
-				UserVoucherVO viVo = new UserVoucherVO(userVoucher.getId(),
+				String shopName = vch.getShop().getShopName();
+				String baseVoucherImageUrl = PropertiesLoader.getInstance().getVoucherImageBaseUrl() + vch.getImage() + WebConstants.FORWARD_SLASH;
+				UserVoucherVO viVo = new UserVoucherVO(userVoucher.getId(), shopName,
 						baseVoucherImageUrl + vch.getImage(), vi.getVchKey() + vi.getId(), vch.getUseRule(), DateUtil
 								.getInstance().getStringDateShort(
 										vch.getEndDate()), vch.getPrice(),

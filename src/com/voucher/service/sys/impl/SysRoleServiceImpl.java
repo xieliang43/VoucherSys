@@ -1,6 +1,8 @@
 package com.voucher.service.sys.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -93,6 +95,18 @@ public class SysRoleServiceImpl implements SysRoleService {
 	 */
 	public void setSysUserRoleDao(SysUserRoleDao sysUserRoleDao) {
 		this.sysUserRoleDao = sysUserRoleDao;
+	}
+
+	@Override
+	public Map<String, Object> getSysRoles() {
+		List<SysRole> sysRoles = sysRoleDao.getSysRoles();
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(sysRoles != null && !sysRoles.isEmpty()) {
+			for(SysRole role : sysRoles) {
+				map.put(String.valueOf(role.getId()), role.getRoleName());
+			}
+		}
+		return map;
 	}
 
 }

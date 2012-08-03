@@ -282,7 +282,7 @@ merchant.formPanel = new Ext.form.FormPanel({
 merchant.addWindow = new Ext.Window({
 	layout : 'fit',
 	width : 500,
-	height : 420,
+	height : 480,
 	closeAction : 'hide',
 	plain : true,
 	modal : true,

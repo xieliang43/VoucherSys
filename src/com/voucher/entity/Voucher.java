@@ -61,7 +61,7 @@ public class Voucher {
 	 * @param createDate
 	 */
 	public Voucher(String name, double price, int quantity, Date startDate,
-			Date endDate, String useRule, String vchKey, short enabled, String image,
+			Date endDate, String useRule, String vchKey, short enabled,
 			String description) {
 		this.name = name;
 		this.price = price;
@@ -71,7 +71,6 @@ public class Voucher {
 		this.useRule = useRule;
 		this.vchKey = vchKey;
 		this.enabled = enabled;
-		this.image = image;
 		this.description = description;
 	}
 	/**

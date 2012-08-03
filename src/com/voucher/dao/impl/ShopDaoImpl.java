@@ -71,7 +71,7 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 	@Override
 	public List<Shop> getAllShops(ExtPager pager, SysUser merchant) {
 		String hql = "from Shop s where s.merchant.id = :id";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Shop.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql)
 					.setFirstResult(pager.getStart())
@@ -88,7 +88,7 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 	public List<Shop> getAllShopsByShopName(ExtPager pager, SysUser merchant,
 			String shopName) {
 		String hql = "from Shop s where s.merchant.id = :id and s.shopName like :shopName";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Shop.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql)
 					.setFirstResult(pager.getStart())
@@ -210,5 +210,65 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public List<Shop> getCurrentMerchantShopsByShopName(SysUser merchant,
+			String shopName) {
+		String hql = "from Shop s where s.merchant.id = :id and s.shopName like :shopName";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("id", merchant.getId());
+			query.setParameter("shopName", "%" + shopName + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Shop> getShopsByPager(ExtPager pager) {
+		String hql = "from Shop s";
+		hql = this.createQueryString(Shop.class, hql, pager);
+		try {
+			Query query = this.createQuery(hql);
+			if(pager != null) {
+				query.setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			}
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Shop> getShopsByShopName(ExtPager pager, String shopName) {
+		String hql = "from Shop s where s.shopName like :shopName";
+		hql = this.createQueryString(Shop.class, hql, pager);
+		
+		try {
+			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			query.setParameter("shopName", "%" + shopName + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Shop> getTotalCountByShopName(String shopName) {
+		String hql = "from Shop s where s.shopName like :shopName";
+		
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("shopName", "%" + shopName + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

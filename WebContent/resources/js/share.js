@@ -54,7 +54,7 @@ Ext.Ajax.on('requestcomplete', function (conn, response, options) {
  */
 Share.AjaxRequest = function (settings) {
     // 参数对象
-    var params = settings.params === undefined ? {} : settings.params,
+     var params = settings.params === undefined ? {} : settings.params,
      showWaiting = settings.showWaiting === undefined ? true : settings.showWaiting,
      showMsg = settings.showMsg === undefined ? true : settings.showMsg,
      timeout = settings.timeout === undefined ? 60 * 1000 : settings.timeout,
@@ -63,7 +63,6 @@ Share.AjaxRequest = function (settings) {
     if (showWaiting) {
         waiting = Ext.Msg.wait('正在处理，请稍等...', '', '');
     }
-    //alert(settings.url);
     Ext.Ajax.request({
         url: settings.url,
         params: params,

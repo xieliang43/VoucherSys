@@ -61,7 +61,7 @@
 		<listener-class>com.voucher.listener.SystemInitListener</listener-class>
 	</listener>
 	<!-- Error Page定义 -->
-<!-- 	<error-page>
+ 	<error-page>
 		<error-code>500</error-code>
 		<location>/WEB-INF/views/commons/timeout.jsp</location>
 	</error-page>
@@ -72,5 +72,5 @@
 	<error-page>
 		<error-code>403</error-code>
 		<location>/WEB-INF/views/commons/timeout.jsp</location>
-	</error-page> -->
+	</error-page>
 </web-app>

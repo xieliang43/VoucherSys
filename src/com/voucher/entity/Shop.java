@@ -67,11 +67,10 @@ public class Shop {
 	 * @param shopType
 	 * @param createDate
 	 */
-	public Shop(String shopName, String shopAddress, String image, String telNo,
+	public Shop(String shopName, String shopAddress, String telNo,
 			String description, ShopType shopType) {
 		this.shopName = shopName;
 		this.shopAddress = shopAddress;
-		this.image = image;
 		this.telNo = telNo;
 		this.description = description;
 		this.shopType = shopType;

@@ -196,7 +196,7 @@ distance.formPanel = new Ext.form.FormPanel({
 distance.addWindow = new Ext.Window({
 			layout : 'fit',
 			width : 500,
-			height : 420,
+			height : 200,
 			closeAction : 'hide',
 			plain : true,
 			modal : true,

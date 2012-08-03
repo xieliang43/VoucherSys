@@ -37,7 +37,7 @@ public class ShopTypeDaoImpl extends BaseDaoImpl implements ShopTypeDao {
 	@Override
 	public List<ShopType> getShopTypes(ExtPager pager) {
 		String hql = "from ShopType st";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(ShopType.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql);
 			return query.getResultList();
@@ -50,7 +50,7 @@ public class ShopTypeDaoImpl extends BaseDaoImpl implements ShopTypeDao {
 	@Override
 	public List<ShopType> getShopTypesByName(ExtPager pager, String name) {
 		String hql = "from ShopType st where st.name = :name";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(ShopType.class, hql, pager);
 		
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());

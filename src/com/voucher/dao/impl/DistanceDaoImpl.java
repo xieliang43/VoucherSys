@@ -29,7 +29,7 @@ public class DistanceDaoImpl extends BaseDaoImpl implements DistanceDao {
 	public List<Distance> getAllDistances(ExtPager pager) {
 		String hql = "from Distance d";
 		try {
-			Query query = this.createPagerQuery(hql, pager);
+			Query query = this.createPagerQuery(Distance.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,7 +41,7 @@ public class DistanceDaoImpl extends BaseDaoImpl implements DistanceDao {
 	public List<Distance> getAllDistancesByName(ExtPager pager, String name) {
 		String hql = "from Distance d where d.name = :name";
 		try {
-			Query query = this.createPagerQuery(hql, pager);
+			Query query = this.createPagerQuery(Distance.class, hql, pager);
 			query.setParameter("name", name);
 			return query.getResultList();
 		} catch (Exception e) {

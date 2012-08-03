@@ -22,4 +22,8 @@ public interface ShopService {
 	public Map<String, Object> getAllEnabledShopsByCurrentMerchant(SysUser merchant);
 	public ExtShopVO getNearbyShops(ShopPager shopPager);
 	public void deleteById(int id);
+	public int getCurrentMerchantTotalCountByShopName(SysUser merchant,
+			String shopName);
+	public List<ShopVO> getShopsByShopName(ExtPager pager, String shopName);
+	public int getTotalCountByShopName(String shopName);
 }

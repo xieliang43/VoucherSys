@@ -17,6 +17,10 @@ public class PropertiesLoader {
 		return instance;
 	}
 	
+	public String getSmsPrefix() {
+		return getImagePathByKey("sms.msg.prefix");
+	}
+	
 	public String getShopImageBaseUrl() {
 		return getImagePathByKey("shop.img.url");
 	}

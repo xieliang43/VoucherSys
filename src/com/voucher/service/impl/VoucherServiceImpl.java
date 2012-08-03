@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.voucher.constants.WebConstants;
 import com.voucher.dao.UserVoucherDao;
 import com.voucher.dao.VoucherDao;
 import com.voucher.dao.VoucherInstanceDao;
@@ -129,9 +130,6 @@ public class VoucherServiceImpl implements VoucherService {
 
 	@Override
 	public void updateVoucher(Voucher voucher) {
-		Voucher oldVoucher = voucherDao.findVoucherById(voucher.getId());
-
-		voucher.setCreateDate(oldVoucher.getCreateDate());
 		voucherDao.update(voucher);
 	}
 
@@ -185,6 +183,7 @@ public class VoucherServiceImpl implements VoucherService {
 		if (viList != null && !viList.isEmpty()) {
 			String baseVoucherImagePath = PropertiesLoader.getInstance().getVoucherImageBaseUrl();
 			for (VoucherInstance vi : viList) {
+				baseVoucherImagePath = baseVoucherImagePath + vi.getVoucher().getImage() + WebConstants.FORWARD_SLASH;
 				VoucherInstanceVO viVO = new VoucherInstanceVO(vi.getId(), baseVoucherImagePath + vi
 						.getVoucher().getImage(), vi.getVchKey()
 						+ String.format("%04d", vi.getId()), vi.getVoucher().getUseRule(), DateUtil
@@ -262,6 +261,22 @@ public class VoucherServiceImpl implements VoucherService {
 	 */
 	public void setUserVoucherDao(UserVoucherDao userVoucherDao) {
 		this.userVoucherDao = userVoucherDao;
+	}
+
+	@Override
+	public Voucher findVoucherById(int id) {
+		return voucherDao.findVoucherById(id);
+	}
+
+	@Override
+	public int getCurrentMerchantTotalCountByShopName(SysUser merchant,
+			String shopName) {
+		List<Voucher> vouchers = voucherDao
+				.getCurrentMerchantVouchersByShopName(merchant, shopName);
+		if (vouchers != null) {
+			return vouchers.size();
+		}
+		return 0;
 	}
 
 }

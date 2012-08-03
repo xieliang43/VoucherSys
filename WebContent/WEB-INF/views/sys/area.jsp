@@ -258,7 +258,7 @@ area.formPanel = new Ext.form.FormPanel({
 area.addWindow = new Ext.Window({
 			layout : 'fit',
 			width : 500,
-			height : 420,
+			height : 320,
 			closeAction : 'hide',
 			plain : true,
 			modal : true,

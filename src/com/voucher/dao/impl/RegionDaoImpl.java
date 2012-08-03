@@ -114,7 +114,7 @@ public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
 	@Override
 	public List<Region> getAllRegions(ExtPager pager) {
 		String hql = "from Region r";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Region.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
 			return query.getResultList();
@@ -127,7 +127,7 @@ public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
 	@Override
 	public List<Region> getAllRegionsByName(ExtPager pager, String name) {
 		String hql = "from Region r where r.name = :name";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Region.class, hql, pager);
 		
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());

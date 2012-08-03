@@ -245,7 +245,7 @@ cmnuser.formPanel = new Ext.form.FormPanel({
 cmnuser.addWindow = new Ext.Window({
 			layout : 'fit',
 			width : 500,
-			height : 420,
+			height : 320,
 			closeAction : 'hide',
 			plain : true,
 			modal : true,

@@ -25,4 +25,13 @@ public class PositionDaoImpl extends BaseDaoImpl implements PositionDao {
 		}
 	}
 
+	@Override
+	public void update(Position position) {
+		try {
+			this.getJpaTemplate().merge(position);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

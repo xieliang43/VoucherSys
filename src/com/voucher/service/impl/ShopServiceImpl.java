@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 import com.voucher.comparator.ShopVOComparator;
 import com.voucher.constants.WebConstants;
@@ -27,6 +28,8 @@ import com.voucher.util.GoogleMapUtil;
 import com.voucher.util.PropertiesLoader;
 
 public class ShopServiceImpl implements ShopService {
+	private static final Logger logger = Logger.getLogger(ShopServiceImpl.class);
+	
 	private ShopDao shopDao;
 	private PositionDao positionDao;
 
@@ -67,7 +70,10 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public void update(Shop shop) {
 		Shop oldShop = this.findShopById(shop.getId());
-		positionDao.delete(oldShop.getPosition());
+		final Position position = oldShop.getPosition();
+		if(position != null) {
+			positionDao.delete(position);
+		}
 
 		shop.setCreateDate(oldShop.getCreateDate());
 		shop.setMerchant(oldShop.getMerchant());
@@ -75,16 +81,19 @@ public class ShopServiceImpl implements ShopService {
 		shopDao.update(shop);
 
 		Map<String, Double> latLng = GoogleMapUtil.getInstance().getLatLng(
-				shop.getShopAddress());
+				shop.getCity().getName() + shop.getArea().getName() + shop.getShopAddress());
 		if (latLng != null && !latLng.isEmpty()) {
 			double lat = latLng.get(WebConstants.LAT);
 			double lng = latLng.get(WebConstants.LNG);
-			Position pos = new Position();
-			pos.setShop(shop);
-			pos.setCreateDate(new Date());
+			Position pos = shop.getPosition();
+			if(pos == null) {
+				pos = new Position();
+				pos.setCreateDate(new Date());
+				pos.setShop(shop);
+			}
 			pos.setLatitude(lat);
 			pos.setLongitude(lng);
-			positionDao.save(pos);
+			positionDao.update(pos);
 		}
 	}
 
@@ -92,10 +101,12 @@ public class ShopServiceImpl implements ShopService {
 	public void save(Shop shop) {
 		shopDao.create(shop);
 		Map<String, Double> latLng = GoogleMapUtil.getInstance().getLatLng(
-				shop.getShopAddress());
+				shop.getCity().getName() + shop.getArea().getName() + shop.getShopAddress());
+		
 		if (latLng != null && !latLng.isEmpty()) {
 			double lat = latLng.get(WebConstants.LAT);
 			double lng = latLng.get(WebConstants.LNG);
+			logger.info("Get Position, latitude: " + lat + ", longitude: " + lng);
 			Position pos = new Position();
 			pos.setShop(shop);
 			pos.setCreateDate(new Date());
@@ -147,12 +158,16 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public int getTotalCount() {
-		return shopDao.getShops().size();
+		return shopDao.getShops() != null ? shopDao.getShops().size() : 0;
 	}
 
 	@Override
 	public int getCurrentMerchantTotalCount(SysUser merchant) {
-		return shopDao.getCurrentMerchantShops(merchant).size();
+		List<Shop> shops = shopDao.getCurrentMerchantShops(merchant);
+		if(shops != null) {
+			return shops.size();
+		}
+		return 0;
 	}
 
 	@Override
@@ -206,14 +221,19 @@ public class ShopServiceImpl implements ShopService {
 						|| shopPager.getLongitude() == null) {
 					distanceOfShop = 0;
 				} else {
+					Position pos = shop.getPosition();
+					double latitude = 0.0;
+					double longitude = 0.0;
+					if(pos != null) {
+						latitude = pos.getLatitude();
+						longitude = pos.getLongitude();
+					}
 					distanceOfShop = DistanceUtil.getDistance(shopPager
-							.getLatitude(), shopPager.getLongitude(), shop
-							.getPosition().getLatitude(), shop.getPosition()
-							.getLongitude());
+							.getLatitude(), shopPager.getLongitude(), latitude, longitude);
 				}
 				if ((int) distanceOfShop < shopPager.getDistance()) {
 					String baseImgPath = PropertiesLoader.getInstance()
-							.getShopImageBaseUrl();
+							.getShopImageBaseUrl() + shop.getMerchant().getAccount() + WebConstants.FORWARD_SLASH;
 					String cityArea = shop.getCity().getName() + shop.getArea().getName();
 					ShopVO svo = new ShopVO(shop.getId(), shop.getShopName(),
 							cityArea + shop.getShopAddress(), shop.getTelNo(), baseImgPath
@@ -233,6 +253,49 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	public void deleteById(int id) {
+		Shop shop = shopDao.findShopById(id);
+		Position pos = shop.getPosition();
+		positionDao.delete(pos);
 		shopDao.deleteById(id);
+	}
+
+	@Override
+	public int getCurrentMerchantTotalCountByShopName(SysUser merchant,
+			String shopName) {
+		List<Shop> shops = shopDao.getCurrentMerchantShopsByShopName(merchant, shopName);
+		if(shops != null) {
+			return shops.size();
+		}
+		return 0;
+	}
+
+	@Override
+	public List<ShopVO> getShopsByShopName(ExtPager pager, String shopName) {
+		List<ShopVO> shopVOList = new ArrayList<ShopVO>();
+		List<Shop> shops = null;
+		if(StringUtils.isBlank(shopName)) {
+			shops = shopDao.getShopsByPager(pager);
+		} else {
+			shops = shopDao.getShopsByShopName(pager, shopName);
+		}
+		if(shops != null && !shops.isEmpty()) {
+			for (Shop s : shops) {
+				ShopVO svo = new ShopVO(s.getId(), s.getShopName(),
+						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
+								.getShopType().getId(), 0, s.getCity().getId(),
+						s.getArea().getId(), s.getCreateDate());
+				shopVOList.add(svo);
+			}
+		}
+		return shopVOList;
+	}
+
+	@Override
+	public int getTotalCountByShopName(String shopName) {
+		List<Shop> shops = shopDao.getTotalCountByShopName(shopName);
+		if(shops != null) {
+			return shops.size();
+		}
+		return 0;
 	}
 }

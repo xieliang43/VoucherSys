@@ -64,7 +64,7 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 	public List<Voucher> getCurrentMerchantVouchers(ExtPager pager,
 			SysUser merchant) {
 		String hql = "from Voucher v where v.shop.merchant.id = :id";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Voucher.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql);
 			if(pager != null) {
@@ -82,7 +82,7 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 	public List<Voucher> getCurrentMerchantVouchersByShopName(ExtPager pager,
 			SysUser merchant, String shopName) {
 		String hql = "from Voucher v where v.shop.merchant.id = :id and v.shop.shopName like :shopName";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Voucher.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
 			query.setParameter("id", merchant.getId());
@@ -137,6 +137,21 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 			Query query = this.createQuery(hql);
 			query.setParameter("enabled", (short)1);
 			query.setParameter("shopId", shopId);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Voucher> getCurrentMerchantVouchersByShopName(SysUser merchant,
+			String shopName) {
+		String hql = "from Voucher v where v.shop.merchant.id = :id and v.shop.shopName like :shopName";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("id", merchant.getId());
+			query.setParameter("shopName", "%" + shopName + "%");
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

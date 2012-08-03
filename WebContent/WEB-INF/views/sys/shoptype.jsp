@@ -197,6 +197,7 @@ shoptype.formPanel = new Ext.form.FormPanel({
 						name : 'name',
 						anchor : '99%'
 					},shoptype.enabledCombo, {
+						xtype : 'textarea',
 						fieldLabel : '描述',
 						maxLength : 128,
 						allowBlank : false,

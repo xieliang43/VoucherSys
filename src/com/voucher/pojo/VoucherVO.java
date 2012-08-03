@@ -11,7 +11,7 @@ public class VoucherVO {
 	private int restQty;
 	private String startDate;
 	private String endDate;
-	private String deadTime;
+	private String useRule;
 	private String vchKey;
 	private short enabled;
 	private String image;
@@ -39,7 +39,7 @@ public class VoucherVO {
 	 * @param shopId
 	 */
 	public VoucherVO(int id, String name, double price, int quantity,
-			int restQty, String startDate, String endDate, String deadTime, String vchKey,
+			int restQty, String startDate, String endDate, String useRule, String vchKey,
 			short enabled, String image, String description, Date createDate,
 			int shopId) {
 		this.id = id;
@@ -49,7 +49,7 @@ public class VoucherVO {
 		this.restQty = restQty;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.deadTime = deadTime;
+		this.useRule = useRule;
 		this.vchKey = vchKey;
 		this.enabled = enabled;
 		this.image = image;
@@ -157,17 +157,17 @@ public class VoucherVO {
 	}
 
 	/**
-	 * @return the deadTime
+	 * @return the useRule
 	 */
-	public String getDeadTime() {
-		return deadTime;
+	public String getUseRule() {
+		return useRule;
 	}
 
 	/**
-	 * @param deadTime the deadTime to set
+	 * @param useRule the useRule to set
 	 */
-	public void setDeadTime(String deadTime) {
-		this.deadTime = deadTime;
+	public void setUseRule(String useRule) {
+		this.useRule = useRule;
 	}
 
 	/**

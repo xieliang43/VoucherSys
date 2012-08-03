@@ -71,13 +71,14 @@ public class SysUserDaoImpl extends BaseDaoImpl implements SysUserDao {
 
 	@Override
 	public List<SysUser> findUsersByRealName(ExtPager pager, String realName) {
-		String hql = "from SysUser su where su.realName = :realName";
+		String hql = "from SysUser su where su.account like :account or su.realName like :realName";
 		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
 			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
 		}
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
-			query.setParameter("realName", realName);
+			query.setParameter("account", "%" + realName + "%");
+			query.setParameter("realName", "%" + realName + "%");
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

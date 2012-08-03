@@ -9,7 +9,6 @@ voucher = {
 	all : ctx + '/voucherAction!loadAll.action',// 加载所有
 	save : ctx + "/voucherAction!save.action",//保存
 	del : ctx + "/voucherAction!delete.action",//删除
-	upload : ctx + "/voucherAction!uploadImage.action",
 	SHOPMAP :eval('(${vchShopMap})'),
 	pageSize : 20, // 每页显示的记录数
 	ENABLED : eval('(${fields.enabled==null?"{}":fields.enabled})'),
@@ -47,7 +46,7 @@ voucher.store = new Ext.data.Store({
 				totalProperty : 'results', // 记录总数
 				root : 'rows' // Json中的列表数据根节点
 			}, ['id', 'name', 'shopId', 'price', 'quantity',
-					'restQty', 'startDate', 'endDate', 'deadTime',
+					'restQty', 'startDate', 'endDate', 'useRule',
 					'enabled', 'image', 'vchKey', 'description', 'createDate']),
 			listeners : {
 				'load' : function(store, records, options) {
@@ -122,8 +121,8 @@ voucher.colModel = new Ext.grid.ColumnModel({
 						dataIndex : 'endDate',
 						renderer: Ext.util.Format.dateRenderer('Y-m-d')
 					}, {
-						header : '截至提示',
-						dataIndex : 'deadTime'
+						header : '使用规则',
+						dataIndex : 'useRule'
 					}, {
 						header : '序号前缀',
 						dataIndex : 'vchKey'
@@ -269,6 +268,10 @@ voucher.endDate = new Ext.form.DateField({
         }
     }
 });
+
+voucher.tipLabel =  new Ext.form.Label({
+    text:"推荐配置：图片大小: 480 x 480, 大小限制：5M"
+});
 /** 基本信息-详细信息的form */
 voucher.formPanel = new Ext.form.FormPanel({
 			frame : false,
@@ -277,6 +280,7 @@ voucher.formPanel = new Ext.form.FormPanel({
 			style: "width: 464px; height: 247px;",
 			labelwidth : 50,
 			defaultType : 'textfield',
+			fileUpload : true,
 			items : [{
 						xtype : 'hidden',
 						fieldLabel : 'ID',
@@ -303,10 +307,11 @@ voucher.formPanel = new Ext.form.FormPanel({
 						name : 'quantity',
 						anchor : '99%'
 					},voucher.startDate, voucher.endDate, {
-							fieldLabel : '截至提示',
-							maxLength : 64,
+							xtype : 'textarea',
+							fieldLabel : '使用规则',
+							maxLength : 640,
 							allowBlank : false,
-							name : 'deadTime',
+							name : 'useRule',
 							anchor : '99%'
 					}, {
 						fieldLabel : '序号前缀',
@@ -315,136 +320,33 @@ voucher.formPanel = new Ext.form.FormPanel({
 						name : 'vchKey',
 						anchor : '99%'
 					}, {
+						xtype : 'textarea',
 						fieldLabel : '描述',
 						maxLength : 64,
 						allowBlank : false,
 						name : 'description',
 						anchor : '99%'
 					}, {
-						fieldLabel : '图片',
-						maxLength : 64,
-						allowBlank : false,
-						name : 'image',
-						anchor : '99%'
-					}]
+						id : 'upload',
+						name : 'upload',
+						fieldLabel : "图片",
+						inputType : "file",
+						xtype : "field"
+					}, voucher.tipLabel]
 		});
-
-voucher.imageForm = new Ext.form.FormPanel({
-	   id: 'imageform',
-	   labelWidth: 80, 
-	   labelAlign : 'right',
-	   border : false,
-	   fileUpload: true,
-	   bodyStyle : 'padding:10px 8px 8px 8px;',
-	   items:[{
-	    		 xtype: 'fieldset',
-	             title: '上传图片',
-	             collapsible: true,
-	             labelWidth: 69,
-	             collapsed: true,
-	             layout:'form',
-	             items: [{
-	            	 id : 'upload',  
-	                 name : 'upload',  
-	                 inputType : "file",  
-	                 fieldLabel : '上传图片',
-	                 xtype : 'textfield',
-	                 anchor : '96%'
-	             },{
-	             	 border:false,
-	                 layout:'form',
-	                 fieldLabel : "预览图片",
-	                 items:[{
-	                     xtype:'panel',
-	                     border:false,
-	                     layout:'column',
-	                     items:[{
-	                       xtype : 'box',
-	                       id : 'browseImage',
-	                       columnWidth:.35,
-	                       bodyStyle:'padding:10px 10px 10px 10px;',
-	                       autoEl : {
-	                           width : 102,
-	                           height : 125,
-	                           tag : 'img',
-	                           src : ''
-	                       }
-	                     },{
-	                     columnWidth:.5,
-	                     labelAlign :'left',
-	                     border:false,
-	                     buttonAlign:'center',
-	                     bodyStyle:'margin-left:10px;padding:5px',
-	                     items:[{
-				              xtype : 'label',
-				              fieldLabel:'',
-				              html: '<ul><li>1、图片格式只能是jpg格式。</li></ul><br/>'
-				            },{
-				              xtype : 'label',
-				              fieldLabel:'',
-				              html: '<ul><li>2、图片大小不超过300K。</li></ul><br/>'
-				            },{
-				              xtype : 'label',
-				              fieldLabel:'',
-				              html: '<ul><li>3、图片默认分辨率为102*125。</li></ul><br/>'
-	                     }],
-	                     buttons:[{
-					         xtype : 'button',
-					         fieldLabel:'',
-					         text:'上传',
-					         handler: function(){
-					           var file_path = Ext.getCmp('upload').getValue();
-					           var str = file_path.substr(file_path.lastIndexOf('.')+1,file_path.length);
-					           if(str!='JPG'&&str!='jpg'){
-					            	Ext.Msg.alert('错误', "上传的图像只能是jpg格式！"); 
-					            	return false;
-					           }
-					           var imgForm = voucher.imageForm.getForm();
-				               if(imgForm.isValid()){
-				            	   imgForm.submit({
-		                            url: voucher.upload,
-		                            success:function(form, action){  
-		                               var isSuc = action.result.success;
-		                               var message = action.result.message;   
-		                               var image_url = "/SchoolManageSystem";
-		                               if(isSuc=='true'){
-		                                     Ext.Msg.alert('消息', message);
-		                               }else{
-		                                     Ext.Msg.alert('错误', message);   
-		                               }
-		                               Ext.getCmp("browseImage").getEl().dom.src=image_url;
-	                                },   
-			                        failure:function(form, action){  
-			                              var isSuc = action.result.success;
-			                              var message = action.result.message;  
-			                              if(isSuc=='true'){
-			                                   Ext.Msg.alert('消息', message);
-			                              }else{
-			                                   Ext.Msg.alert('错误', message);   
-			                              }
-	                                      Ext.getCmp("browseImage").getEl().dom.src=image_url;
-	                          		}
-	                        		});
-	                      		}
-	                   		}
-	                     }]
-	                   }]
-              }]
-         }]
-	   }]
-});
 
 /** 编辑新建窗口 */
 voucher.addWindow = new Ext.Window({
 			layout : 'fit',
 			width : 500,
-			height : 400,
+			height : 520,
 			closeAction : 'hide',
 			plain : true,
 			modal : true,
 			resizable : true,
-			items : [voucher.formPanel, /*voucher.imageForm*/],
+			items : [voucher.formPanel],
 			buttons : [{
+						id : 'saveBtn',
 						text : '保存',
 						handler : function() {
 							voucher.saveFun();
@@ -466,21 +368,22 @@ voucher.alwaysFun = function() {
 	voucher.editAction.disable();
 };
 voucher.saveFun = function() {
-	var form = voucher.formPanel.getForm();
-	if (!form.isValid()) {
+	var iform = voucher.formPanel.getForm();
+	if (!iform.isValid()) {
 		return;
 	}
-	// 发送请求
-	Share.AjaxRequest({
-				url : voucher.save,
-				method : "POST",
-				params : form.getValues(),
-				callback : function(json) {
-					voucher.addWindow.hide();
-					voucher.alwaysFun();
-					voucher.store.reload();
-				}
-			});
+	iform.submit({
+		url : voucher.save,
+		method : "POST",
+		success : function(form, action) {
+			voucher.addWindow.hide();
+		},
+		failure : function() {
+			voucher.addWindow.hide();
+			voucher.alwaysFun();
+			voucher.store.reload();
+	    }
+	});
 };
 voucher.delFun = function() {
 	var record = voucher.grid.getSelectionModel().getSelected();

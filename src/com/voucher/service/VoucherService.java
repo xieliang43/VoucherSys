@@ -32,4 +32,9 @@ public interface VoucherService {
 			throws ServiceConcurrentException, DataExistException,
 			DataNotFoundException;
 
+	public Voucher findVoucherById(int id);
+
+	public int getCurrentMerchantTotalCountByShopName(SysUser merchant,
+			String shopName);
+
 }

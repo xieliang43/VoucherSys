@@ -35,7 +35,7 @@ public class AdviceDaoImpl extends BaseDaoImpl implements AdviceDao {
 	@Override
 	public List<Advice> findAdvicesByMsg(ExtPager pager, String msg) {
 		String hql = "from Advice ad where ad.msg like :msg";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Advice.class, hql, pager);
 		
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
@@ -50,7 +50,7 @@ public class AdviceDaoImpl extends BaseDaoImpl implements AdviceDao {
 	@Override
 	public List<Advice> findAdvices(ExtPager pager) {
 		String hql = "from Advice ad";
-		hql = this.createQueryString(hql, pager);
+		hql = this.createQueryString(Advice.class, hql, pager);
 		try {
 			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
 			return query.getResultList();

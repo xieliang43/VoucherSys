@@ -3,13 +3,13 @@
 <div id="${param.id}"></div>
 
 <script type="text/javascript">
-Ext.ns("Ext.Authority.shop"); // 自定义一个命名空间
-shop = Ext.Authority.shop; // 定义命名空间的别名
-shop = {
-	all : ctx + '/merchantShopAction!loadAll.action',// 加载所有
-	save : ctx + "/merchantShopAction!save.action",//保存
-	del : ctx + "/merchantShopAction!delete.action",//删除
-	loadArea: ctx + "/merchantShopAction!loadAreaByCity.action",
+Ext.ns("Ext.Authority.merchantshops"); // 自定义一个命名空间
+merchantshops = Ext.Authority.merchantshops; // 定义命名空间的别名
+merchantshops = {
+	all : ctx + '/sysShopAction!loadAll.action',// 加载所有
+	save : ctx + "/sysShopAction!save.action",//保存
+	del : ctx + "/sysShopAction!delete.action",//删除
+	loadArea: ctx + "/sysShopAction!loadAreaByCity.action",
 	SHOPTYPE : eval('(${shopTypeMap})'),
 	AREAMAP : eval('(${shopAreaMap})'),
 	CITYMAP : eval('(${shopCityMap})'),
@@ -17,32 +17,32 @@ shop = {
 };
 
 /** 改变页的combo */
-shop.pageSizeCombo = new Share.pageSizeCombo({
+merchantshops.pageSizeCombo = new Share.pageSizeCombo({
 			value : '20',
 			listeners : {
 				select : function(comboBox) {
-					shop.pageSize = parseInt(comboBox.getValue());
-					shop.bbar.pageSize = parseInt(comboBox.getValue());
-					shop.store.baseParams.limit = shop.pageSize;
-					shop.store.baseParams.start = 0;
-					shop.store.load();
+					merchantshops.pageSize = parseInt(comboBox.getValue());
+					merchantshops.bbar.pageSize = parseInt(comboBox.getValue());
+					merchantshops.store.baseParams.limit = merchantshops.pageSize;
+					merchantshops.store.baseParams.start = 0;
+					merchantshops.store.load();
 				}
 			}
 		});
 // 覆盖已经设置的。具体设置以当前页面的pageSizeCombo为准
-shop.pageSize = parseInt(shop.pageSizeCombo.getValue());
+merchantshops.pageSize = parseInt(merchantshops.pageSizeCombo.getValue());
 /** 基本信息-数据源 */
-shop.store = new Ext.data.Store({
+merchantshops.store = new Ext.data.Store({
 			autoLoad : true,
 			remoteSort : true,
 			baseParams : {
 				start : 0,
-				limit : shop.pageSize,
+				limit : merchantshops.pageSize,
 				shopName: null
 			},
 			proxy : new Ext.data.HttpProxy({// 获取数据的方式
 				method : 'POST',
-				url : shop.all
+				url : merchantshops.all
 			}),
 			reader : new Ext.data.JsonReader({// 数据读取器
 				totalProperty : 'results', // 记录总数
@@ -51,11 +51,11 @@ shop.store = new Ext.data.Store({
 					'description', 'cityId', 'areaId', 'createDate']),
 			listeners : {
 				'load' : function(store, records, options) {
-					shop.alwaysFun();
+					merchantshops.alwaysFun();
 				}
 			}
 		});
-shop.shopTypeCombo = new Ext.form.ComboBox({
+merchantshops.shopTypeCombo = new Ext.form.ComboBox({
 	emptyText : '请选择类型...',
 	fieldLabel : '类型',
 	hiddenName : 'shopTypeId',
@@ -64,7 +64,7 @@ shop.shopTypeCombo = new Ext.form.ComboBox({
 	mode : 'local',
 	store : new Ext.data.ArrayStore({
 				fields : ['v', 't'],
-				data : Share.map2Ary(shop.SHOPTYPE)
+				data : Share.map2Ary(merchantshops.SHOPTYPE)
 			}),
 	valueField : 'v',
 	displayField : 't',
@@ -73,7 +73,7 @@ shop.shopTypeCombo = new Ext.form.ComboBox({
 	anchor : '99%'
 });
 
-shop.cityCombo = new Ext.form.ComboBox({
+merchantshops.cityCombo = new Ext.form.ComboBox({
 	emptyText : '请选择城市...',
 	id : 'city_id',
 	fieldLabel : '城市',
@@ -83,7 +83,7 @@ shop.cityCombo = new Ext.form.ComboBox({
 	mode : 'local',
 	store : new Ext.data.ArrayStore({
 				fields : ['v', 't'],
-				data : Share.map2Ary(shop.CITYMAP)
+				data : Share.map2Ary(merchantshops.CITYMAP)
 			}),
 	valueField : 'v',
 	displayField : 't',
@@ -92,19 +92,19 @@ shop.cityCombo = new Ext.form.ComboBox({
 	anchor : '99%',
 	listeners: {
          select : function(combo, record, index){
-        	 shop.areaCombo.clearValue();
-        	 shop.areaCombo.store.removeAll();
-        	 shop.areaStore.proxy = new Ext.data.HttpProxy({
-                 url : shop.loadArea + '?cityId=' + this.getValue()
+        	 merchantshops.areaCombo.clearValue();
+        	 merchantshops.areaCombo.store.removeAll();
+        	 merchantshops.areaStore.proxy = new Ext.data.HttpProxy({
+                 url : merchantshops.loadArea + '?cityId=' + this.getValue()
              });
-        	 shop.areaStore.reload();
-        	 shop.areaCombo.store = shop.areaStore;
+        	 merchantshops.areaStore.reload();
+        	 merchantshops.areaCombo.store = merchantshops.areaStore;
          }
     }
 });
 
-shop.areaStore = new Ext.data.JsonStore({
-    url: shop.loadArea,
+merchantshops.areaStore = new Ext.data.JsonStore({
+    url: merchantshops.loadArea,
     root:'rows',
     id:'id',
     totalProperty:'total',
@@ -112,11 +112,11 @@ shop.areaStore = new Ext.data.JsonStore({
     remoteSort:true
 });
 
-shop.areaStore.on('beforeload', function() {
+merchantshops.areaStore.on('beforeload', function() {
     Ext.apply(this.baseParams);
 });
 
-shop.areaCombo = new Ext.form.ComboBox({
+merchantshops.areaCombo = new Ext.form.ComboBox({
 	emptyText : '请选择区...',
 	id: 'area_id',
 	fieldLabel : '区',
@@ -126,7 +126,7 @@ shop.areaCombo = new Ext.form.ComboBox({
     hiddenName: 'areaId',
 	store : new Ext.data.ArrayStore({
 		fields : ['id', 'name'],
-		data : Share.map2Ary(shop.AREAMAP)
+		data : Share.map2Ary(merchantshops.AREAMAP)
 	}),
 	valueField : 'id',
 	displayField : 'name',
@@ -135,25 +135,25 @@ shop.areaCombo = new Ext.form.ComboBox({
 	anchor : '99%'
 });
 /** 基本信息-选择模式 */
-shop.selModel = new Ext.grid.CheckboxSelectionModel({
+merchantshops.selModel = new Ext.grid.CheckboxSelectionModel({
 			singleSelect : true,
 			listeners : {
 				'rowselect' : function(selectionModel, rowIndex, record) {
-					shop.deleteAction.enable();
-					shop.editAction.enable();
+					merchantshops.deleteAction.enable();
+					merchantshops.editAction.enable();
 				},
 				'rowdeselect' : function(selectionModel, rowIndex, record) {
-					shop.alwaysFun();
+					merchantshops.alwaysFun();
 				}
 			}
 		});
 /** 基本信息-数据列 */
-shop.colModel = new Ext.grid.ColumnModel({
+merchantshops.colModel = new Ext.grid.ColumnModel({
 			defaults : {
 				sortable : true,
 				width : 140
 			},
-			columns : [shop.selModel, {
+			columns : [merchantshops.selModel, {
 						hidden : true,
 						header : '编号',
 						dataIndex : 'id'
@@ -164,7 +164,7 @@ shop.colModel = new Ext.grid.ColumnModel({
 						header : '类型',
 						dataIndex : 'shopTypeId',
 						renderer : function(v) {
-							return Share.map(v, shop.SHOPTYPE, '');
+							return Share.map(v, merchantshops.SHOPTYPE, '');
 						}
 					}, {
 						header : '联系电话',
@@ -173,13 +173,13 @@ shop.colModel = new Ext.grid.ColumnModel({
 						header : '城市',
 						dataIndex : 'cityId',
 						renderer : function(v) {
-							return Share.map(v, shop.CITYMAP, '');
+							return Share.map(v, merchantshops.CITYMAP, '');
 						}
 					}, {
 						header : '区',
 						dataIndex : 'areaId',
 						renderer : function(v) {
-							return Share.map(v, shop.AREAMAP, '');
+							return Share.map(v, merchantshops.AREAMAP, '');
 						}
 					}, {
 						header : '地址',
@@ -197,78 +197,78 @@ shop.colModel = new Ext.grid.ColumnModel({
 					}]
 		});
 /** 新建 */
-shop.addAction = new Ext.Action({
+merchantshops.addAction = new Ext.Action({
 			text : '新建',
 			iconCls : 'module_add',
 			handler : function() {
-				shop.addWindow.setIconClass('module_add'); // 设置窗口的样式
-				shop.addWindow.setTitle('新建商店'); // 设置窗口的名称
-				shop.addWindow.show().center(); // 显示窗口
-				shop.formPanel.getForm().reset(); // 清空表单里面的元素的值.
-				shop.shopTypeCombo.clearValue();
-				shop.cityCombo.clearValue();
-				shop.areaCombo.clearValue();
-	        	shop.areaCombo.store.removeAll();
-	        	shop.areaStore.reload();
-	        	shop.areaCombo.store = shop.areaStore;
+				merchantshops.addWindow.setIconClass('module_add'); // 设置窗口的样式
+				merchantshops.addWindow.setTitle('新建商店'); // 设置窗口的名称
+				merchantshops.addWindow.show().center(); // 显示窗口
+				merchantshops.formPanel.getForm().reset(); // 清空表单里面的元素的值.
+				merchantshops.shopTypeCombo.clearValue();
+				merchantshops.cityCombo.clearValue();
+				merchantshops.areaCombo.clearValue();
+	        	merchantshops.areaCombo.store.removeAll();
+	        	merchantshops.areaStore.reload();
+	        	merchantshops.areaCombo.store = merchantshops.areaStore;
 			}
 		});
 /** 编辑 */
-shop.editAction = new Ext.Action({
+merchantshops.editAction = new Ext.Action({
 			text : '编辑',
 			iconCls : 'module_edit',
 			disabled : true,
 			handler : function() {
-				var record = shop.grid.getSelectionModel().getSelected();
-				shop.addWindow.setIconClass('module_edit'); // 设置窗口的样式
-				shop.addWindow.setTitle('编辑商店'); // 设置窗口的名称
-				shop.addWindow.show().center();
-				shop.formPanel.getForm().reset();
-				shop.formPanel.getForm().loadRecord(record);
-				shop.areaCombo.clearValue();
-	        	shop.areaCombo.store.removeAll();
-	        	shop.areaStore.proxy = new Ext.data.HttpProxy({
-	                 url : shop.loadArea + '?cityId=' + record.data.cityId
+				var record = merchantshops.grid.getSelectionModel().getSelected();
+				merchantshops.addWindow.setIconClass('module_edit'); // 设置窗口的样式
+				merchantshops.addWindow.setTitle('编辑商店'); // 设置窗口的名称
+				merchantshops.addWindow.show().center();
+				merchantshops.formPanel.getForm().reset();
+				merchantshops.formPanel.getForm().loadRecord(record);
+				merchantshops.areaCombo.clearValue();
+	        	merchantshops.areaCombo.store.removeAll();
+	        	merchantshops.areaStore.proxy = new Ext.data.HttpProxy({
+	                 url : merchantshops.loadArea + '?cityId=' + record.data.cityId
 	             });
-	        	shop.areaStore.reload();
-	        	shop.areaCombo.store = shop.areaStore;
+	        	merchantshops.areaStore.reload();
+	        	merchantshops.areaCombo.store = merchantshops.areaStore;
 			}
 		});
 /** 删除 */
-shop.deleteAction = new Ext.Action({
+merchantshops.deleteAction = new Ext.Action({
 			text : '删除',
 			iconCls : 'module_delete',
 			disabled : true,
 			handler : function() {
-				shop.delFun();
+				merchantshops.delFun();
 			}
 		});
 /** 查询 */
-shop.searchField = new Ext.ux.form.SearchField({
-			store : shop.store,
+merchantshops.searchField = new Ext.ux.form.SearchField({
+			store : merchantshops.store,
 			paramName : 'shopName',
 			emptyText : '请输入商店名称',
 			style : 'margin-left: 5px;'
 		});
 /** 顶部工具栏 */
-shop.tbar = [shop.addAction, '-', shop.editAction, '-',
-		shop.deleteAction, '-', shop.searchField];
+merchantshops.tbar = [merchantshops.addAction, '-', merchantshops.editAction, '-',
+		merchantshops.deleteAction, '-', merchantshops.searchField];
 /** 底部工具条 */
-shop.bbar = new Ext.PagingToolbar({
-			pageSize : shop.pageSize,
-			store : shop.store,
+merchantshops.bbar = new Ext.PagingToolbar({
+			pageSize : merchantshops.pageSize,
+			store : merchantshops.store,
 			displayInfo : true,
 			// plugins : new Ext.ux.ProgressBarPager(), // 分页进度条
-			items : ['-', '&nbsp;', shop.pageSizeCombo]
+			items : ['-', '&nbsp;', merchantshops.pageSizeCombo]
 		});
 /** 基本信息-表格 */
-shop.grid = new Ext.grid.GridPanel({
+merchantshops.grid = new Ext.grid.GridPanel({
 			// title : '模块列表',
-			store : shop.store,
-			colModel : shop.colModel,
-			selModel : shop.selModel,
-			tbar : shop.tbar,
-			bbar : shop.bbar,
+			store : merchantshops.store,
+			colModel : merchantshops.colModel,
+			selModel : merchantshops.selModel,
+			tbar : merchantshops.tbar,
+			bbar : merchantshops.bbar,
 			autoScroll : 'auto',
 			region : 'center',
 			loadMask : true,
@@ -276,12 +276,11 @@ shop.grid = new Ext.grid.GridPanel({
 			listeners : {},
 			viewConfig : {}
 		});
-		
-shop.tipLabel =  new Ext.form.Label({
+merchantshops.tipLabel =  new Ext.form.Label({
     text:"推荐配置：图片大小: 480 x 480, 大小限制：5M"
 });
 /** 基本信息-详细信息的form */
-shop.formPanel = new Ext.form.FormPanel({
+merchantshops.formPanel = new Ext.form.FormPanel({
 			frame : false,
 			title : '商店信息',
 			bodyStyle : 'padding:10px;border:0px',
@@ -299,20 +298,20 @@ shop.formPanel = new Ext.form.FormPanel({
 						allowBlank : false,
 						name : 'shopName',
 						anchor : '99%'
-					}, shop.shopTypeCombo, {
+					}, merchantshops.shopTypeCombo, {
 						fieldLabel : '联系电话',
 						maxLength : 512,
 						allowBlank : false,
 						name : 'telNo',
 						anchor : '99%'
-					}, shop.cityCombo, shop.areaCombo, {
+					}, merchantshops.cityCombo, merchantshops.areaCombo, {
 						fieldLabel : '地址',
 						maxLength : 64,
 						allowBlank : false,
 						name : 'shopAddress',
 						blankText:'请准确填写您的商铺地址',
 						anchor : '99%'
-					},  {
+					}, {
 						xtype : 'textarea',
 						fieldLabel : '描述',
 						maxLength : 512,
@@ -325,10 +324,10 @@ shop.formPanel = new Ext.form.FormPanel({
 						fieldLabel : "图片",
 						inputType : "file",
 						xtype : "field"
-					}, shop.tipLabel]
+					}, merchantshops.tipLabel]
 		});
 /** 编辑新建窗口 */
-shop.addWindow = new Ext.Window({
+merchantshops.addWindow = new Ext.Window({
 			layout : 'fit',
 			width : 500,
 			height : 420,
@@ -336,16 +335,16 @@ shop.addWindow = new Ext.Window({
 			plain : true,
 			modal : true,
 			resizable : true,
-			items : [shop.formPanel],
+			items : [merchantshops.formPanel],
 			buttons : [{
 						text : '保存',
 						handler : function() {
-							shop.saveFun();
+							merchantshops.saveFun();
 						}
 					}, {
 						text : '重置',
 						handler : function() {
-							var form = shop.formPanel.getForm();
+							var form = merchantshops.formPanel.getForm();
 							var id = form.findField("id").getValue();
 							form.reset();
 							if (id != '')
@@ -353,50 +352,50 @@ shop.addWindow = new Ext.Window({
 						}
 					}]
 		});
-shop.alwaysFun = function() {
-	Share.resetGrid(shop.grid);
-	shop.deleteAction.disable();
-	shop.editAction.disable();
+merchantshops.alwaysFun = function() {
+	Share.resetGrid(merchantshops.grid);
+	merchantshops.deleteAction.disable();
+	merchantshops.editAction.disable();
 };
-shop.saveFun = function() {
-	var form = shop.formPanel.getForm();
+merchantshops.saveFun = function() {
+	var form = merchantshops.formPanel.getForm();
 	if (!form.isValid()) {
 		return;
 	}
 	form.submit({
-		url : shop.save,
+		url : merchantshops.save,
 		method : "POST",
 		success : function(form, action) {
-			shop.addWindow.hide();
+			merchantshops.addWindow.hide();
 		},
 		failure : function() {
-			shop.addWindow.hide();
-			shop.alwaysFun();
-			shop.store.reload();
+			merchantshops.addWindow.hide();
+			merchantshops.alwaysFun();
+			merchantshops.store.reload();
 	    }
 	});
 };
-shop.delFun = function() {
-	var record = shop.grid.getSelectionModel().getSelected();
+merchantshops.delFun = function() {
+	var record = merchantshops.grid.getSelectionModel().getSelected();
 	Ext.Msg.confirm('提示', '你真的要删除选中的商店吗?', function(btn, text) {
 				if (btn == 'yes') {
 					// 发送请求
 					Share.AjaxRequest({
-								url : shop.del + "?id=" + record.data.id,
+								url : merchantshops.del + "?id=" + record.data.id,
 								callback : function(json) {
-									shop.alwaysFun();
-									shop.store.reload();
+									merchantshops.alwaysFun();
+									merchantshops.store.reload();
 								}
 							});
 				}
 			});
 };
-shop.myPanel = new Ext.Panel({
+merchantshops.myPanel = new Ext.Panel({
 			id : '${param.id}' + '_panel',
 			renderTo : '${param.id}',
 			layout : 'border',
 			boder : false,
 			height : index.tabPanel.getInnerHeight() - 1,
-			items : [shop.grid]
+			items : [merchantshops.grid]
 		});
 </script>

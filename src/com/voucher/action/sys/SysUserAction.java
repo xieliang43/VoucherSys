@@ -14,8 +14,10 @@ import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.MerchantVO;
 import com.voucher.pojo.UserRoleVO;
+import com.voucher.service.sys.SysRoleService;
 import com.voucher.service.sys.SysUserRoleService;
 import com.voucher.service.sys.SysUserService;
+import com.voucher.util.JackJson;
 import com.voucher.util.MD5;
 
 public class SysUserAction extends BaseAction implements SessionAware {
@@ -32,6 +34,7 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	
 	private SysUserService sysUserService;
 	private SysUserRoleService sysUserRoleService;
+	private SysRoleService sysRoleService;
 
 	private Map<String, Object> session;
 	
@@ -92,6 +95,12 @@ public class SysUserAction extends BaseAction implements SessionAware {
 		
 		session.remove(WebConstants.CURRENT_USER);
 		this.sendExtReturn(new ExtReturn(true, "修改密码成功！请重新登录！"));
+	}
+	
+	public String sysUserInit() {
+		Map<String, Object> map = getSysRoleService().getSysRoles();
+		session.put("roleMap", JackJson.fromObjectToJson(map));
+		return SUCCESS;
 	}
 	
 	public void loadAll() {
@@ -504,5 +513,19 @@ public class SysUserAction extends BaseAction implements SessionAware {
 	 */
 	public void setExpensePassword(String expensePassword) {
 		this.expensePassword = expensePassword;
+	}
+
+	/**
+	 * @return the sysRoleService
+	 */
+	public SysRoleService getSysRoleService() {
+		return sysRoleService;
+	}
+
+	/**
+	 * @param sysRoleService the sysRoleService to set
+	 */
+	public void setSysRoleService(SysRoleService sysRoleService) {
+		this.sysRoleService = sysRoleService;
 	}
 }
