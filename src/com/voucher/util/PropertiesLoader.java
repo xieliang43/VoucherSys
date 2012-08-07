@@ -17,6 +17,13 @@ public class PropertiesLoader {
 		return instance;
 	}
 	
+	public String getGoogleMapsUrl() {
+		return getImagePathByKey("google.maps.url");
+	}
+	public String getGoogleMapsKey() {
+		return getImagePathByKey("google.maps.key");
+	}
+	
 	public String getSmsPrefix() {
 		return getImagePathByKey("sms.msg.prefix");
 	}

@@ -16,4 +16,6 @@ public interface UserVoucherService {
 	public SysUser findMerchantByUserVoucher(int uvId);
 	
 	public String useUserVoucher(int uvId);
+
+	public void deleteUserVoucher(int viId);
 }

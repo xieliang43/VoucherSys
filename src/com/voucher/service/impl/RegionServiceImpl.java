@@ -102,7 +102,9 @@ public class RegionServiceImpl implements RegionService {
 
 	@Override
 	public List<Region> findRegionsByParentAndType(int parentId, int type) {
-		return regionDao.findRegionsByParentAndType(parentId, type);
+		final List<Region> areas = regionDao.findRegionsByParentAndType(parentId, type);
+		
+		return areas;
 	}
 
 	@Override

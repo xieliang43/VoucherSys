@@ -13,6 +13,7 @@ import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtShopVO;
 import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.ShopPager;
+import com.voucher.pojo.ShopVoucherInstanceVO;
 import com.voucher.pojo.VchInstVO;
 import com.voucher.service.DistanceService;
 import com.voucher.service.RegionService;
@@ -22,11 +23,15 @@ import com.voucher.service.VoucherService;
 
 public class ShopAction extends BaseAction {
 
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7881853394576176768L;
 
+	private static final String ZERO = "0";
+	private static final String NO_LIMIT = "不限";
+	
 	private String cityId;
 	private String shopId;
 	private String shopTypeId;
@@ -48,7 +53,7 @@ public class ShopAction extends BaseAction {
 	public void getShopTypes() throws IOException {
 		List<ShopType> shopTypes = shopTypeService.getShopTypes();
 		if (null == shopTypes || shopTypes.isEmpty()) {
-			JsonVO jErrorVO = new JsonVO("0", "系统错误，未载入商业类型！", null);
+			JsonVO jErrorVO = new JsonVO(ZERO, "系统错误，未载入商业类型！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
@@ -60,7 +65,7 @@ public class ShopAction extends BaseAction {
 
 	public void getShopAreas() throws IOException {
 		if (StringUtils.isBlank(cityId)) {
-			JsonVO jErrorVO = new JsonVO("0", "请输入城市！", null);
+			JsonVO jErrorVO = new JsonVO(ZERO, "请输入城市！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
@@ -68,12 +73,14 @@ public class ShopAction extends BaseAction {
 		List<Region> regions = regionService.findRegionsByParentAndType(
 				Integer.valueOf(cityId), 3);
 		if (null == regions || regions.isEmpty()) {
-			JsonVO jErrorVO = new JsonVO("0", "系统错误，未载入城市！", null);
+			JsonVO jErrorVO = new JsonVO(ZERO, "系统错误，未载入城市！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
 		}
 		List<AreaVO> areas = new ArrayList<AreaVO>();
+		AreaVO first = new AreaVO(0, "不限");
+		areas.add(first);
 		for (Region r : regions) {
 			AreaVO area = new AreaVO(r.getId(), r.getName());
 			areas.add(area);
@@ -85,7 +92,7 @@ public class ShopAction extends BaseAction {
 
 	public void getShops() {
 		if (StringUtils.isBlank(cityId) && StringUtils.isBlank(areaId)) {
-			JsonVO jErrorVO = new JsonVO("0", "无地区输入!", null);
+			JsonVO jErrorVO = new JsonVO(ZERO, "无地区输入!", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;
@@ -94,10 +101,10 @@ public class ShopAction extends BaseAction {
 		if(!StringUtils.isBlank(cityId)) {
 			shopPager.setCityId(Integer.valueOf(cityId));
 		}
-		if(!StringUtils.isBlank(shopTypeId)) {
+		if(!StringUtils.isBlank(shopTypeId) && !ZERO.equals(shopTypeId)) {
 			shopPager.setShopTypeId(Integer.valueOf(shopTypeId));
 		}
-		if(!StringUtils.isBlank(areaId)) {
+		if(!StringUtils.isBlank(areaId) && !ZERO.equals(areaId)) {
 			shopPager.setAreaId(Integer.valueOf(areaId));
 		}
 		if(!StringUtils.isBlank(limit)) {
@@ -106,8 +113,12 @@ public class ShopAction extends BaseAction {
 		if(!StringUtils.isBlank(start)) {
 			shopPager.setStart(Integer.valueOf(start));
 		}
-		if(!StringUtils.isBlank(distance)) {
-			shopPager.setDistance(Integer.valueOf(distance));
+		if(!StringUtils.isBlank(distance)){
+			if(distance.equals(NO_LIMIT)) {
+				shopPager.setDistance(Integer.MAX_VALUE);
+			} else {
+				shopPager.setDistance(Integer.valueOf(distance));
+			}
 		} else {
 			shopPager.setDistance(Integer.MAX_VALUE);
 		}
@@ -135,9 +146,22 @@ public class ShopAction extends BaseAction {
 		this.sendJSonReturn(json);
 	}
 	
+	public void getVouchers2() {
+		if (StringUtils.isBlank(shopId)) {
+			JsonVO jErrorVO = new JsonVO(ZERO, "商店不能为空！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		List<ShopVoucherInstanceVO> vouchers = voucherService.getEnabledShopVouchersByShop(Integer.valueOf(shopId));
+		JsonVO jVO = new JsonVO("1", "代金券信息", vouchers);
+		String json = this.convertToJson(jVO);
+		this.sendJSonReturn(json);
+	}
+	
 	public void getVouchers() {
 		if (StringUtils.isBlank(shopId)) {
-			JsonVO jErrorVO = new JsonVO("0", "商店不能为空！", null);
+			JsonVO jErrorVO = new JsonVO(ZERO, "商店不能为空！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 			return;

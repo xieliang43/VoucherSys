@@ -12,8 +12,7 @@
 <body class="x-border-layout-ct" style="position: static; overflow: hidden;">
 	<table id="logo-table" style="margin-top: 6%;">
 		<tr>
-			<td align="center" height="65"><a href="${ctx}/"><img src="${ctx}/resources/images/login_header.jpg"></img> </a>
-			</td>
+			<td align="center" height="65">欢迎使用代金券管理系统</td>
 		</tr>
 	</table>
 	<div id="login-win-div"></div>

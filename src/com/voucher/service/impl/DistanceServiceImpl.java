@@ -25,6 +25,10 @@ public class DistanceServiceImpl implements DistanceService {
 				Distance d2 = (Distance)o2;
 				return Integer.valueOf(d1.getName()) - Integer.valueOf(d2.getName());
 			}});
+		Distance dist = new Distance();
+		dist.setId(0);
+		dist.setName("不限");
+		list.add(0, dist);
 		return list;
 	}
 

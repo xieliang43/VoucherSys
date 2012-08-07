@@ -8,6 +8,7 @@ import com.voucher.exception.DataExistException;
 import com.voucher.exception.DataNotFoundException;
 import com.voucher.exception.ServiceConcurrentException;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ShopVoucherInstanceVO;
 import com.voucher.pojo.VchInstVO;
 import com.voucher.pojo.VoucherVO;
 
@@ -36,5 +37,8 @@ public interface VoucherService {
 
 	public int getCurrentMerchantTotalCountByShopName(SysUser merchant,
 			String shopName);
+
+	public List<ShopVoucherInstanceVO> getEnabledShopVouchersByShop(
+			int shopId);
 
 }

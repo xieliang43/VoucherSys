@@ -1,5 +1,6 @@
 package com.voucher.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,17 @@ public class ShopTypeServiceImpl implements ShopTypeService {
 
 	@Override
 	public List<ShopType> getShopTypes() {
-		return shopTypeDao.getShopTypes();
+		final List<ShopType> shopTypes = shopTypeDao.getShopTypes();
+		
+		ShopType shopType = new ShopType();
+		shopType.setId(0);
+		shopType.setName("不限");
+		shopType.setEnabled((short)0);
+		shopType.setDescription("不限");
+		shopType.setCreateDate(new Date());
+		shopTypes.add(0, shopType);
+		
+		return shopTypes;
 	}
 
 	@Override

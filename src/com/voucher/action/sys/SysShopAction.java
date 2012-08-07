@@ -120,13 +120,14 @@ public class SysShopAction extends BaseAction implements SessionAware {
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
 		Shop shop = new Shop(shopName, shopAddress, getTelNo(), description, shopType);
 		
+		final String imageFileName = buildFileName(uploadFileName.trim());
 		if(StringUtils.isBlank(id)) {
 			if(StringUtils.isBlank(uploadFileName)) {
 				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 				return;
 			}
-			uploadShopImage(upload, uploadFileName.trim());
-			shop.setImage(buildFileName(uploadFileName.trim()));
+			uploadShopImage(merchant, upload, imageFileName);
+			shop.setImage(imageFileName);
 			shop.setCreateDate(new Date());
 			shop.setMerchant(merchant);
 			shop.setCity(city);
@@ -137,8 +138,9 @@ public class SysShopAction extends BaseAction implements SessionAware {
 			if(StringUtils.isBlank(uploadFileName)) {
 				shop.setImage(oldShop.getImage());
 			} else {
-				shop.setImage(buildFileName(uploadFileName.trim()));
-				uploadShopImage(upload, uploadFileName.trim());
+				shop.setImage(imageFileName);
+				uploadShopImage(merchant, upload, imageFileName);
+				deleteShopImage(merchant, imageFileName);
 			}
 			shop.setId(Integer.valueOf(id));
 			shop.setCity(city);

@@ -1,5 +1,6 @@
 package com.voucher.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -31,7 +32,7 @@ public class ShopTypeDaoImpl extends BaseDaoImpl implements ShopTypeDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return new ArrayList<ShopType>();
 	}
 
 	@Override

@@ -82,17 +82,22 @@ public class ShopServiceImpl implements ShopService {
 
 		Map<String, Double> latLng = GoogleMapUtil.getInstance().getLatLng(
 				shop.getCity().getName() + shop.getArea().getName() + shop.getShopAddress());
-		if (latLng != null && !latLng.isEmpty()) {
-			double lat = latLng.get(WebConstants.LAT);
-			double lng = latLng.get(WebConstants.LNG);
+		if (latLng != null) {
+			Double lat = latLng.get(WebConstants.LAT);
+			Double lng = latLng.get(WebConstants.LNG);
 			Position pos = shop.getPosition();
 			if(pos == null) {
 				pos = new Position();
 				pos.setCreateDate(new Date());
 				pos.setShop(shop);
 			}
-			pos.setLatitude(lat);
-			pos.setLongitude(lng);
+			if(lat != null && lng != null) {
+				pos.setLatitude(lat);
+				pos.setLongitude(lng);
+			} else {
+				pos.setLatitude(0.0);
+				pos.setLongitude(0.0);
+			}
 			positionDao.update(pos);
 		}
 	}
@@ -103,17 +108,20 @@ public class ShopServiceImpl implements ShopService {
 		Map<String, Double> latLng = GoogleMapUtil.getInstance().getLatLng(
 				shop.getCity().getName() + shop.getArea().getName() + shop.getShopAddress());
 		
+		Position pos = new Position();
+		pos.setShop(shop);
+		pos.setCreateDate(new Date());
 		if (latLng != null && !latLng.isEmpty()) {
 			double lat = latLng.get(WebConstants.LAT);
 			double lng = latLng.get(WebConstants.LNG);
 			logger.info("Get Position, latitude: " + lat + ", longitude: " + lng);
-			Position pos = new Position();
-			pos.setShop(shop);
-			pos.setCreateDate(new Date());
 			pos.setLatitude(lat);
 			pos.setLongitude(lng);
-			positionDao.save(pos);
+		} else {
+			pos.setLatitude(.0);
+			pos.setLongitude(.0);
 		}
+		positionDao.save(pos);
 	}
 
 	@Override
@@ -245,7 +253,7 @@ public class ShopServiceImpl implements ShopService {
 				}
 			}
 		}
-		int total = shopDao.getTotalEnabledShops(shopPager);
+		int total = list.size(); //shopDao.getTotalEnabledShops(shopPager);
 		Collections.sort(list, new ShopVOComparator());
 		ExtShopVO extShopVO = new ExtShopVO(total, list);
 		return extShopVO;
@@ -255,7 +263,9 @@ public class ShopServiceImpl implements ShopService {
 	public void deleteById(int id) {
 		Shop shop = shopDao.findShopById(id);
 		Position pos = shop.getPosition();
-		positionDao.delete(pos);
+		if(pos != null) {
+			positionDao.delete(pos);
+		}
 		shopDao.deleteById(id);
 	}
 

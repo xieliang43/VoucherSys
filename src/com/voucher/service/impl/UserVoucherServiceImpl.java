@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.voucher.constants.WebConstants;
 import com.voucher.dao.UserVoucherDao;
+import com.voucher.dao.VoucherInstanceDao;
 import com.voucher.entity.UserVoucher;
 import com.voucher.entity.Voucher;
 import com.voucher.entity.VoucherInstance;
@@ -19,6 +20,7 @@ import com.voucher.util.PropertiesLoader;
 public class UserVoucherServiceImpl implements UserVoucherService {
 
 	private UserVoucherDao userVoucherDao;
+	private VoucherInstanceDao voucherInstanceDao;
 
 	@Override
 	public List<UserVoucherVO> getUserInstances(int userId) {
@@ -30,9 +32,9 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 				VoucherInstance vi = userVoucher.getVoucherInstance();
 				Voucher vch = vi.getVoucher();
 				String shopName = vch.getShop().getShopName();
-				String baseVoucherImageUrl = PropertiesLoader.getInstance().getVoucherImageBaseUrl() + vch.getImage() + WebConstants.FORWARD_SLASH;
+				String baseVoucherImageUrl = PropertiesLoader.getInstance().getVoucherImageBaseUrl() + vch.getShop().getMerchant().getAccount() + WebConstants.FORWARD_SLASH;
 				UserVoucherVO viVo = new UserVoucherVO(userVoucher.getId(), shopName,
-						baseVoucherImageUrl + vch.getImage(), vi.getVchKey() + vi.getId(), vch.getUseRule(), DateUtil
+						baseVoucherImageUrl + vch.getImage(), vi.getVchKey() + String.format("%04d", vi.getId()), vch.getUseRule(), DateUtil
 								.getInstance().getStringDateShort(
 										vch.getEndDate()), vch.getPrice(),
 						userVoucher.getIsUsed(), userVoucher.getIsActive());
@@ -95,6 +97,31 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 		}
 		userVoucher.setIsUsed((short)1);
 		return "02";
+	}
+
+	@Override
+	public void deleteUserVoucher(int viId) {
+		UserVoucher userVoucher = userVoucherDao.findUserVoucherById(viId);
+		if(userVoucher.getIsUsed() == 0) {
+			VoucherInstance vchInst = userVoucher.getVoucherInstance();
+			vchInst.setIsBought((short)0);
+			voucherInstanceDao.update(vchInst);
+		}
+		userVoucherDao.deleteById(viId);
+	}
+
+	/**
+	 * @return the voucherInstanceDao
+	 */
+	public VoucherInstanceDao getVoucherInstanceDao() {
+		return voucherInstanceDao;
+	}
+
+	/**
+	 * @param voucherInstanceDao the voucherInstanceDao to set
+	 */
+	public void setVoucherInstanceDao(VoucherInstanceDao voucherInstanceDao) {
+		this.voucherInstanceDao = voucherInstanceDao;
 	}
 
 }

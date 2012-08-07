@@ -4,12 +4,12 @@ import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
-public class FieldChecher {
-	private static FieldChecher instance = new FieldChecher();
+public class FieldChecker {
+	private static FieldChecker instance = new FieldChecker();
 	
-	private FieldChecher() {}
+	private FieldChecker() {}
 	
-	public static FieldChecher getInstance() {
+	public static FieldChecker getInstance() {
 		return instance;
 	}
 	

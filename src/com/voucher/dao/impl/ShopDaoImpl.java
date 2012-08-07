@@ -157,7 +157,7 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 
 	@Override
 	public int getTotalEnabledShops(ShopPager shopPager) {
-		List list = null;
+		List<Shop> list = null;
 		String hql = "from Shop s where";
 		if(shopPager.getAreaId() != null) {
 			hql = hql + " s.area.id = :areaId";

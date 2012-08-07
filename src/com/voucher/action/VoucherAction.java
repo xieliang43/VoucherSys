@@ -115,6 +115,11 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "商店不能为空！"));
 			return;
 		}
+		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
+		if(merchant == null) {
+			sendExtReturn(new ExtReturn(false, "用户不能为空！"));
+			return;
+		}
 		Voucher voucher = new Voucher(name, Double.valueOf(price),
 				Integer.valueOf(quantity), DateUtil.getInstance().strToDate(
 						startDate), DateUtil.getInstance().strToDate(endDate),
@@ -128,16 +133,19 @@ public class VoucherAction extends BaseAction implements SessionAware {
 				return;
 			}
 			voucher.setCreateDate(new Date());
-			voucher.setImage(buildFileName(uploadFileName));
-			uploadVoucherImage(upload, uploadFileName.trim());
+			final String imageFileName = buildFileName(uploadFileName.trim());
+			voucher.setImage(imageFileName);
+			uploadVoucherImage(merchant, upload, imageFileName);
 			voucherService.saveVoucher(voucher);
 		} else {
 			Voucher oldVoucher = voucherService.findVoucherById(Integer.valueOf(id));
 			if(StringUtils.isBlank(uploadFileName)) {
 				voucher.setImage(oldVoucher.getImage());
 			} else {
-				voucher.setImage(buildFileName(uploadFileName.trim()));
-				uploadVoucherImage(upload, uploadFileName.trim());
+				final String imageFileName = buildFileName(uploadFileName.trim());
+				voucher.setImage(imageFileName);
+				uploadVoucherImage(merchant, upload, imageFileName);
+				deleteVoucherImage(merchant, imageFileName);
 			}
 			voucher.setCreateDate(oldVoucher.getCreateDate());
 			voucher.setId(Integer.valueOf(id));

@@ -99,4 +99,13 @@ public class UserVoucherDaoImpl extends BaseDaoImpl implements UserVoucherDao {
 		return null;
 	}
 
+	@Override
+	public void deleteById(int id) {
+		try {
+			this.getJpaTemplate().remove(this.findUserVoucherById(id));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

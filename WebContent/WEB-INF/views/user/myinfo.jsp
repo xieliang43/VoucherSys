@@ -9,7 +9,6 @@
 	Ext.ns("Ext.Authority.myinfo"); // 自定义一个命名空间
 	myinfo = Ext.Authority.myinfo; // 定义命名空间的别名
 	myinfo = {
-		save : ctx + "/user/myinfo",
 		THEME: eval('(${fields.theme==null?"{}":fields.theme})'),//注意括号
 		SEX: eval('(${fields.sex==null?"{}":fields.sex})')//注意括号
 	};
@@ -121,26 +120,6 @@
 	myinfo.toolbar = new Ext.Toolbar({
 		renderTo : 'editUserToolBarDiv',
 		items : [ new Ext.Button({
-			text : '保存',
-			iconCls : 'save',
-			handler : function() {
-				var form = myinfo.formPanel.getForm();
-				if (form.isValid()) {
-					var values = form.getValues();
-					if (values.theme) {
-						delete values.theme;
-					}
-					Share.AjaxRequest({
-						url : myinfo.save,
-						params : values,
-						callback : function(json) {
-							// 重新登录
-							Share.getWin().location = ctx;
-						}
-					});
-				}
-			}
-		}), new Ext.Button({
 			text : '取消',
 			iconCls : 'cancel',
 			handler : function() {

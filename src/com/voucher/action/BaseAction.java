@@ -8,7 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -90,28 +89,39 @@ public class BaseAction extends ActionSupport {
 		}
 	}
 	
-	protected void uploadVoucherImage(File srcFile, String fileName) {
-		Map<String, Object> session = ServletActionContext.getContext().getSession();
-		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		
-		String webBaseSrc = ServletActionContext.getServletContext().getRealPath(WebConstants.UPLOAD) + WebConstants.FILE_SEPARATOR;
-		String uploadDir = webBaseSrc + WebConstants.VOUCHER + WebConstants.FILE_SEPARATOR + merchant.getAccount();
-		checkDir(uploadDir);
-		String toFileName = uploadDir + WebConstants.FILE_SEPARATOR + buildFileName(fileName);
+	protected void uploadVoucherImage(SysUser merchant, File srcFile, String fileName) {
+		String toFileName = retrieveFileName(merchant, WebConstants.VOUCHER, fileName);
 		File dst = new File(toFileName);
 		writeFile(srcFile, dst);
 	}
 	
-	protected void uploadShopImage(File srcFile, String fileName) {
-		Map<String, Object> session = ServletActionContext.getContext().getSession();
-		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		
-		String webBaseSrc = ServletActionContext.getServletContext().getRealPath(WebConstants.UPLOAD) + WebConstants.FILE_SEPARATOR;
-		String uploadDir = webBaseSrc + WebConstants.SHOP + WebConstants.FILE_SEPARATOR + merchant.getAccount();
-		checkDir(uploadDir);
-		String toFileName = uploadDir + WebConstants.FILE_SEPARATOR + buildFileName(fileName);
+	protected void uploadShopImage(SysUser merchant, File srcFile, String fileName) {
+		String toFileName = retrieveFileName(merchant, WebConstants.SHOP, fileName);
 		File dst = new File(toFileName);
 		writeFile(srcFile, dst);
+	}
+	
+	protected void deleteShopImage(SysUser merchant, String fileName) {
+		deleteImage(merchant, WebConstants.SHOP, fileName);
+	}
+	
+	protected void deleteVoucherImage(SysUser merchant, String fileName) {
+		deleteImage(merchant, WebConstants.VOUCHER, fileName);
+	}
+	
+	protected void deleteImage(SysUser merchant, String type, String fileName) {
+		String existFileName = retrieveFileName(merchant, type, fileName);
+		File existImage = new File(existFileName);
+		if(existImage.exists()) {
+			existImage.delete();
+		}
+	}
+	
+	private String retrieveFileName(SysUser merchant, String type, String fileName) {
+		String webBaseSrc = ServletActionContext.getServletContext().getRealPath(WebConstants.UPLOAD) + WebConstants.FILE_SEPARATOR;
+		String uploadDir = webBaseSrc + type + WebConstants.FILE_SEPARATOR + merchant.getAccount();
+		checkDir(uploadDir);
+		return uploadDir + WebConstants.FILE_SEPARATOR + fileName;
 	}
 	
 	protected String buildFileName(String fileName) {

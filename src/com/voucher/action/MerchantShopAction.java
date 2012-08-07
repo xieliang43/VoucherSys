@@ -127,6 +127,10 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		Region city = regionService.getRegionById(Integer.valueOf(cityId));
 		Region area = regionService.getRegionById(Integer.valueOf(areaId));
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
+		if(merchant == null) {
+			sendExtReturn(new ExtReturn(false, "用户不能为空！"));
+			return;
+		}
 		Shop shop = new Shop(shopName, shopAddress, getTelNo(), description, shopType);
 		
 		if(StringUtils.isBlank(id)) {
@@ -134,8 +138,9 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 				return;
 			}
-			uploadShopImage(upload, uploadFileName.trim());
-			shop.setImage(buildFileName(uploadFileName.trim()));
+			final String imageFileName = buildFileName(uploadFileName.trim());
+			uploadShopImage(merchant, upload, imageFileName);
+			shop.setImage(imageFileName);
 			shop.setCreateDate(new Date());
 			shop.setMerchant(merchant);
 			shop.setCity(city);
@@ -146,8 +151,10 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 			if(StringUtils.isBlank(uploadFileName)) {
 				shop.setImage(oldShop.getImage());
 			} else {
-				shop.setImage(buildFileName(uploadFileName.trim()));
-				uploadShopImage(upload, uploadFileName.trim());
+				final String imageFileName = buildFileName(uploadFileName.trim());
+				shop.setImage(imageFileName);
+				uploadShopImage(merchant, upload, imageFileName);
+				deleteShopImage(merchant, imageFileName);
 			}
 			shop.setId(Integer.valueOf(id));
 			shop.setCity(city);

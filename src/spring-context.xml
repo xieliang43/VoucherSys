@@ -264,6 +264,7 @@
 	
 	<bean id="userVoucherService" class="com.voucher.service.impl.UserVoucherServiceImpl">
 		<property name="userVoucherDao" ref="userVoucherDao"/>
+		<property name="voucherInstanceDao" ref="voucherInstanceDao"/>
 	</bean>
 	
 	<bean id="voucherAction" class="com.voucher.action.VoucherAction" scope="prototype">

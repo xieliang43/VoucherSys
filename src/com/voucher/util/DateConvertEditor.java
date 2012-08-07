@@ -9,20 +9,6 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * spring中日期转换
- * 
- * <pre>
- * &#064;InitBinder
- * public void initBinder(WebDataBinder binder) {
- * 	binder.registerCustomEditor(Date.class, new DateConvertEditor());
- * 	// binder.registerCustomEditor(Date.class, new
- * 	// DateConvertEditor(&quot;yyyy-MM-dd&quot;));
- * 	binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
- * }
- * </pre>
- * 
- * 
- * @author chenxin
- * @date 2011-8-10 下午1:48:37
  */
 public class DateConvertEditor extends PropertyEditorSupport {
 	private DateFormat format;

@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
 
 import com.voucher.pojo.ExtPager;
-import com.voucher.util.FieldChecher;
+import com.voucher.util.FieldChecker;
 
 /**
  * 
@@ -25,7 +25,7 @@ public abstract class BaseDaoImpl extends JpaDaoSupport {
 		if (pager != null) {
 			if (!StringUtils.isBlank(pager.getDir())
 					&& !StringUtils.isBlank(pager.getSort())) {
-				if(FieldChecher.getInstance().checkField(clazz, pager.getSort())) {
+				if(FieldChecker.getInstance().checkField(clazz, pager.getSort())) {
 					tmpHql = hql + " order by " + pager.getSort() + " "
 							+ pager.getDir();
 				}

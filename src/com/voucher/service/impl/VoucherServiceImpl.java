@@ -23,6 +23,8 @@ import com.voucher.exception.DataNotFoundException;
 import com.voucher.exception.PersistenceConcurrentException;
 import com.voucher.exception.ServiceConcurrentException;
 import com.voucher.pojo.ExtPager;
+import com.voucher.pojo.ShopVoucherInstanceVO;
+import com.voucher.pojo.ShopVoucherVO;
 import com.voucher.pojo.VchInstVO;
 import com.voucher.pojo.VoucherInstanceVO;
 import com.voucher.pojo.VoucherVO;
@@ -169,31 +171,36 @@ public class VoucherServiceImpl implements VoucherService {
 			viList.addAll(voucherInstanceDao.getVoucherInstancesByVoucher(vch
 					.getId()));
 		}
-		
-		Collections.sort(viList, new Comparator(){
+
+		Collections.sort(viList, new Comparator() {
 
 			@Override
 			public int compare(Object o1, Object o2) {
-				VoucherInstance vi1 = (VoucherInstance)o1;
-				VoucherInstance vi2 = (VoucherInstance)o2;
-				
+				VoucherInstance vi1 = (VoucherInstance) o1;
+				VoucherInstance vi2 = (VoucherInstance) o2;
+
 				return vi1.getIsBought() - vi2.getIsBought();
-			}});
-		
+			}
+		});
+
 		if (viList != null && !viList.isEmpty()) {
-			String baseVoucherImagePath = PropertiesLoader.getInstance().getVoucherImageBaseUrl();
 			for (VoucherInstance vi : viList) {
-				baseVoucherImagePath = baseVoucherImagePath + vi.getVoucher().getImage() + WebConstants.FORWARD_SLASH;
-				VoucherInstanceVO viVO = new VoucherInstanceVO(vi.getId(), baseVoucherImagePath + vi
-						.getVoucher().getImage(), vi.getVchKey()
-						+ String.format("%04d", vi.getId()), vi.getVoucher().getUseRule(), DateUtil
-						.getInstance().getStringDateShort(
-								vi.getVoucher().getEndDate()), vi.getVoucher()
-						.getPrice(), vi.getIsBought());
+				String baseVoucherImagePath = PropertiesLoader.getInstance()
+						.getVoucherImageBaseUrl();
+				baseVoucherImagePath = baseVoucherImagePath
+						+ vi.getVoucher().getShop().getMerchant().getAccount()
+						+ WebConstants.FORWARD_SLASH;
+				VoucherInstanceVO viVO = new VoucherInstanceVO(vi.getId(),
+						baseVoucherImagePath + vi.getVoucher().getImage(),
+						vi.getVchKey() + String.format("%04d", vi.getId()), vi
+								.getVoucher().getUseRule(), DateUtil
+								.getInstance().getStringDateShort(
+										vi.getVoucher().getEndDate()), vi
+								.getVoucher().getPrice(), vi.getIsBought());
 				viVOList.add(viVO);
 			}
 		}
-		
+
 		VchInstVO vchInstVO = new VchInstVO(totalVis, totalActive, viVOList);
 		return vchInstVO;
 	}
@@ -226,7 +233,8 @@ public class VoucherServiceImpl implements VoucherService {
 		try {
 			vchInst.setIsBought((short) 1);
 			voucherInstanceDao.update(vchInst);
-			UserVoucher newUserVch = new UserVoucher(user, vchInst, new Date(), (short)0, (short)1);
+			UserVoucher newUserVch = new UserVoucher(user, vchInst, new Date(),
+					(short) 0, (short) 1);
 			userVoucherDao.save(newUserVch);
 		} catch (PersistenceConcurrentException e) {
 			throw new ServiceConcurrentException();
@@ -277,6 +285,31 @@ public class VoucherServiceImpl implements VoucherService {
 			return vouchers.size();
 		}
 		return 0;
+	}
+
+	@Override
+	public List<ShopVoucherInstanceVO> getEnabledShopVouchersByShop(int shopId) {
+		List<ShopVoucherInstanceVO> instances = new ArrayList<ShopVoucherInstanceVO>();
+		List<Voucher> vouchers = voucherDao.getEnabledVouchersByShop(shopId);
+		if (vouchers != null && !vouchers.isEmpty()) {
+			for (Voucher vch : vouchers) {
+				int total = voucherInstanceDao
+						.getVoucherInstanceCountByVoucher(vch.getId());
+				int rest = voucherInstanceDao.getActiveCountByVoucher(vch
+						.getId());
+				String baseVoucherImagePath = PropertiesLoader.getInstance()
+						.getVoucherImageBaseUrl() + vch.getShop().getMerchant().getAccount() + WebConstants.FORWARD_SLASH;
+				ShopVoucherVO shopVoucherVO = new ShopVoucherVO(vch.getId(),
+						baseVoucherImagePath + vch.getImage(), vch.getUseRule(), DateUtil
+								.getInstance().getStringDateShort(
+										vch.getEndDate()), vch.getPrice(),
+						vch.getDescription());
+				ShopVoucherInstanceVO instance = new ShopVoucherInstanceVO(total, rest, shopVoucherVO);
+				instances.add(instance);
+			}
+		}
+
+		return instances;
 	}
 
 }

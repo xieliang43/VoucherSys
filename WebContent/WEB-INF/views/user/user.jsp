@@ -294,7 +294,7 @@
 		}, user.password, {
 			fieldLabel : '消费密码',
 			inputType : 'password',
-			maxLength : 32,
+			maxLength : 4,
 			allowBlank : false,
 			name : 'expensePassword',
 			anchor : '99%'

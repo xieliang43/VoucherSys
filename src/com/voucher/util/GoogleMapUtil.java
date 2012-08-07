@@ -9,9 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,8 +21,8 @@ public class GoogleMapUtil {
 	private static Logger logger = Logger.getLogger(GoogleMapUtil.class);
 	private static final String SENSOR = "true";
 	private static final String OUTPUT = "csv";
-	private static final String KEY = "ABQIAAAAqaGKijD7euSpqDeVsNA85xTT3OL8VXjPlPTFW7n7OgOFwXoSnxT7IP1pHznaiGwWMvsEq_SkxvESLw";
-	private static final String MAPS_URL = "http://maps.google.com/maps/geo?q={0}&output={1}&sensor={2}&key={3}";
+	private static final String KEY = PropertiesLoader.getInstance().getGoogleMapsKey();
+	private static final String MAPS_URL = PropertiesLoader.getInstance().getGoogleMapsUrl();
 
 	private static GoogleMapUtil instance = new GoogleMapUtil();
 	

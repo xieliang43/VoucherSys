@@ -22,7 +22,6 @@ public class WalletAction extends BaseAction {
 	
 	private String userId;
 	private String token;
-	private String viId;
 	private String uvId;
 	private String expensePassword;
 	
@@ -73,6 +72,11 @@ public class WalletAction extends BaseAction {
 		if(!validateUser() || !validateMerchant()){
 			return;
 		}
+		if(StringUtils.isBlank(uvId)) {
+			JsonVO jErrorVO = new JsonVO("0", "代金券不能为空！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+		}
 		String result = userVoucherService.useUserVoucher(Integer.valueOf(uvId));
 		if("00".equals(result)) {
 			JsonVO jErrorVO = new JsonVO("0", "不能找到代金券！", null);
@@ -111,6 +115,20 @@ public class WalletAction extends BaseAction {
 			return false;
 		}
 		return true;
+	}
+	
+	public void deleteVoucher() {
+		if(validateUser()) {
+			if(StringUtils.isBlank(uvId)) {
+				JsonVO jErrorVO = new JsonVO("0", "代金券不能为空！", null);
+				String json = this.convertToJson(jErrorVO);
+				sendJSonReturn(json);
+			}
+			userVoucherService.deleteUserVoucher(Integer.valueOf(uvId));
+			JsonVO jVO = new JsonVO("1", "删除成功！", null);
+			String json = this.convertToJson(jVO);
+			this.sendJSonReturn(json);
+		}
 	}
 
 	/**
@@ -153,20 +171,6 @@ public class WalletAction extends BaseAction {
 	 */
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	/**
-	 * @return the viId
-	 */
-	public String getViId() {
-		return viId;
-	}
-
-	/**
-	 * @param viId the viId to set
-	 */
-	public void setViId(String viId) {
-		this.viId = viId;
 	}
 
 	/**
