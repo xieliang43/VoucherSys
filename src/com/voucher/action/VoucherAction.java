@@ -139,13 +139,17 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			voucherService.saveVoucher(voucher);
 		} else {
 			Voucher oldVoucher = voucherService.findVoucherById(Integer.valueOf(id));
+			if(oldVoucher == null) {
+				sendExtReturn(new ExtReturn(false, "代金券不能为空！"));
+				return;
+			}
 			if(StringUtils.isBlank(uploadFileName)) {
 				voucher.setImage(oldVoucher.getImage());
 			} else {
 				final String imageFileName = buildFileName(uploadFileName.trim());
 				voucher.setImage(imageFileName);
 				uploadVoucherImage(merchant, upload, imageFileName);
-				deleteVoucherImage(merchant, imageFileName);
+				deleteVoucherImage(merchant, oldVoucher.getImage());
 			}
 			voucher.setCreateDate(oldVoucher.getCreateDate());
 			voucher.setId(Integer.valueOf(id));

@@ -148,13 +148,17 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 			shopService.save(shop);
 		} else {
 			Shop oldShop = shopService.findShopById(Integer.valueOf(id));
+			if(oldShop == null) {
+				sendExtReturn(new ExtReturn(false, "商店不能为空！"));
+				return;
+			}
 			if(StringUtils.isBlank(uploadFileName)) {
 				shop.setImage(oldShop.getImage());
 			} else {
 				final String imageFileName = buildFileName(uploadFileName.trim());
 				shop.setImage(imageFileName);
 				uploadShopImage(merchant, upload, imageFileName);
-				deleteShopImage(merchant, imageFileName);
+				deleteShopImage(merchant, oldShop.getImage());
 			}
 			shop.setId(Integer.valueOf(id));
 			shop.setCity(city);
