@@ -252,7 +252,7 @@ merchant.formPanel = new Ext.form.FormPanel({
 		anchor : '99%'
 	}, {
 		fieldLabel : '手机',
-		maxLength : 11,
+		maxLength : 16,
 		allowBlank : false,
 		name : 'mobile',
 		anchor : '99%'

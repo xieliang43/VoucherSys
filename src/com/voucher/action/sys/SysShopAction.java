@@ -109,10 +109,6 @@ public class SysShopAction extends BaseAction implements SessionAware {
 			sendExtReturn(new ExtReturn(false, "地址不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(getUploadFileName())) {
-			sendExtReturn(new ExtReturn(false, "图片不能为空！"));
-			return;
-		}
 		
 		ShopType shopType = shopTypeService.getShopTypeById(Integer.valueOf(shopTypeId));
 		Region city = regionService.getRegionById(Integer.valueOf(cityId));

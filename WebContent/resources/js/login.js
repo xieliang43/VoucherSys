@@ -321,7 +321,7 @@ $(document).ready(function () {
 					anchor : '99%'
 				},{
 					inputType: 'password',
-					fieldLabel : '密码',
+					fieldLabel : '确认密码',
 					maxLength : 32,
 					allowBlank : false,
 					name : 'comparePassword',

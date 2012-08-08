@@ -162,7 +162,7 @@
 			<interceptor-ref name="fileUpload">
 			     <!--拦截器strut2自带的, 指定上传文件的格式,如果不符合规定，将会自动拦截下来 -->
 			     <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
-			     <param name="maximumSize">5120000</param>
+			     <param name="maximumSize">51200</param>
 		     </interceptor-ref>
             <result name="login">index.jsp</result>
             <interceptor-ref name="sysLoginDefaultStack"/>
@@ -191,7 +191,7 @@
 			 <interceptor-ref name="fileUpload">
 			     <!--拦截器strut2自带的, 指定上传文件的格式,如果不符合规定，将会自动拦截下来 -->
 			     <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
-			     <param name="maximumSize">5120000</param>
+			     <param name="maximumSize">51200</param>
 		     </interceptor-ref>
             <result name="login">index.jsp</result>
             <interceptor-ref name="sysLoginDefaultStack"/>

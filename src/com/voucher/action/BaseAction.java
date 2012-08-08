@@ -124,13 +124,11 @@ public class BaseAction extends ActionSupport {
 		return uploadDir + WebConstants.FILE_SEPARATOR + fileName;
 	}
 	
-	protected String buildFileName(String fileName) {
-		String []str = fileName.split(WebConstants.DOT_REG);
-		if(str == null || str.length < 2) {
-			throw new IllegalArgumentException("input parameter is invalid");
-		}
+	protected static String buildFileName(String fileName) {
+		String imageName = fileName.substring(0, fileName.lastIndexOf(WebConstants.DOT) - 1);
+		String suffix = fileName.substring(fileName.lastIndexOf(WebConstants.DOT) + 1);
 		String uuidStr = UUID.randomUUID().toString();
-		return str[0] + WebConstants.MINUS + uuidStr + WebConstants.DOT + str[1];
+		return imageName + WebConstants.MINUS + uuidStr + WebConstants.DOT + suffix;
 	}
 	
 	private void checkDir(String dir) {

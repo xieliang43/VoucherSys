@@ -278,7 +278,7 @@ shop.grid = new Ext.grid.GridPanel({
 		});
 		
 shop.tipLabel =  new Ext.form.Label({
-    text:"推荐配置：图片大小: 480 x 480, 大小限制：5M"
+    text:"推荐配置：图片大小: 480 x 480, 大小限制：50K"
 });
 /** 基本信息-详细信息的form */
 shop.formPanel = new Ext.form.FormPanel({
@@ -315,7 +315,7 @@ shop.formPanel = new Ext.form.FormPanel({
 					},  {
 						xtype : 'textarea',
 						fieldLabel : '描述',
-						maxLength : 512,
+						maxLength : 640,
 						allowBlank : false,
 						name : 'description',
 						anchor : '99%'
