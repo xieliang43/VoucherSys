@@ -103,7 +103,7 @@ public class PurchaseAction extends BaseAction {
 		}
 		try {
 			voucherService.purchaseVoucher(Integer.valueOf(userId), Integer.valueOf(viId));
-			JsonVO jVO = new JsonVO("1", "抢购成功！", new Integer(1));
+			JsonVO jVO = new JsonVO("1", "领取成功！", new Integer(1));
 			String json = this.convertToJson(jVO);
 			this.sendJSonReturn(json);
 		} catch (ServiceConcurrentException e) {
@@ -111,7 +111,7 @@ public class PurchaseAction extends BaseAction {
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 		} catch (NumberFormatException e) {
-			JsonVO jErrorVO = new JsonVO("0", "未知错误！", null);
+			JsonVO jErrorVO = new JsonVO("0", "数据错误！", null);
 			String json = this.convertToJson(jErrorVO);
 			sendJSonReturn(json);
 		} catch (DataExistException e) {
