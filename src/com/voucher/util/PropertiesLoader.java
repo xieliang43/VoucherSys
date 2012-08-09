@@ -48,6 +48,9 @@ public class PropertiesLoader {
 	public String getSmsNumber() {
 		return getImagePathByKey("sms.number");
 	}
+	public String getSmsUrl() {
+		return getImagePathByKey("sms.url");
+	}
 	
 	public String getImagePathByKey(String key) {
 		Properties prop = loadProperties();

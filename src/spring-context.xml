@@ -64,10 +64,6 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
 	
-	<bean id="merchantDao" class="com.voucher.dao.impl.MerchantDaoImpl">
-		<property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</bean>
-	
 	<bean id="shopDao" class="com.voucher.dao.impl.ShopDaoImpl">
 		<property name="entityManagerFactory" ref="entityManagerFactory"/>
 	</bean>
@@ -90,10 +86,6 @@
 	
 	<bean id="regionService" class="com.voucher.service.impl.RegionServiceImpl">
 		<property name="regionDao" ref="regionDao"/>
-	</bean>
-	
-	<bean id="merchantService" class="com.voucher.service.impl.MerchantServiceImpl">
-		<property name="merchantDao" ref="merchantDao"/>
 	</bean>
 	
 	<bean id="distanceService" class="com.voucher.service.impl.DistanceServiceImpl">

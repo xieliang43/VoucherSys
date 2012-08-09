@@ -36,7 +36,7 @@
 	</bean>
 	
 	<bean id="userVoucherTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-		<property name="jobDetail" ref="voucherQuartzJob" />
+		<property name="jobDetail" ref="userVoucherQuartzJob" />
 		<property name="cronExpression" value="0 0 0 * * ?" />
 	</bean>
 	

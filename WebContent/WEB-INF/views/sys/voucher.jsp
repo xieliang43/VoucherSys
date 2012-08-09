@@ -270,7 +270,7 @@ voucher.endDate = new Ext.form.DateField({
 });
 
 voucher.tipLabel =  new Ext.form.Label({
-    text:"推荐配置：图片大小: 480 x 480, 大小限制：50K"
+    text:"推荐配置：图片大小: 480 x 480, 大小限制：200K"
 });
 /** 基本信息-详细信息的form */
 voucher.formPanel = new Ext.form.FormPanel({
@@ -327,8 +327,8 @@ voucher.formPanel = new Ext.form.FormPanel({
 						name : 'description',
 						anchor : '99%'
 					}, {
-						id : 'upload',
-						name : 'upload',
+						id : 'img',
+						name : 'img',
 						fieldLabel : "图片",
 						inputType : "file",
 						xtype : "field"

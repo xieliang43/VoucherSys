@@ -25,11 +25,9 @@ public class MessageServiceImpl implements MessageService {
 			.getUserPwd();
 	private final static String smsNumber = PropertiesLoader.getInstance()
 			.getSmsNumber();
-	private final static String PREFIX = "你的验证码是：";
+	private final static String PREFIX = PropertiesLoader.getInstance().getSmsPrefix();
 
-	private final static String MSG_URL = "http://jiekou.56dxw.com/sms/HttpInterface.aspx?comid={0}&username={1}"
-			+ "&userpwd={2}&handtel={3}&sendcontent={4}"
-			+ "&sendtime={5}&smsnumber={6}";
+	private final static String MSG_URL = PropertiesLoader.getInstance().getSmsUrl();
 
 	@Override
 	public void sendMessage(String phoneNo, String code) {

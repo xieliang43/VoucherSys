@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.voucher.constants.WebConstants;
 import com.voucher.dao.UserVoucherDao;
 import com.voucher.dao.VoucherInstanceDao;
@@ -18,6 +20,8 @@ import com.voucher.util.DateUtil;
 import com.voucher.util.PropertiesLoader;
 
 public class UserVoucherServiceImpl implements UserVoucherService {
+	
+	private static final Logger logger = Logger.getLogger(UserVoucherServiceImpl.class);
 
 	private UserVoucherDao userVoucherDao;
 	private VoucherInstanceDao voucherInstanceDao;
@@ -63,6 +67,7 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 	public List<UserVoucher> getActiveUserVouchersLessThanCurrentDate() {
 		List<UserVoucher> userVouchers = userVoucherDao
 				.findActiveUserVouchers();
+		logger.info("Before filter, user voucher's size: " + userVouchers.size());
 		if (userVouchers != null && !userVouchers.isEmpty()) {
 			Iterator<UserVoucher> itr = userVouchers.iterator();
 			while (itr.hasNext()) {
@@ -73,6 +78,7 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 				}
 			}
 		}
+		logger.info("After filter, user voucher's size: " + userVouchers.size());
 		return userVouchers;
 	}
 

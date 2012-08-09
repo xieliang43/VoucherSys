@@ -49,9 +49,9 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	private String shopId;
 	private String shopName;
 
-	private File upload;
-	private String uploadContentType;
-	private String uploadFileName;
+	private File img;
+	private String imgContentType;
+	private String imgFileName;
 
 	private ShopService shopService;
 	private VoucherService voucherService;
@@ -128,14 +128,14 @@ public class VoucherAction extends BaseAction implements SessionAware {
 		voucher.setShop(shop);
 		
 		if (StringUtils.isBlank(id)) {
-			if(StringUtils.isBlank(uploadFileName)) {
+			if(StringUtils.isBlank(imgFileName)) {
 				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 				return;
 			}
 			voucher.setCreateDate(new Date());
-			final String imageFileName = buildFileName(uploadFileName.trim());
-			voucher.setImage(imageFileName);
-			uploadVoucherImage(merchant, upload, imageFileName);
+			final String imageName = buildFileName(imgFileName.trim());
+			voucher.setImage(imageName);
+			uploadVoucherImage(merchant, img, imageName);
 			voucherService.saveVoucher(voucher);
 		} else {
 			Voucher oldVoucher = voucherService.findVoucherById(Integer.valueOf(id));
@@ -143,12 +143,12 @@ public class VoucherAction extends BaseAction implements SessionAware {
 				sendExtReturn(new ExtReturn(false, "代金券不能为空！"));
 				return;
 			}
-			if(StringUtils.isBlank(uploadFileName)) {
+			if(StringUtils.isBlank(imgFileName)) {
 				voucher.setImage(oldVoucher.getImage());
 			} else {
-				final String imageFileName = buildFileName(uploadFileName.trim());
-				voucher.setImage(imageFileName);
-				uploadVoucherImage(merchant, upload, imageFileName);
+				final String imageName = buildFileName(imgFileName.trim());
+				voucher.setImage(imageName);
+				uploadVoucherImage(merchant, img, imageName);
 				deleteVoucherImage(merchant, oldVoucher.getImage());
 			}
 			voucher.setCreateDate(oldVoucher.getCreateDate());
@@ -431,48 +431,45 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @return the uploadFileName
+	 * @return the img
 	 */
-	public String getUploadFileName() {
-		return uploadFileName;
+	public File getImg() {
+		return img;
 	}
 
 	/**
-	 * @param uploadFileName
-	 *            the uploadFileName to set
+	 * @param img the img to set
 	 */
-	public void setUploadFileName(String uploadFileName) {
-		this.uploadFileName = uploadFileName;
+	public void setImg(File img) {
+		this.img = img;
 	}
 
 	/**
-	 * @return the uploadContentType
+	 * @return the imgContentType
 	 */
-	public String getUploadContentType() {
-		return uploadContentType;
+	public String getImgContentType() {
+		return imgContentType;
 	}
 
 	/**
-	 * @param uploadContentType
-	 *            the uploadContentType to set
+	 * @param imgContentType the imgContentType to set
 	 */
-	public void setUploadContentType(String uploadContentType) {
-		this.uploadContentType = uploadContentType;
+	public void setImgContentType(String imgContentType) {
+		this.imgContentType = imgContentType;
 	}
 
 	/**
-	 * @return the upload
+	 * @return the imgFileName
 	 */
-	public File getUpload() {
-		return upload;
+	public String getImgFileName() {
+		return imgFileName;
 	}
 
 	/**
-	 * @param upload
-	 *            the upload to set
+	 * @param imgFileName the imgFileName to set
 	 */
-	public void setUpload(File upload) {
-		this.upload = upload;
+	public void setImgFileName(String imgFileName) {
+		this.imgFileName = imgFileName;
 	}
 
 	/**

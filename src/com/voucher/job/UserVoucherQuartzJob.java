@@ -27,6 +27,7 @@ public class UserVoucherQuartzJob extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext ctx)
 			throws JobExecutionException {
 		List<UserVoucher> userVouchers = getUserVoucherService().getActiveUserVouchersLessThanCurrentDate();
+		logger.info("Get user voucher's size: " + userVouchers.size());
 		if(userVouchers != null && !userVouchers.isEmpty()) {
 			for(UserVoucher userVoucher : userVouchers) {
 				userVoucher.setIsActive((short)0);

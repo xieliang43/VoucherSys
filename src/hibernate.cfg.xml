@@ -27,11 +27,11 @@
 		<property name="hbm2ddl.auto">validate</property>
 		
 		<mapping class="com.voucher.entity.User"/>
-		<mapping class="com.voucher.entity.Merchant"/>
 		<mapping class="com.voucher.entity.Shop"/>
 		<mapping class="com.voucher.entity.Region"/>
 		<mapping class="com.voucher.entity.Voucher"/>
 		<mapping class="com.voucher.entity.VoucherInstance"/>
+		<mapping class="com.voucher.entity.UserVoucher"/>
 		<mapping class="com.voucher.entity.ShopType"/>
 		<mapping class="com.voucher.entity.Position"/>
 		<mapping class="com.voucher.entity.Advice"/>
@@ -49,6 +49,7 @@
 		<class-cache class="com.voucher.entity.ShopType" usage="read-write" />
 		<class-cache class="com.voucher.entity.Shop" usage="read-write" />
 		<class-cache class="com.voucher.entity.Distance" usage="read-write" />
-		<class-cache class="com.voucher.entity.Position" usage="read-write"/>
+		<class-cache class="com.voucher.entity.Voucher" usage="read-write"/>
+		<class-cache class="com.voucher.entity.VoucherInstance" usage="read-write"/>
 	</session-factory>
 </hibernate-configuration>
