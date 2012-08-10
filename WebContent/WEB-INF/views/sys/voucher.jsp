@@ -73,7 +73,7 @@ voucher.shopCombo = new Ext.form.ComboBox({
 });
 /** 基本信息-选择模式 */
 voucher.selModel = new Ext.grid.CheckboxSelectionModel({
-			singleSelect : true,
+			singleSelect : false,
 			listeners : {
 				'rowselect' : function(selectionModel, rowIndex, record) {
 					voucher.deleteAction.enable();
@@ -153,7 +153,6 @@ voucher.addAction = new Ext.Action({
 				voucher.addWindow.setTitle('新建模块'); // 设置窗口的名称
 				voucher.addWindow.show().center(); // 显示窗口
 				voucher.formPanel.getForm().reset(); // 清空表单里面的元素的值.
-				voucher.imageForm.getForm().reset();
 				voucher.shopCombo.clearValue();
 			}
 		});
@@ -163,6 +162,15 @@ voucher.editAction = new Ext.Action({
 			iconCls : 'module_edit',
 			disabled : true,
 			handler : function() {
+				var selections = voucher.grid.getSelectionModel().getSelections();
+				var ids = [];
+				for ( var i = 0; i < selections.length; i++) {
+					ids.push(selections[i].data.id);
+				}
+				if(ids.length > 1) {
+					Ext.Msg.alert("提示", "请选择一种代金券进行编辑!");
+					return;
+				}
 				var record = voucher.grid.getSelectionModel().getSelected();
 				voucher.addWindow.setIconClass('module_edit'); // 设置窗口的样式
 				voucher.addWindow.setTitle('编辑模块'); // 设置窗口的名称
@@ -386,12 +394,20 @@ voucher.saveFun = function() {
 	});
 };
 voucher.delFun = function() {
-	var record = voucher.grid.getSelectionModel().getSelected();
+	var selections = voucher.grid.getSelectionModel().getSelections();
+	var ids = [];
+	for ( var i = 0; i < selections.length; i++) {
+		ids.push(selections[i].data.id);
+	}
+	var params = {
+			shopIds : ids
+		};
 	Ext.Msg.confirm('提示', '你真的要删除选中的代金券吗?', function(btn, text) {
 				if (btn == 'yes') {
 					// 发送请求
 					Share.AjaxRequest({
-								url : voucher.del + "?id=" + record.data.id,
+								url : voucher.del,
+								params : params,
 								callback : function(json) {
 									voucher.alwaysFun();
 									voucher.store.reload();

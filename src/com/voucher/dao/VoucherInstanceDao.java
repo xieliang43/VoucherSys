@@ -21,4 +21,6 @@ public interface VoucherInstanceDao {
 
 	void update(VoucherInstance vchInst) throws PersistenceConcurrentException;
 
+	void removeVoucherInstance(VoucherInstance vi);
+
 }

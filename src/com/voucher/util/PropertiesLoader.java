@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesLoader {
-	private static final String INFO_NAME = "vchsys.properties";
+	private static final String PROPS_FILE_NAME = "vchsys.properties";
 	
 	private static PropertiesLoader instance = new PropertiesLoader();
 	
@@ -17,42 +17,55 @@ public class PropertiesLoader {
 		return instance;
 	}
 	
-	public String getGoogleMapsUrl() {
-		return getImagePathByKey("google.maps.url");
+	public String getProxyHost() {
+		return getValueByKey("proxy.host");
 	}
-	public String getGoogleMapsKey() {
-		return getImagePathByKey("google.maps.key");
+	public String getProxyPort() {
+		return getValueByKey("proxy.port");
+	}
+	
+	public String getBaiduMapsUrl() {
+		return getValueByKey("baidu.maps.url");
+	}
+	public String getBaiduMapsKey() {
+		return getValueByKey("baidu.maps.key");
+	}
+	public String getBaiduMapsOutput() {
+		return getValueByKey("baidu.maps.output");
+	}
+	public String getBaiduMapsBounds() {
+		return getValueByKey("baidu.maps.bounds");
 	}
 	
 	public String getSmsPrefix() {
-		return getImagePathByKey("sms.msg.prefix");
+		return getValueByKey("sms.msg.prefix");
 	}
 	
 	public String getShopImageBaseUrl() {
-		return getImagePathByKey("shop.img.url");
+		return getValueByKey("shop.img.url");
 	}
 	
 	public String getVoucherImageBaseUrl() {
-		return getImagePathByKey("voucher.img.url");
+		return getValueByKey("voucher.img.url");
 	}
 	
 	public String getCompanyId() {
-		return getImagePathByKey("com.id");
+		return getValueByKey("com.id");
 	}
 	public String getUserName() {
-		return getImagePathByKey("user.name");
+		return getValueByKey("user.name");
 	}
 	public String getUserPwd() {
-		return getImagePathByKey("user.pwd");
+		return getValueByKey("user.pwd");
 	}
 	public String getSmsNumber() {
-		return getImagePathByKey("sms.number");
+		return getValueByKey("sms.number");
 	}
 	public String getSmsUrl() {
-		return getImagePathByKey("sms.url");
+		return getValueByKey("sms.url");
 	}
 	
-	public String getImagePathByKey(String key) {
+	public String getValueByKey(String key) {
 		Properties prop = loadProperties();
 		String path = (String) prop.get(key);
 		return path;
@@ -60,7 +73,7 @@ public class PropertiesLoader {
 	
 	private Properties loadProperties() {
 		Properties prop = new Properties();
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream(INFO_NAME);
+		InputStream is = this.getClass().getClassLoader().getResourceAsStream(PROPS_FILE_NAME);
 		if(is != null) {
 			try {
 				prop.load(is);

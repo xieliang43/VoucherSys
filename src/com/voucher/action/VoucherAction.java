@@ -49,6 +49,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	private String shopId;
 	private String shopName;
 
+	private String[] voucherIds;
+
 	private File img;
 	private String imgContentType;
 	private String imgFileName;
@@ -81,10 +83,11 @@ public class VoucherAction extends BaseAction implements SessionAware {
 				.getCurrentMerchantVouchersByShopName(pager, merchant,
 						getShopName());
 		int total;
-		if(StringUtils.isBlank(shopName)) {
+		if (StringUtils.isBlank(shopName)) {
 			total = voucherService.getCurrentMerchantTotalCount(merchant);
 		} else {
-			total = voucherService.getCurrentMerchantTotalCountByShopName(merchant, shopName);
+			total = voucherService.getCurrentMerchantTotalCountByShopName(
+					merchant, shopName);
 		}
 
 		sendExtGridReturn(new ExtGridReturn(total, list));
@@ -116,7 +119,7 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			return;
 		}
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
-		if(merchant == null) {
+		if (merchant == null) {
 			sendExtReturn(new ExtReturn(false, "用户不能为空！"));
 			return;
 		}
@@ -126,9 +129,9 @@ public class VoucherAction extends BaseAction implements SessionAware {
 				useRule, vchKey, (short) 1, description);
 		Shop shop = shopService.findShopById(Integer.valueOf(shopId));
 		voucher.setShop(shop);
-		
+
 		if (StringUtils.isBlank(id)) {
-			if(StringUtils.isBlank(imgFileName)) {
+			if (StringUtils.isBlank(imgFileName)) {
 				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 				return;
 			}
@@ -138,12 +141,13 @@ public class VoucherAction extends BaseAction implements SessionAware {
 			uploadVoucherImage(merchant, img, imageName);
 			voucherService.saveVoucher(voucher);
 		} else {
-			Voucher oldVoucher = voucherService.findVoucherById(Integer.valueOf(id));
-			if(oldVoucher == null) {
+			Voucher oldVoucher = voucherService.findVoucherById(Integer
+					.valueOf(id));
+			if (oldVoucher == null) {
 				sendExtReturn(new ExtReturn(false, "代金券不能为空！"));
 				return;
 			}
-			if(StringUtils.isBlank(imgFileName)) {
+			if (StringUtils.isBlank(imgFileName)) {
 				voucher.setImage(oldVoucher.getImage());
 			} else {
 				final String imageName = buildFileName(imgFileName.trim());
@@ -158,17 +162,19 @@ public class VoucherAction extends BaseAction implements SessionAware {
 
 		sendExtReturn(new ExtReturn(true, "保存成功！"));
 	}
-	
 
 	public void delete() {
-		if (StringUtils.isBlank(id)) {
-			this.sendExtReturn(new ExtReturn(false, "ID不能为空！"));
+		if (voucherIds == null || voucherIds.length == 0) {
+			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
 			return;
 		}
-		voucherService.deleteById(Integer.valueOf(id));
+		for (String voucherId : voucherIds) {
+			if (!StringUtils.isBlank(voucherId)) {
+				voucherService.deleteById(Integer.valueOf(voucherId));
+			}
+		}
 		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
-	
 
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -438,7 +444,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param img the img to set
+	 * @param img
+	 *            the img to set
 	 */
 	public void setImg(File img) {
 		this.img = img;
@@ -452,7 +459,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param imgContentType the imgContentType to set
+	 * @param imgContentType
+	 *            the imgContentType to set
 	 */
 	public void setImgContentType(String imgContentType) {
 		this.imgContentType = imgContentType;
@@ -466,7 +474,8 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	}
 
 	/**
-	 * @param imgFileName the imgFileName to set
+	 * @param imgFileName
+	 *            the imgFileName to set
 	 */
 	public void setImgFileName(String imgFileName) {
 		this.imgFileName = imgFileName;
@@ -515,5 +524,20 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	/**
+	 * @return the voucherIds
+	 */
+	public String[] getVoucherIds() {
+		return voucherIds;
+	}
+
+	/**
+	 * @param voucherIds
+	 *            the voucherIds to set
+	 */
+	public void setVoucherIds(String[] voucherIds) {
+		this.voucherIds = voucherIds;
 	}
 }

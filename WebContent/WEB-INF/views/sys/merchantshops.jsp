@@ -136,7 +136,7 @@ merchantshops.areaCombo = new Ext.form.ComboBox({
 });
 /** 基本信息-选择模式 */
 merchantshops.selModel = new Ext.grid.CheckboxSelectionModel({
-			singleSelect : true,
+			singleSelect : false,
 			listeners : {
 				'rowselect' : function(selectionModel, rowIndex, record) {
 					merchantshops.deleteAction.enable();
@@ -219,6 +219,15 @@ merchantshops.editAction = new Ext.Action({
 			iconCls : 'module_edit',
 			disabled : true,
 			handler : function() {
+				var selections = merchantshops.grid.getSelectionModel().getSelections();
+				var ids = [];
+				for ( var i = 0; i < selections.length; i++) {
+					ids.push(selections[i].data.id);
+				}
+				if(ids.length > 1) {
+					Ext.Msg.alert("提示", "请选择一个商店进行编辑!");
+					return;
+				}
 				var record = merchantshops.grid.getSelectionModel().getSelected();
 				merchantshops.addWindow.setIconClass('module_edit'); // 设置窗口的样式
 				merchantshops.addWindow.setTitle('编辑商店'); // 设置窗口的名称
@@ -376,12 +385,20 @@ merchantshops.saveFun = function() {
 	});
 };
 merchantshops.delFun = function() {
-	var record = merchantshops.grid.getSelectionModel().getSelected();
+	var selections = merchantshops.grid.getSelectionModel().getSelections();
+	var ids = [];
+	for ( var i = 0; i < selections.length; i++) {
+		ids.push(selections[i].data.id);
+	}
+	var params = {
+			shopIds : ids
+		};
 	Ext.Msg.confirm('提示', '你真的要删除选中的商店吗?', function(btn, text) {
 				if (btn == 'yes') {
 					// 发送请求
 					Share.AjaxRequest({
-								url : merchantshops.del + "?id=" + record.data.id,
+								url : merchantshops.del,
+								params : params,
 								callback : function(json) {
 									merchantshops.alwaysFun();
 									merchantshops.store.reload();

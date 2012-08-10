@@ -24,4 +24,8 @@ public interface UserVoucherDao {
 
 	public void deleteById(int id);
 
+	public UserVoucher findUserVoucherByVoucherInstanceId(int vchId);
+
+	public void removeUserVoucher(UserVoucher uv);
+
 }

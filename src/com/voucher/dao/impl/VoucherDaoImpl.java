@@ -25,7 +25,7 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 	@Override
 	public void delete(Voucher voucher) {
 		try {
-			this.getJpaTemplate().remove(voucher);
+			this.getJpaTemplate().remove(this.getJpaTemplate().merge(voucher));
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 		}
@@ -152,6 +152,19 @@ public class VoucherDaoImpl extends BaseDaoImpl implements VoucherDao {
 			Query query = this.createQuery(hql);
 			query.setParameter("id", merchant.getId());
 			query.setParameter("shopName", "%" + shopName + "%");
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List<Voucher> getVouchersByShopId(int shopId) {
+		String hql = "from Voucher v where v.shop.id = :shopId";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("shopId", shopId);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

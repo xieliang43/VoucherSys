@@ -23,8 +23,9 @@ import com.voucher.pojo.ExtShopVO;
 import com.voucher.pojo.ShopPager;
 import com.voucher.pojo.ShopVO;
 import com.voucher.service.ShopService;
+import com.voucher.service.VoucherService;
+import com.voucher.util.BaiduMapUtil;
 import com.voucher.util.DistanceUtil;
-import com.voucher.util.GoogleMapUtil;
 import com.voucher.util.PropertiesLoader;
 
 public class ShopServiceImpl implements ShopService {
@@ -32,6 +33,7 @@ public class ShopServiceImpl implements ShopService {
 	
 	private ShopDao shopDao;
 	private PositionDao positionDao;
+	private VoucherService voucherService;
 
 	@Override
 	public Shop findShopById(int shopId) {
@@ -80,8 +82,8 @@ public class ShopServiceImpl implements ShopService {
 
 		shopDao.update(shop);
 
-		Map<String, Double> latLng = GoogleMapUtil.getInstance().getLatLng(
-				shop.getCity().getName() + shop.getArea().getName() + shop.getShopAddress());
+		Map<String, Double> latLng = BaiduMapUtil.getInstance().getLatLng(
+				shop.getCity().getName(), shop.getArea().getName() + shop.getShopAddress());
 		if (latLng != null) {
 			Double lat = latLng.get(WebConstants.LAT);
 			Double lng = latLng.get(WebConstants.LNG);
@@ -105,8 +107,8 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public void save(Shop shop) {
 		shopDao.create(shop);
-		Map<String, Double> latLng = GoogleMapUtil.getInstance().getLatLng(
-				shop.getCity().getName() + shop.getArea().getName() + shop.getShopAddress());
+		Map<String, Double> latLng = BaiduMapUtil.getInstance().getLatLng(
+				shop.getCity().getName(), shop.getArea().getName() + shop.getShopAddress());
 		
 		Position pos = new Position();
 		pos.setShop(shop);
@@ -262,11 +264,14 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public void deleteById(int id) {
 		Shop shop = shopDao.findShopById(id);
-		Position pos = shop.getPosition();
-		if(pos != null) {
-			positionDao.delete(pos);
+		if(shop != null) {
+			voucherService.deleteByShop(shop);
+			Position pos = shop.getPosition();
+			if(pos != null) {
+				positionDao.delete(pos);
+			}
+			shopDao.deleteById(id);
 		}
-		shopDao.deleteById(id);
 	}
 
 	@Override
@@ -307,5 +312,19 @@ public class ShopServiceImpl implements ShopService {
 			return shops.size();
 		}
 		return 0;
+	}
+
+	/**
+	 * @return the voucherService
+	 */
+	public VoucherService getVoucherService() {
+		return voucherService;
+	}
+
+	/**
+	 * @param voucherService the voucherService to set
+	 */
+	public void setVoucherService(VoucherService voucherService) {
+		this.voucherService = voucherService;
 	}
 }

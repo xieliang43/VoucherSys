@@ -2,6 +2,7 @@ package com.voucher.service;
 
 import java.util.List;
 
+import com.voucher.entity.Shop;
 import com.voucher.entity.Voucher;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.exception.DataExistException;
@@ -24,6 +25,8 @@ public interface VoucherService {
 	public void updateVoucher(Voucher voucher);
 
 	public void deleteById(int id);
+	
+	public void deleteByShop(Shop shop);
 
 	public List<Voucher> getEnabledVouchersLessThanCurrentDate();
 
@@ -40,5 +43,7 @@ public interface VoucherService {
 
 	public List<ShopVoucherInstanceVO> getEnabledShopVouchersByShop(
 			int shopId);
+	
+	public void deleteVoucherInstancesByVoucher(int vchId);
 
 }

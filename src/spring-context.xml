@@ -99,6 +99,7 @@
 	<bean id="shopService" class="com.voucher.service.impl.ShopServiceImpl">
 		<property name="shopDao" ref="shopDao"/>
 		<property name="positionDao" ref="positionDao"/>
+		<property name="voucherService" ref="voucherService"/>
 	</bean>
 	
 	<bean id="shopTypeService" class="com.voucher.service.impl.ShopTypeServiceImpl">

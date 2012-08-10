@@ -136,7 +136,7 @@ shop.areaCombo = new Ext.form.ComboBox({
 });
 /** 基本信息-选择模式 */
 shop.selModel = new Ext.grid.CheckboxSelectionModel({
-			singleSelect : true,
+			singleSelect : false,
 			listeners : {
 				'rowselect' : function(selectionModel, rowIndex, record) {
 					shop.deleteAction.enable();
@@ -219,6 +219,15 @@ shop.editAction = new Ext.Action({
 			iconCls : 'module_edit',
 			disabled : true,
 			handler : function() {
+				var selections = shop.grid.getSelectionModel().getSelections();
+				var ids = [];
+				for ( var i = 0; i < selections.length; i++) {
+					ids.push(selections[i].data.id);
+				}
+				if(ids.length > 1) {
+					Ext.Msg.alert("提示", "请选择一个商店进行编辑!");
+					return;
+				}
 				var record = shop.grid.getSelectionModel().getSelected();
 				shop.addWindow.setIconClass('module_edit'); // 设置窗口的样式
 				shop.addWindow.setTitle('编辑商店'); // 设置窗口的名称
@@ -276,7 +285,7 @@ shop.grid = new Ext.grid.GridPanel({
 			listeners : {},
 			viewConfig : {}
 		});
-		
+
 shop.tipLabel =  new Ext.form.Label({
     text:"推荐配置：图片大小: 480 x 480, 大小限制：50K"
 });
@@ -377,12 +386,20 @@ shop.saveFun = function() {
 	});
 };
 shop.delFun = function() {
-	var record = shop.grid.getSelectionModel().getSelected();
+	var selections = shop.grid.getSelectionModel().getSelections();
+	var ids = [];
+	for ( var i = 0; i < selections.length; i++) {
+		ids.push(selections[i].data.id);
+	}
+	var params = {
+			shopIds : ids
+		};
 	Ext.Msg.confirm('提示', '你真的要删除选中的商店吗?', function(btn, text) {
 				if (btn == 'yes') {
 					// 发送请求
 					Share.AjaxRequest({
-								url : shop.del + "?id=" + record.data.id,
+								url : shop.del,
+								params : params,
 								callback : function(json) {
 									shop.alwaysFun();
 									shop.store.reload();

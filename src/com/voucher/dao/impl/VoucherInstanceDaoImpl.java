@@ -85,4 +85,13 @@ public class VoucherInstanceDaoImpl extends BaseDaoImpl implements VoucherInstan
 		}
 	}
 
+	@Override
+	public void removeVoucherInstance(VoucherInstance vi) {
+		try {
+			this.getJpaTemplate().remove(this.getJpaTemplate().merge(vi));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

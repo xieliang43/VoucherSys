@@ -45,6 +45,8 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	private String cityId;
 	private String areaId;
 	
+	private String []shopIds;
+	
 	private File upload;
 	private String uploadContentType;
 	private String uploadFileName;
@@ -165,11 +167,15 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	}
 	
 	public void delete() {
-		if (StringUtils.isBlank(id)) {
+		if(shopIds == null || shopIds.length == 0) {
 			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
 			return;
 		}
-		shopService.deleteById(Integer.valueOf(id));
+		for(String shopId : shopIds) {
+			if (!StringUtils.isBlank(shopId)) {
+				shopService.deleteById(Integer.valueOf(shopId));
+			}
+		}
 		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
 
@@ -442,5 +448,19 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	 */
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
+	}
+
+	/**
+	 * @return the shopIds
+	 */
+	public String [] getShopIds() {
+		return shopIds;
+	}
+
+	/**
+	 * @param shopIds the shopIds to set
+	 */
+	public void setShopIds(String [] shopIds) {
+		this.shopIds = shopIds;
 	}
 }

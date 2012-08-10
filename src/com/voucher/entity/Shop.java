@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +47,7 @@ public class Shop {
 	private Date createDate;
 	@OneToOne(mappedBy="shop")
 	private Position position;
-	@OneToMany(mappedBy="shop")
+	@OneToMany(mappedBy="shop", cascade=CascadeType.ALL)
 	private Set<Voucher> vouchers = new HashSet<Voucher>();
 	@OneToOne
 	@JoinColumn(name="CITY_ID")

@@ -108,4 +108,29 @@ public class UserVoucherDaoImpl extends BaseDaoImpl implements UserVoucherDao {
 		}
 	}
 
+	@Override
+	public UserVoucher findUserVoucherByVoucherInstanceId(int vchId) {
+		String hql = "from UserVoucher uv where uv.voucherInstance.id = :vchId";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("vchId", vchId);
+			List<UserVoucher> list = query.getResultList();
+			if(list != null && !list.isEmpty()) {
+				return list.get(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void removeUserVoucher(UserVoucher uv) {
+		try {
+			this.getJpaTemplate().remove(this.getJpaTemplate().merge(uv));
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

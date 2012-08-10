@@ -46,6 +46,8 @@ public class SysShopAction extends BaseAction implements SessionAware {
 	private String cityId;
 	private String areaId;
 	
+	private String []shopIds;
+	
 	private File upload;
 	private String uploadContentType;
 	private String uploadFileName;
@@ -116,12 +118,12 @@ public class SysShopAction extends BaseAction implements SessionAware {
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
 		Shop shop = new Shop(shopName, shopAddress, getTelNo(), description, shopType);
 		
-		final String imageFileName = buildFileName(uploadFileName.trim());
 		if(StringUtils.isBlank(id)) {
 			if(StringUtils.isBlank(uploadFileName)) {
 				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 				return;
 			}
+			final String imageFileName = buildFileName(uploadFileName.trim());
 			uploadShopImage(merchant, upload, imageFileName);
 			shop.setImage(imageFileName);
 			shop.setCreateDate(new Date());
@@ -138,6 +140,7 @@ public class SysShopAction extends BaseAction implements SessionAware {
 			if(StringUtils.isBlank(uploadFileName)) {
 				shop.setImage(oldShop.getImage());
 			} else {
+				final String imageFileName = buildFileName(uploadFileName.trim());
 				shop.setImage(imageFileName);
 				uploadShopImage(merchant, upload, imageFileName);
 				deleteShopImage(merchant, oldShop.getImage());
@@ -151,11 +154,15 @@ public class SysShopAction extends BaseAction implements SessionAware {
 	}
 	
 	public void delete() {
-		if (StringUtils.isBlank(id)) {
+		if(shopIds == null || shopIds.length == 0) {
 			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
 			return;
 		}
-		shopService.deleteById(Integer.valueOf(id));
+		for(String shopId : shopIds) {
+			if (!StringUtils.isBlank(shopId)) {
+				shopService.deleteById(Integer.valueOf(shopId));
+			}
+		}
 		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
 
@@ -444,5 +451,19 @@ public class SysShopAction extends BaseAction implements SessionAware {
 	 */
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
+	}
+
+	/**
+	 * @return the shopIds
+	 */
+	public String [] getShopIds() {
+		return shopIds;
+	}
+
+	/**
+	 * @param shopIds the shopIds to set
+	 */
+	public void setShopIds(String [] shopIds) {
+		this.shopIds = shopIds;
 	}
 }

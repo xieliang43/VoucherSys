@@ -13,6 +13,7 @@ import com.voucher.constants.WebConstants;
 import com.voucher.dao.UserVoucherDao;
 import com.voucher.dao.VoucherDao;
 import com.voucher.dao.VoucherInstanceDao;
+import com.voucher.entity.Shop;
 import com.voucher.entity.User;
 import com.voucher.entity.UserVoucher;
 import com.voucher.entity.Voucher;
@@ -137,6 +138,7 @@ public class VoucherServiceImpl implements VoucherService {
 
 	@Override
 	public void deleteById(int id) {
+		deleteVoucherInstancesByVoucher(id);
 		voucherDao.deleteById(id);
 	}
 
@@ -310,6 +312,31 @@ public class VoucherServiceImpl implements VoucherService {
 		}
 
 		return instances;
+	}
+
+	@Override
+	public void deleteByShop(Shop shop) {
+		List<Voucher> vouchers = voucherDao.getVouchersByShopId(shop.getId());
+		if(vouchers != null && !vouchers.isEmpty()) {
+			for(Voucher v : vouchers) {
+				deleteVoucherInstancesByVoucher(v.getId());
+				voucherDao.delete(v);
+			}
+		}
+	}
+
+	@Override
+	public void deleteVoucherInstancesByVoucher(int vchId) {
+		List<VoucherInstance> vis = voucherInstanceDao.getVoucherInstancesByVoucher(vchId);
+		if(vis != null && !vis.isEmpty()) {
+			for(VoucherInstance vi : vis) {
+				UserVoucher uv = userVoucherDao.findUserVoucherByVoucherInstanceId(vi.getId());
+				if(uv != null) {
+					userVoucherDao.removeUserVoucher(uv);
+				}
+				voucherInstanceDao.removeVoucherInstance(vi);
+			}
+		}
 	}
 
 }
