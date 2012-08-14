@@ -47,7 +47,7 @@ merchantshops.store = new Ext.data.Store({
 			reader : new Ext.data.JsonReader({// 数据读取器
 				totalProperty : 'results', // 记录总数
 				root : 'rows' // Json中的列表数据根节点
-			}, ['id', 'shopName', 'shopAddress', 'telNo', 'shopTypeId', 'image',
+			}, ['id', 'shopName', 'merchantName', 'shopAddress', 'telNo', 'shopTypeId', 'image',
 					'description', 'cityId', 'areaId', 'createDate']),
 			listeners : {
 				'load' : function(store, records, options) {
@@ -160,6 +160,9 @@ merchantshops.colModel = new Ext.grid.ColumnModel({
 					}, {
 						header : '商店名称',
 						dataIndex : 'shopName'
+					}, {
+						header : '商家',
+						dataIndex : 'merchantName'
 					}, {
 						header : '类型',
 						dataIndex : 'shopTypeId',

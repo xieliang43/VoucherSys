@@ -5,6 +5,7 @@ import java.util.Date;
 public class ShopVO {
 	private int id;
 	private String shopName;
+	private String merchantName;
 	private String shopAddress;
 	private String image;
 	private String telNo;
@@ -27,11 +28,12 @@ public class ShopVO {
 	 * @param shopTypeId
 	 * @param createDate
 	 */
-	public ShopVO(int id, String shopName, String shopAddress, String telNo, String image,
+	public ShopVO(int id, String shopName, String merchantName, String shopAddress, String telNo, String image,
 			String description, int shopTypeId, int distance, int cityId, int areaId, Date createDate) {
 		super();
 		this.id = id;
 		this.shopName = shopName;
+		this.merchantName = merchantName;
 		this.shopAddress = shopAddress;
 		this.telNo = telNo;
 		this.image = image;
@@ -173,5 +175,17 @@ public class ShopVO {
 	 */
 	public void setTelNo(String telNo) {
 		this.telNo = telNo;
+	}
+	/**
+	 * @return the merchantName
+	 */
+	public String getMerchantName() {
+		return merchantName;
+	}
+	/**
+	 * @param merchantName the merchantName to set
+	 */
+	public void setMerchantName(String merchantName) {
+		this.merchantName = merchantName;
 	}
 }

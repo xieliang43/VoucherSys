@@ -372,6 +372,7 @@ shop.saveFun = function() {
 	if (!form.isValid()) {
 		return;
 	}
+	
 	form.submit({
 		url : shop.save,
 		method : "POST",

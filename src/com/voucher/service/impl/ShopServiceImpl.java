@@ -133,7 +133,7 @@ public class ShopServiceImpl implements ShopService {
 		List<Shop> shopList = shopDao.getShops();
 		if (shopList != null && !shopList.isEmpty()) {
 			for (Shop s : shopList) {
-				ShopVO svo = new ShopVO(s.getId(), s.getShopName(),
+				ShopVO svo = new ShopVO(s.getId(), s.getShopName(), s.getMerchant().getAccount(),
 						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
 								.getShopType().getId(), 0, s.getCity().getId(),
 						s.getArea().getId(), s.getCreateDate());
@@ -156,7 +156,7 @@ public class ShopServiceImpl implements ShopService {
 		}
 		if (shopList != null && !shopList.isEmpty()) {
 			for (Shop s : shopList) {
-				ShopVO svo = new ShopVO(s.getId(), s.getShopName(),
+				ShopVO svo = new ShopVO(s.getId(), s.getShopName(), s.getMerchant().getAccount(),
 						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
 								.getShopType().getId(), 0, s.getCity().getId(),
 						s.getArea().getId(), s.getCreateDate());
@@ -245,7 +245,7 @@ public class ShopServiceImpl implements ShopService {
 					String baseImgPath = PropertiesLoader.getInstance()
 							.getShopImageBaseUrl() + shop.getMerchant().getAccount() + WebConstants.FORWARD_SLASH;
 					String cityArea = shop.getCity().getName() + shop.getArea().getName();
-					ShopVO svo = new ShopVO(shop.getId(), shop.getShopName(),
+					ShopVO svo = new ShopVO(shop.getId(), shop.getShopName(), shop.getMerchant().getAccount(),
 							cityArea + shop.getShopAddress(), shop.getTelNo(), baseImgPath
 									+ shop.getImage(), shop.getDescription(),
 							shop.getShopType().getId(), (int) distanceOfShop,
@@ -295,7 +295,7 @@ public class ShopServiceImpl implements ShopService {
 		}
 		if(shops != null && !shops.isEmpty()) {
 			for (Shop s : shops) {
-				ShopVO svo = new ShopVO(s.getId(), s.getShopName(),
+				ShopVO svo = new ShopVO(s.getId(), s.getShopName(), s.getMerchant().getAccount(),
 						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
 								.getShopType().getId(), 0, s.getCity().getId(),
 						s.getArea().getId(), s.getCreateDate());

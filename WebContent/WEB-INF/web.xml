@@ -59,7 +59,6 @@
 	<!-- 系统初始化监听器 -->
 	<listener>
 		<listener-class>com.voucher.listener.SystemInitListener</listener-class>
-		<listener-class>com.voucher.listener.SystemProxyListener</listener-class>
 	</listener>
 	<!-- Error Page定义 -->
  	<!-- <error-page>

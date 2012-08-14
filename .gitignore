@@ -16,6 +16,7 @@ local.properties
 #.settings/
 .loadpath
 .sonar/
+sonar-project.properties
 
 # External tool builders
 .externalToolBuilders/

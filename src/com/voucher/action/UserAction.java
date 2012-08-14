@@ -132,7 +132,7 @@ public class UserAction extends BaseAction implements SessionAware {
 			return;
 		}
 		Integer code = (int) (Math.random()*10000);
-		String verifyCode = String.valueOf(code);
+		String verifyCode = String.format("%04d", code);
 		messageService.sendMessage(phoneNo, verifyCode);
 		JsonVO vo = new JsonVO("1", "获取验证码成功！", verifyCode);
 		String json = this.convertToJson(vo);

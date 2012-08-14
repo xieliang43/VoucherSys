@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.voucher.action.BaseAction;
@@ -30,6 +31,7 @@ public class SysShopAction extends BaseAction implements SessionAware {
 	 * 
 	 */
 	private static final long serialVersionUID = -3106697979741132678L;
+	private static Logger logger = Logger.getLogger(SysShopAction.class);
 
 	private int start;
 	private int limit;

@@ -376,11 +376,11 @@ voucher.alwaysFun = function() {
 	voucher.editAction.disable();
 };
 voucher.saveFun = function() {
-	var iform = voucher.formPanel.getForm();
-	if (!iform.isValid()) {
+	var form = voucher.formPanel.getForm();
+	if (!form.isValid()) {
 		return;
 	}
-	iform.submit({
+	form.submit({
 		url : voucher.save,
 		method : "POST",
 		success : function(form, action) {
