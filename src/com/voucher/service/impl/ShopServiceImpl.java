@@ -327,4 +327,13 @@ public class ShopServiceImpl implements ShopService {
 	public void setVoucherService(VoucherService voucherService) {
 		this.voucherService = voucherService;
 	}
+
+	@Override
+	public List<Shop> getShopsByRegion(int rId) {
+		List<Shop> shops = shopDao.getShopsByCityId(rId);
+		if(shops == null || shops.isEmpty()) {
+			shops = shopDao.getShopsByAreaId(rId);
+		}
+		return shops;
+	}
 }

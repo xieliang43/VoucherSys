@@ -24,4 +24,5 @@ public interface ShopDao {
 	public List<Shop> getShopsByPager(ExtPager pager);
 	public List<Shop> getShopsByShopName(ExtPager pager, String shopName);
 	public List<Shop> getTotalCountByShopName(String shopName);
+	public List<Shop> getShopsByAreaId(int rId);
 }

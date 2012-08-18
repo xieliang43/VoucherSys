@@ -8,10 +8,12 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.RegionDao;
 import com.voucher.entity.Region;
+import com.voucher.exception.DataExistException;
 import com.voucher.exception.DataNotFoundException;
 import com.voucher.pojo.ExtPager;
 
@@ -19,6 +21,8 @@ import com.voucher.pojo.ExtPager;
  *
  */
 public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
+	
+	private static final Logger logger = Logger.getLogger(RegionDaoImpl.class);
 
 	public void create(Region region) throws PersistenceException {
 		try {
@@ -152,11 +156,12 @@ public class RegionDaoImpl extends BaseDaoImpl implements RegionDao {
 	}
 
 	@Override
-	public void deleteById(int id) {
+	public void deleteById(int id) throws DataExistException {
 		try {
 			this.getJpaTemplate().remove(this.getJpaTemplate().merge(this.findRegionById(id)));
 		} catch (DataAccessException e) {
-			e.printStackTrace();
+			logger.error("Foreign key exist, cannot remove region by id: " + id);
+			throw new DataExistException("Foreign key exist");
 		} catch (DataNotFoundException e) {
 			e.printStackTrace();
 		}

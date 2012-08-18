@@ -297,7 +297,7 @@ $(document).ready(function () {
     });
     
     login.tipLabel =  new Ext.form.Label({
-        text:"消费密码为消费者使用时商家需输入的密码，长度为4！"
+        text:"消费密码为消费者使用时商家需输入的密码，长度为4的数字！"
     });
     
     login.registerFormPanel = new Ext.form.FormPanel({
@@ -349,11 +349,26 @@ $(document).ready(function () {
 					anchor : '99%'
 				},{
 					fieldLabel : '电话',
-					xtype : 'numberfield',
 					maxLength : 16,
 					allowBlank : false,
 					name : 'officePhone',
-					anchor : '99%'
+					anchor : '99%',
+					listeners: {
+				        change: function() {
+				           var phoneField = login.registerFormPanel.getForm().findField("officePhone");
+				           var phone = phoneField.getValue();
+				           if(phone.length == 0) {
+				        	   Ext.Msg.alert('提示', '请输入电话号码');
+				           }
+				           for(var i=0; i<phone.length; i++) {
+				        	   if(isNaN(phone.charAt(i))) {
+				        		   Ext.Msg.alert('提示', '输入电话号码有误');
+				        		   phoneField.setValue("");
+				        		   return;
+				        	   }
+				           }
+				        }
+				    }
 				},{
 					fieldLabel : '邮箱',
 					maxLength : 36,

@@ -261,7 +261,23 @@ merchant.formPanel = new Ext.form.FormPanel({
 		maxLength : 14,
 		allowBlank : false,
 		name : 'officePhone',
-		anchor : '99%'
+		anchor : '99%',
+		listeners: {
+	        change: function() {
+	           var phoneField = merchant.formPanel.getForm().findField("officePhone");
+	           var phone = phoneField.getValue();
+	           if(phone.length == 0) {
+	        	   Ext.Msg.alert('提示', '请输入电话号码');
+	           }
+	           for(var i=0; i<phone.length; i++) {
+	        	   if(isNaN(phone.charAt(i))) {
+	        		   Ext.Msg.alert('提示', '输入电话号码有误');
+	        		   phoneField.setValue("");
+	        		   return;
+	        	   }
+	           }
+	        }
+	    }
 	}, {
 		fieldLabel : 'QQ',
 		maxLength : 14,

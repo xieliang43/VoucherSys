@@ -17,7 +17,9 @@ import org.apache.log4j.Logger;
 import com.voucher.comparator.RegionalComparator;
 import com.voucher.dao.RegionDao;
 import com.voucher.entity.Region;
+import com.voucher.exception.DataExistException;
 import com.voucher.exception.DataNotFoundException;
+import com.voucher.exception.ServiceDataAccessException;
 import com.voucher.exception.ServiceException;
 import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtPager;
@@ -170,8 +172,12 @@ public class RegionServiceImpl implements RegionService {
 	}
 
 	@Override
-	public void deleteById(int id) {
-		regionDao.deleteById(id);
+	public void deleteById(int id) throws ServiceDataAccessException {
+		try {
+			regionDao.deleteById(id);
+		} catch (DataExistException e) {
+			throw new ServiceDataAccessException("Service Data Access Exception");
+		}
 	}
 
 	@Override

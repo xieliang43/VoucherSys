@@ -27,7 +27,7 @@
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://223.4.25.206:3306/voucherdb?useUnicode=true&amp;characterEncoding=utf8" />
+		<property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:3306/voucherdb?useUnicode=true&amp;characterEncoding=utf8" />
 		<property name="user" value="root" />
 		<property name="password" value="1QAZxdr5" />
 
@@ -149,6 +149,7 @@
 	
 	<bean id="regionAction" class="com.voucher.action.RegionAction" scope="prototype">
 		<property name="regionService" ref="regionService"/>
+		<property name="shopService" ref="shopService"/>
 	</bean>
 	
 	<bean id="shopAction" class="com.voucher.action.ShopAction" scope="prototype">

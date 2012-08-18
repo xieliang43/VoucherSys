@@ -313,7 +313,23 @@ shop.formPanel = new Ext.form.FormPanel({
 						maxLength : 512,
 						allowBlank : false,
 						name : 'telNo',
-						anchor : '99%'
+						anchor : '99%',
+						listeners: {
+							change: function() {
+						           var telField = shop.formPanel.getForm().findField("telNo");
+						           var tel = telField.getValue();
+						           if(tel.length == 0) {
+						        	   Ext.Msg.alert('提示', '请输入电话号码');
+						           }
+						           for(var i=0; i<tel.length; i++) {
+						        	   if(isNaN(tel.charAt(i))) {
+						        		   Ext.Msg.alert('提示', '输入电话号码有误');
+						        		   telField.setValue("");
+						        		   return;
+						        	   }
+						           }
+						        }
+					    }
 					}, shop.cityCombo, shop.areaCombo, {
 						fieldLabel : '地址',
 						maxLength : 64,

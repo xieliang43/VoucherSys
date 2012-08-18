@@ -271,4 +271,17 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		}
 		return null;
 	}
+
+	@Override
+	public List<Shop> getShopsByAreaId(int rId) {
+		String hql = "from Shop s where s.area.id = :id";
+		try {
+			Query query = this.createQuery(hql);
+			query.setParameter("id", rId);
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

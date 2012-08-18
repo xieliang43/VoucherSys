@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.voucher.entity.Region;
+import com.voucher.exception.ServiceDataAccessException;
 import com.voucher.exception.ServiceException;
 import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtPager;
@@ -30,7 +31,7 @@ public interface RegionService {
 	public Region findRegionByParentId(int parentId);
 	public void saveRegion(Region region);
 	public void update(Region region);
-	public void deleteById(int id);
+	public void deleteById(int id) throws ServiceDataAccessException;
 	public Map<String, Object> getAllEnabledDistrictsByCity(int cityId);
 	public List<AreaVO> getAreasByParent(int cityId);
 }

@@ -6,6 +6,7 @@ package com.voucher.dao;
 import java.util.List;
 
 import com.voucher.entity.Region;
+import com.voucher.exception.DataExistException;
 import com.voucher.pojo.ExtPager;
 
 /**
@@ -24,5 +25,5 @@ public interface RegionDao {
 	public List<Region> getAllRegions(ExtPager pager);
 	public List<Region> getAllRegionsByName(ExtPager pager, String name);
 	public List<Region> getAllRegions();
-	public void deleteById(int id);
+	public void deleteById(int id) throws DataExistException;
 }

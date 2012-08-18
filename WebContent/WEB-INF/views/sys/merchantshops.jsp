@@ -312,10 +312,26 @@ merchantshops.formPanel = new Ext.form.FormPanel({
 						anchor : '99%'
 					}, merchantshops.shopTypeCombo, {
 						fieldLabel : '联系电话',
-						maxLength : 512,
+						maxLength : 16,
 						allowBlank : false,
 						name : 'telNo',
-						anchor : '99%'
+						anchor : '99%',
+						listeners: {
+					        change: function() {
+					           var telField = merchantshops.formPanel.getForm().findField("telNo");
+					           var tel = telField.getValue();
+					           if(tel.length == 0) {
+					        	   Ext.Msg.alert('提示', '请输入电话号码');
+					           }
+					           for(var i=0; i<tel.length; i++) {
+					        	   if(isNaN(tel.charAt(i))) {
+					        		   Ext.Msg.alert('提示', '输入电话号码有误');
+					        		   telField.setValue("");
+					        		   return;
+					        	   }
+					           }
+					        }
+					    }
 					}, merchantshops.cityCombo, merchantshops.areaCombo, {
 						fieldLabel : '地址',
 						maxLength : 64,

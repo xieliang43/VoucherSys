@@ -26,4 +26,5 @@ public interface ShopService {
 			String shopName);
 	public List<ShopVO> getShopsByShopName(ExtPager pager, String shopName);
 	public int getTotalCountByShopName(String shopName);
+	public List<Shop> getShopsByRegion(int rId);
 }

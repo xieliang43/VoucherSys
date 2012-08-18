@@ -124,10 +124,6 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(password)) {
-			this.sendExtReturn(new ExtReturn(false, "密码不能为空！"));
-			return;
-		}
 		if (StringUtils.isBlank(expensePassword)) {
 			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
 			return;
@@ -147,6 +143,10 @@ public class SysUserAction extends BaseAction implements SessionAware {
 		
 		String encExpensePassword = MD5.getInstance().encrypt(expensePassword);
 		if(StringUtils.isBlank(id)) {
+			if (StringUtils.isBlank(password)) {
+				this.sendExtReturn(new ExtReturn(false, "密码不能为空！"));
+				return;
+			}
 			String encPassword = MD5.getInstance().encrypt(password);
 			SysUser user = new SysUser(account, encPassword, encExpensePassword, realName, Short.valueOf(sex), email, mobile, officePhone, qqNo, remark);
 			sysUserService.save(user, roleIds);
@@ -154,9 +154,6 @@ public class SysUserAction extends BaseAction implements SessionAware {
 			SysUser oldUser = sysUserService.findUserById(Integer.valueOf(id));
 			oldUser.setAccount(account);
 			oldUser.setRealName(realName);
-			if(!encExpensePassword.equals(oldUser.getExpensePassword())) {
-				oldUser.setExpensePassword(encExpensePassword);
-			}
 			oldUser.setSex(Short.valueOf(sex));
 			oldUser.setEmail(email);
 			oldUser.setMobile(mobile);

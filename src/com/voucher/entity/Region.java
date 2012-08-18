@@ -19,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * @author weilin
  *
  */
 @Entity

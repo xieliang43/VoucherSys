@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.voucher.entity.Region;
+import com.voucher.entity.Shop;
+import com.voucher.exception.ServiceDataAccessException;
 import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
@@ -18,6 +20,7 @@ import com.voucher.pojo.ExtReturn;
 import com.voucher.pojo.JsonVO;
 import com.voucher.pojo.RegionVO;
 import com.voucher.service.RegionService;
+import com.voucher.service.ShopService;
 import com.voucher.util.JackJson;
 
 public class RegionAction extends BaseAction implements SessionAware {
@@ -28,6 +31,7 @@ public class RegionAction extends BaseAction implements SessionAware {
 	private static final long serialVersionUID = 6157582358663584560L;
 	
 	private RegionService regionService;
+	private ShopService shopService;
 	
 	private int start;
 	private int limit;
@@ -117,7 +121,20 @@ public class RegionAction extends BaseAction implements SessionAware {
 			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
 			return;
 		}
-		regionService.deleteById(Integer.valueOf(id));
+		List<Shop> shop = shopService.getShopsByRegion(Integer.valueOf(id));
+		if(shop != null && !shop.isEmpty()) {
+			sendExtReturn(new ExtReturn(false, "此区域有商店关联，请先删除区域商店！"));
+			return;
+		}
+		try {
+			regionService.deleteById(Integer.valueOf(id));
+		} catch (NumberFormatException e) {
+			sendExtReturn(new ExtReturn(false, "主键格式错误！"));
+			return;
+		} catch (ServiceDataAccessException e) {
+			sendExtReturn(new ExtReturn(false, "此区域有子区域，请先删除子区域！"));
+			return;
+		}
 		sendExtReturn(new ExtReturn(true, "删除成功！"));
 	}
 
@@ -292,5 +309,19 @@ public class RegionAction extends BaseAction implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+	/**
+	 * @return the shopService
+	 */
+	public ShopService getShopService() {
+		return shopService;
+	}
+
+	/**
+	 * @param shopService the shopService to set
+	 */
+	public void setShopService(ShopService shopService) {
+		this.shopService = shopService;
 	}
 }
