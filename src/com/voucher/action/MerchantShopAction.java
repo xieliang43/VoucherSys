@@ -114,10 +114,6 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 			sendExtReturn(new ExtReturn(false, "城市不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(getAreaId())) {
-			sendExtReturn(new ExtReturn(false, "区不能为空！"));
-			return;
-		}
 		if (StringUtils.isBlank(getShopAddress())) {
 			sendExtReturn(new ExtReturn(false, "地址不能为空！"));
 			return;
@@ -125,7 +121,10 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 		
 		ShopType shopType = shopTypeService.getShopTypeById(Integer.valueOf(shopTypeId));
 		Region city = regionService.getRegionById(Integer.valueOf(cityId));
-		Region area = regionService.getRegionById(Integer.valueOf(areaId));
+		Region area = null;
+		if (!StringUtils.isBlank(getAreaId())) {
+			area = regionService.getRegionById(Integer.valueOf(areaId));
+		}
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
 		if(merchant == null) {
 			sendExtReturn(new ExtReturn(false, "用户不能为空！"));
@@ -138,6 +137,7 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
 				return;
 			}
+			
 			final String imageFileName = buildFileName(uploadFileName.trim());
 			uploadShopImage(merchant, upload, imageFileName);
 			shop.setImage(imageFileName);

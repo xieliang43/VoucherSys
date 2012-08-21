@@ -130,7 +130,6 @@ merchantshops.areaCombo = new Ext.form.ComboBox({
 	}),
 	valueField : 'id',
 	displayField : 'name',
-	allowBlank : false,
 	editable : false,
 	anchor : '99%'
 });
@@ -214,6 +213,12 @@ merchantshops.addAction = new Ext.Action({
 	        	merchantshops.areaCombo.store.removeAll();
 	        	merchantshops.areaStore.reload();
 	        	merchantshops.areaCombo.store = merchantshops.areaStore;
+	        	
+	        	var form = merchantshops.formPanel.getForm();
+				var isAddField = form.findField("isAdd");
+				if(isAddField.getValue() == undefined || isAddField.getValue() == "false" || isAddField.getValue().length == 0) {
+					isAddField.setValue("true");
+				}
 			}
 		});
 /** 编辑 */
@@ -231,6 +236,7 @@ merchantshops.editAction = new Ext.Action({
 					Ext.Msg.alert("提示", "请选择一个商店进行编辑!");
 					return;
 				}
+				
 				var record = merchantshops.grid.getSelectionModel().getSelected();
 				merchantshops.addWindow.setIconClass('module_edit'); // 设置窗口的样式
 				merchantshops.addWindow.setTitle('编辑商店'); // 设置窗口的名称
@@ -244,6 +250,12 @@ merchantshops.editAction = new Ext.Action({
 	             });
 	        	merchantshops.areaStore.reload();
 	        	merchantshops.areaCombo.store = merchantshops.areaStore;
+	        	
+	        	var form = merchantshops.formPanel.getForm();
+				var isAddField = form.findField("isAdd");
+				if(isAddField.getValue() == undefined || isAddField.getValue() == "true" || isAddField.getValue().length == 0) {
+					isAddField.setValue("false");
+				}
 			}
 		});
 /** 删除 */
@@ -289,7 +301,7 @@ merchantshops.grid = new Ext.grid.GridPanel({
 			viewConfig : {}
 		});
 merchantshops.tipLabel =  new Ext.form.Label({
-    text:"推荐配置：图片大小: 480 x 480, 大小限制：5M"
+    text:"推荐配置：图片大小: 480 x 480, 大小限制：200K"
 });
 /** 基本信息-详细信息的form */
 merchantshops.formPanel = new Ext.form.FormPanel({
@@ -303,6 +315,10 @@ merchantshops.formPanel = new Ext.form.FormPanel({
 						xtype : 'hidden',
 						fieldLabel : 'ID',
 						name : 'id',
+						anchor : '99%'
+					}, {
+						xtype : 'hidden',
+						name : 'isAdd',
 						anchor : '99%'
 					}, {
 						fieldLabel : '商店名称',
@@ -367,6 +383,15 @@ merchantshops.addWindow = new Ext.Window({
 			buttons : [{
 						text : '保存',
 						handler : function() {
+							var form = merchantshops.formPanel.getForm();
+							var isAdd = form.findField("isAdd").getValue();
+							if(isAdd == "true") {
+								var upload = form.findField("upload").getValue();
+								if(upload == null || upload == "") {
+									Ext.Msg.alert('提示', '请添加图片！');
+					        		   return;
+								}
+							}
 							merchantshops.saveFun();
 						}
 					}, {
@@ -392,6 +417,7 @@ merchantshops.saveFun = function() {
 	}
 	form.submit({
 		url : merchantshops.save,
+		waitMsg: "保存中，请稍等...",
 		method : "POST",
 		success : function(form, action) {
 			merchantshops.addWindow.hide();

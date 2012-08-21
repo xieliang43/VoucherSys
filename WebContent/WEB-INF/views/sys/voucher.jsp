@@ -149,11 +149,23 @@ voucher.addAction = new Ext.Action({
 			text : '新建',
 			iconCls : 'module_add',
 			handler : function() {
+				var form = voucher.formPanel.getForm();
+				var img = form.findField("img").getValue();
+				if(img == null || img == "") {
+					Ext.Msg.alert('提示', '请添加图片！');
+	        		   return;
+				}
 				voucher.addWindow.setIconClass('module_add'); // 设置窗口的样式
 				voucher.addWindow.setTitle('新建模块'); // 设置窗口的名称
 				voucher.addWindow.show().center(); // 显示窗口
 				voucher.formPanel.getForm().reset(); // 清空表单里面的元素的值.
 				voucher.shopCombo.clearValue();
+				
+				var form = voucher.formPanel.getForm();
+				var isAddField = form.findField("isAdd");
+				if(isAddField.getValue() == undefined || isAddField.getValue() == "false" || isAddField.getValue().length == 0) {
+					isAddField.setValue("true");
+				}
 			}
 		});
 /** 编辑 */
@@ -177,6 +189,12 @@ voucher.editAction = new Ext.Action({
 				voucher.addWindow.show().center();
 				voucher.formPanel.getForm().reset();
 				voucher.formPanel.getForm().loadRecord(record);
+				
+				var form = voucher.formPanel.getForm();
+				var isAddField = form.findField("isAdd");
+				if(isAddField.getValue() == undefined || isAddField.getValue() == "true" || isAddField.getValue().length == 0) {
+					isAddField.setValue("false");
+				}
 			}
 		});
 /** 删除 */
@@ -295,6 +313,10 @@ voucher.formPanel = new Ext.form.FormPanel({
 						name : 'id',
 						anchor : '99%'
 					}, {
+						xtype : 'hidden',
+						name : 'isAdd',
+						anchor : '99%'
+					}, {
 						fieldLabel : '代金券名称',
 						maxLength : 64,
 						allowBlank : false,
@@ -357,6 +379,15 @@ voucher.addWindow = new Ext.Window({
 						id : 'saveBtn',
 						text : '保存',
 						handler : function() {
+							var form = voucher.formPanel.getForm();
+							var isAdd = form.findField("isAdd").getValue();
+							if(isAdd == "true") {
+								var upload = form.findField("img").getValue();
+								if(upload == null || upload == "") {
+									Ext.Msg.alert('提示', '请添加图片！');
+					        		   return;
+								}
+							}
 							voucher.saveFun();
 						}
 					}, {
@@ -382,6 +413,7 @@ voucher.saveFun = function() {
 	}
 	form.submit({
 		url : voucher.save,
+		waitMsg: "保存中，请稍等...",
 		method : "POST",
 		success : function(form, action) {
 			voucher.addWindow.hide();

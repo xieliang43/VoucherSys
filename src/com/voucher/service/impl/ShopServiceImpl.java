@@ -16,6 +16,7 @@ import com.voucher.constants.WebConstants;
 import com.voucher.dao.PositionDao;
 import com.voucher.dao.ShopDao;
 import com.voucher.entity.Position;
+import com.voucher.entity.Region;
 import com.voucher.entity.Shop;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
@@ -81,9 +82,12 @@ public class ShopServiceImpl implements ShopService {
 		shop.setMerchant(oldShop.getMerchant());
 
 		shopDao.update(shop);
-
+		String areaName = "";
+		if(shop.getArea() != null) {
+			areaName = shop.getArea().getName();
+		}
 		Map<String, Double> latLng = BaiduMapUtil.getInstance().getLatLng(
-				shop.getCity().getName(), shop.getArea().getName() + shop.getShopAddress());
+				shop.getCity().getName(), areaName + shop.getShopAddress());
 		if (latLng != null) {
 			Double lat = latLng.get(WebConstants.LAT);
 			Double lng = latLng.get(WebConstants.LNG);
@@ -107,8 +111,12 @@ public class ShopServiceImpl implements ShopService {
 	@Override
 	public void save(Shop shop) {
 		shopDao.create(shop);
+		String areaName = "";
+		if(shop.getArea() != null) {
+			areaName = shop.getArea().getName();
+		}
 		Map<String, Double> latLng = BaiduMapUtil.getInstance().getLatLng(
-				shop.getCity().getName(), shop.getArea().getName() + shop.getShopAddress());
+				shop.getCity().getName(), areaName + shop.getShopAddress());
 		
 		Position pos = new Position();
 		pos.setShop(shop);
@@ -133,10 +141,15 @@ public class ShopServiceImpl implements ShopService {
 		List<Shop> shopList = shopDao.getShops();
 		if (shopList != null && !shopList.isEmpty()) {
 			for (Shop s : shopList) {
+				int areaId = 0;
+				Region area = s.getArea();
+				if(area != null) {
+					areaId = area.getId();
+				}
 				ShopVO svo = new ShopVO(s.getId(), s.getShopName(), s.getMerchant().getAccount(),
 						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
 								.getShopType().getId(), 0, s.getCity().getId(),
-						s.getArea().getId(), s.getCreateDate());
+						areaId, s.getCreateDate());
 				shopVOList.add(svo);
 			}
 		}
@@ -156,10 +169,15 @@ public class ShopServiceImpl implements ShopService {
 		}
 		if (shopList != null && !shopList.isEmpty()) {
 			for (Shop s : shopList) {
+				int areaId = 0;
+				Region area = s.getArea();
+				if(area != null) {
+					areaId = area.getId();
+				}
 				ShopVO svo = new ShopVO(s.getId(), s.getShopName(), s.getMerchant().getAccount(),
 						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
 								.getShopType().getId(), 0, s.getCity().getId(),
-						s.getArea().getId(), s.getCreateDate());
+								areaId, s.getCreateDate());
 				shopVOList.add(svo);
 			}
 		}
@@ -244,12 +262,19 @@ public class ShopServiceImpl implements ShopService {
 				if ((int) distanceOfShop < shopPager.getDistance()) {
 					String baseImgPath = PropertiesLoader.getInstance()
 							.getShopImageBaseUrl() + shop.getMerchant().getAccount() + WebConstants.FORWARD_SLASH;
-					String cityArea = shop.getCity().getName() + shop.getArea().getName();
+					Region area = shop.getArea();
+					String areaName = "";
+					int areaId = 0;
+					if(area != null) {
+						areaName = area.getName();
+						areaId = area.getId();
+					}
+					String cityArea = shop.getCity().getName() + areaName;
 					ShopVO svo = new ShopVO(shop.getId(), shop.getShopName(), shop.getMerchant().getAccount(),
 							cityArea + shop.getShopAddress(), shop.getTelNo(), baseImgPath
 									+ shop.getImage(), shop.getDescription(),
 							shop.getShopType().getId(), (int) distanceOfShop,
-							shop.getCity().getId(), shop.getArea().getId(),
+							shop.getCity().getId(), areaId,
 							shop.getCreateDate());
 					list.add(svo);
 				}
@@ -295,10 +320,14 @@ public class ShopServiceImpl implements ShopService {
 		}
 		if(shops != null && !shops.isEmpty()) {
 			for (Shop s : shops) {
+				int areaId = 0;
+				if(s.getArea() != null) {
+					areaId = s.getArea().getId();
+				}
 				ShopVO svo = new ShopVO(s.getId(), s.getShopName(), s.getMerchant().getAccount(),
 						s.getShopAddress(), s.getTelNo(), s.getImage(), s.getDescription(), s
 								.getShopType().getId(), 0, s.getCity().getId(),
-						s.getArea().getId(), s.getCreateDate());
+						areaId, s.getCreateDate());
 				shopVOList.add(svo);
 			}
 		}

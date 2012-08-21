@@ -139,6 +139,57 @@ public class UserAction extends BaseAction implements SessionAware {
 		sendJSonReturn(json);
 	}
 	
+	public void getResetCode() throws IOException {
+		if(StringUtils.isBlank(phoneNo)) {
+			JsonVO jErrorVO = new JsonVO("0", "请输入电话号码！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		User existUser = userService.findUserByPhoneNo(phoneNo);
+		if(existUser == null) {
+			JsonVO jErrorVO = new JsonVO("0", "此手机号码未注册！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		Integer code = (int) (Math.random()*10000);
+		String verifyCode = String.format("%04d", code);
+		messageService.sendMessage(phoneNo, verifyCode);
+		JsonVO vo = new JsonVO("1", "获取验证码成功！", verifyCode);
+		String json = this.convertToJson(vo);
+		sendJSonReturn(json);
+	}
+	
+	public void resetPassword() {
+		if(StringUtils.isBlank(phoneNo)) {
+			JsonVO jErrorVO = new JsonVO("0", "请输入电话号码！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		if(StringUtils.isBlank(password)) {
+			JsonVO jErrorVO = new JsonVO("0", "请输入密码！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		User existUser = userService.findUserByPhoneNo(phoneNo);
+		if(existUser == null) {
+			JsonVO jErrorVO = new JsonVO("0", "此手机号码未注册！", null);
+			String json = this.convertToJson(jErrorVO);
+			sendJSonReturn(json);
+			return;
+		}
+		String newPwd = MD5.getInstance().encrypt(password);
+		existUser.setPassword(newPwd);
+		userService.update(existUser);
+		JsonVO jVO = new JsonVO("1", "密码修改成功！", null);
+		
+		String json = this.convertToJson(jVO);
+		sendJSonReturn(json);
+	}
+	
 	public String initUserCities() {
 		Map<String, Object> areaMap = regionService.getAllCities();
 		session.put("userAreaMap", JackJson.fromObjectToJson(areaMap));

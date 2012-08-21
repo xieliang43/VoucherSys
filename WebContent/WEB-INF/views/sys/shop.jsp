@@ -130,7 +130,6 @@ shop.areaCombo = new Ext.form.ComboBox({
 	}),
 	valueField : 'id',
 	displayField : 'name',
-	allowBlank : false,
 	editable : false,
 	anchor : '99%'
 });
@@ -201,6 +200,13 @@ shop.addAction = new Ext.Action({
 			text : '新建',
 			iconCls : 'module_add',
 			handler : function() {
+				var form = shop.formPanel.getForm();
+				var upload = form.findField("upload").getValue();
+				if(upload == null || upload == "") {
+					Ext.Msg.alert('提示', '请添加图片！');
+	        		   return;
+				}
+				
 				shop.addWindow.setIconClass('module_add'); // 设置窗口的样式
 				shop.addWindow.setTitle('新建商店'); // 设置窗口的名称
 				shop.addWindow.show().center(); // 显示窗口
@@ -211,6 +217,12 @@ shop.addAction = new Ext.Action({
 	        	shop.areaCombo.store.removeAll();
 	        	shop.areaStore.reload();
 	        	shop.areaCombo.store = shop.areaStore;
+	        	
+	        	var form = shop.formPanel.getForm();
+				var isAddField = form.findField("isAdd");
+				if(isAddField.getValue() == undefined || isAddField.getValue() == "false" || isAddField.getValue().length == 0) {
+					isAddField.setValue("true");
+				}
 			}
 		});
 /** 编辑 */
@@ -241,6 +253,12 @@ shop.editAction = new Ext.Action({
 	             });
 	        	shop.areaStore.reload();
 	        	shop.areaCombo.store = shop.areaStore;
+	        	
+	        	var form = shop.formPanel.getForm();
+				var isAddField = form.findField("isAdd");
+				if(isAddField.getValue() == undefined || isAddField.getValue() == "true" || isAddField.getValue().length == 0) {
+					isAddField.setValue("false");
+				}
 			}
 		});
 /** 删除 */
@@ -301,6 +319,10 @@ shop.formPanel = new Ext.form.FormPanel({
 						xtype : 'hidden',
 						fieldLabel : 'ID',
 						name : 'id',
+						anchor : '99%'
+					}, {
+						xtype : 'hidden',
+						name : 'isAdd',
 						anchor : '99%'
 					}, {
 						fieldLabel : '商店名称',
@@ -365,6 +387,15 @@ shop.addWindow = new Ext.Window({
 			buttons : [{
 						text : '保存',
 						handler : function() {
+							var form = shop.formPanel.getForm();
+							var isAdd = form.findField("isAdd").getValue();
+							if(isAdd == "true") {
+								var upload = form.findField("upload").getValue();
+								if(upload == null || upload == "") {
+									Ext.Msg.alert('提示', '请添加图片！');
+					        		   return;
+								}
+							}
 							shop.saveFun();
 						}
 					}, {
@@ -391,6 +422,7 @@ shop.saveFun = function() {
 	
 	form.submit({
 		url : shop.save,
+		waitMsg: "保存中，请稍等...",
 		method : "POST",
 		success : function(form, action) {
 			shop.addWindow.hide();
