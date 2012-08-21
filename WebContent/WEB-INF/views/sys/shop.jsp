@@ -200,12 +200,6 @@ shop.addAction = new Ext.Action({
 			text : '新建',
 			iconCls : 'module_add',
 			handler : function() {
-				var form = shop.formPanel.getForm();
-				var upload = form.findField("upload").getValue();
-				if(upload == null || upload == "") {
-					Ext.Msg.alert('提示', '请添加图片！');
-	        		   return;
-				}
 				
 				shop.addWindow.setIconClass('module_add'); // 设置窗口的样式
 				shop.addWindow.setTitle('新建商店'); // 设置窗口的名称

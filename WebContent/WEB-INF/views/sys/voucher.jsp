@@ -149,12 +149,6 @@ voucher.addAction = new Ext.Action({
 			text : '新建',
 			iconCls : 'module_add',
 			handler : function() {
-				var form = voucher.formPanel.getForm();
-				var img = form.findField("img").getValue();
-				if(img == null || img == "") {
-					Ext.Msg.alert('提示', '请添加图片！');
-	        		   return;
-				}
 				voucher.addWindow.setIconClass('module_add'); // 设置窗口的样式
 				voucher.addWindow.setTitle('新建模块'); // 设置窗口的名称
 				voucher.addWindow.show().center(); // 显示窗口
