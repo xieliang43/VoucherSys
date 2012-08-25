@@ -17,6 +17,10 @@ public class PropertiesLoader {
 		return instance;
 	}
 	
+	public String getResetPassword() {
+		return getValueByKey("user.reset.password");
+	}
+	
 	public String getProxyHost() {
 		return getValueByKey("proxy.host");
 	}
@@ -63,6 +67,20 @@ public class PropertiesLoader {
 	}
 	public String getSmsUrl() {
 		return getValueByKey("sms.url");
+	}
+	
+	public String getSmtpHost() {
+		return getValueByKey("mail.smtp.host");
+	}
+	public String getSmtpAuth() {
+		return getValueByKey("mail.smtp.auth");
+	}
+	
+	public String getMailAccount() {
+		return getValueByKey("email.account");
+	}
+	public String getMailPassword() {
+		return getValueByKey("email.password");
 	}
 	
 	public String getValueByKey(String key) {

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.voucher.entity.Advice;
 import com.voucher.entity.Publish;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
@@ -58,7 +57,7 @@ public class PublishAction extends BaseAction {
 	
 	public void loadAll() {
 		ExtPager pager = new ExtPager(limit, start, dir, sort);
-		List<Advice> list = publishService.findAdviceByMsg(pager, phoneNo);
+		List<Publish> list = publishService.findPublishByMsg(pager, phoneNo);
 		int total = publishService.getTotalCount();
 		
 		sendExtGridReturn(new ExtGridReturn(total, list));

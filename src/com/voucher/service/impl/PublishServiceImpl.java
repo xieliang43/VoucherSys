@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.voucher.dao.PublishDao;
-import com.voucher.entity.Advice;
 import com.voucher.entity.Publish;
 import com.voucher.pojo.ExtPager;
 import com.voucher.service.PublishService;
@@ -33,8 +32,8 @@ public class PublishServiceImpl implements PublishService {
 	}
 
 	@Override
-	public List<Advice> findAdviceByMsg(ExtPager pager, String phoneNo) {
-		List<Advice> list = null;
+	public List<Publish> findPublishByMsg(ExtPager pager, String phoneNo) {
+		List<Publish> list = null;
 		if(StringUtils.isBlank(phoneNo)) {
 			list = publishDao.findPublishes(pager);
 		} else {

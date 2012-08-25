@@ -10,7 +10,6 @@ import com.voucher.exception.DataExistException;
 import com.voucher.pojo.ExtPager;
 
 /**
- * @author LL
  *
  */
 public interface RegionDao {

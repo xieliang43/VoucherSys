@@ -9,6 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.google.code.kaptcha.Constants;
 import com.voucher.action.BaseAction;
 import com.voucher.constants.WebConstants;
 import com.voucher.entity.sys.SysUser;
@@ -35,6 +36,7 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	private String mobile;
 	private String officePhone;
 	private String qqNo;
+	private String captcha;
 
 	private SysUserService sysUserService;
 	private SysModuleService sysModuleService;
@@ -148,6 +150,52 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 		session.remove(WebConstants.CURRENT_USER);
 		
 		this.sendExtReturn(new ExtReturn(true, "退出系统成功！"));
+	}
+	
+	public void resetPassword() {
+		if (StringUtils.isBlank(account)) {
+			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(email)) {
+			this.sendExtReturn(new ExtReturn(false, "邮箱不能为空！"));
+			return;
+		}
+		if (StringUtils.isBlank(captcha)) {
+			this.sendExtReturn(new ExtReturn(false, "验证码不能为空！"));
+			return;
+		}
+		
+		Object sessionCaptcha =  session.get(Constants.KAPTCHA_SESSION_KEY);
+		if(null == sessionCaptcha){
+			this.sendExtReturn(new ExtReturn(false, "验证码已经失效!请重新输入新的验证码！"));
+			return;
+		}
+		if (!captcha.equalsIgnoreCase((String)sessionCaptcha)) {
+			this.sendExtReturn(new ExtReturn(false, "验证码输入不正确,请重新输入！"));
+			return;
+		}
+		session.remove(Constants.KAPTCHA_SESSION_KEY);
+		
+		SysUser user = sysUserService.findUserByAccount(account);
+		if(user == null) {
+			this.sendExtReturn(new ExtReturn(false, "不能找到用户！"));
+			return;
+		}
+		if(!email.equals(user.getEmail())) {
+			this.sendExtReturn(new ExtReturn(false, "注册邮箱不正确！"));
+			return;
+		}
+		
+		String result = sysUserService.findPassword(user);
+		
+		if ("01".equals(result)) {
+			this.sendExtReturn(new ExtReturn(true, "邮件发送成功！请登录注册邮箱查收！"));
+		} else if ("00".equals(result)) {
+			this.sendExtReturn(new ExtReturn(false, "邮件发送失败！"));
+		} else {
+			this.sendExtReturn(new ExtReturn(false, result));
+		}
 	}
 	
 	private String getIpAddr() {
@@ -343,5 +391,19 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	 */
 	public void setComparePassword(String comparePassword) {
 		this.comparePassword = comparePassword;
+	}
+
+	/**
+	 * @return the captcha
+	 */
+	public String getCaptcha() {
+		return captcha;
+	}
+
+	/**
+	 * @param captcha the captcha to set
+	 */
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 }

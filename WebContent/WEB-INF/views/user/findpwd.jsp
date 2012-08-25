@@ -16,11 +16,10 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
-//yepnope("${ctx}/resources/js/user/findpwd.js");
 Ext.ns("Ext.Authority.findpassword"); // 自定义一个命名空间
 findpwd = Ext.Authority.findpassword; // 定义命名空间的别名
 findpwd = {
-	findurl : ctx + "/findpwd"
+	findurl : ctx + "/sysLoginAction!resetPassword.action"
 };
 // 编辑用户Form
 findpwd.findPwdFormPanel = new Ext.form.FormPanel({

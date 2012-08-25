@@ -28,4 +28,5 @@ public interface SysUserService {
 	public void deleteById(int userId);
 	public void resetPassword(SysUser user);
 	public SysUser findUserByPhoneNo(String mobile);
+	public String findPassword(SysUser user);
 }

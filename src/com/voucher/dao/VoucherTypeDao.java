@@ -8,7 +8,6 @@ import java.util.List;
 import com.voucher.entity.ShopType;
 
 /**
- * @author LL
  *
  */
 public interface VoucherTypeDao {

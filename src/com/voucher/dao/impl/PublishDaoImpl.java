@@ -23,7 +23,7 @@ public class PublishDaoImpl extends BaseDaoImpl implements PublishDao {
 	}
 
 	@Override
-	public List<Advice> findPublishes(ExtPager pager) {
+	public List<Publish> findPublishes(ExtPager pager) {
 		String hql = "from Publish pub";
 		hql = this.createQueryString(Publish.class, hql, pager);
 		try {
@@ -36,7 +36,7 @@ public class PublishDaoImpl extends BaseDaoImpl implements PublishDao {
 	}
 
 	@Override
-	public List<Advice> findPublishesByPhoneNo(ExtPager pager, String phoneNo) {
+	public List<Publish> findPublishesByPhoneNo(ExtPager pager, String phoneNo) {
 		String hql = "from Publish pb where pb.phoneNo like :phoneNo";
 		hql = this.createQueryString(Publish.class, hql, pager);
 		

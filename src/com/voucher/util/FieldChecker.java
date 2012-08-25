@@ -13,7 +13,7 @@ public class FieldChecker {
 		return instance;
 	}
 	
-	public boolean checkField(Class clazz, String field) {
+	public boolean checkField(Class<?> clazz, String field) {
 		Set<String> fieldSet = new HashSet<String>();
 		Field []fields = clazz.getDeclaredFields();
 		if(fields != null && fields.length > 0) {

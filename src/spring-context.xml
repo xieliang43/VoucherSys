@@ -34,12 +34,12 @@
 		<property name="autoCommitOnClose" value="true" />
 		<property name="initialPoolSize" value="5"/>
 		<property name="minPoolSize" value="5"/>
-		<property name="maxPoolSize" value="100"/>
-		<property name="maxIdleTime" value="30"/>
-		<property name="maxIdleTimeExcessConnections" value="30"/>
+		<property name="maxPoolSize" value="250"/>
+		<property name="maxIdleTime" value="60"/>
+		<property name="maxIdleTimeExcessConnections" value="60"/>
 		<property name="acquireIncrement" value="1"/>
 		<property name="acquireRetryAttempts" value="0"/>
-		<property name="unreturnedConnectionTimeout" value="30"/>
+		<property name="unreturnedConnectionTimeout" value="60"/>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

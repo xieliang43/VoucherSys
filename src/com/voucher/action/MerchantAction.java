@@ -28,6 +28,8 @@ public class MerchantAction extends BaseAction implements SessionAware {
 	private String account;
 	private String password;
 	private String expensePassword;
+	private String newExpensePassword;
+	private String cmpExpensePassword;
 	private String realName;
 	private String sex;
 	private String email;
@@ -84,10 +86,6 @@ public class MerchantAction extends BaseAction implements SessionAware {
 			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(expensePassword)) {
-			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
-			return;
-		}
 		if (StringUtils.isBlank(email)) {
 			this.sendExtReturn(new ExtReturn(false, "邮箱不能为空！"));
 			return;
@@ -118,47 +116,34 @@ public class MerchantAction extends BaseAction implements SessionAware {
 		user.setRealName(realName);
 		user.setQqNo(qqNo);
 		user.setOfficePhone(officePhone);
-		if(!expensePassword.equals(user.getExpensePassword())) {
-			user.setExpensePassword(MD5.getInstance().encrypt(expensePassword));
-		}
 
 		sysUserService.update(user);
 		sendExtReturn(new ExtReturn(true, "更新成功！"));
 	}
 
-	public void changePassword() {
+	public void changeExpPassword() {
 		SysUser user = (SysUser) session.get(WebConstants.CURRENT_USER);
 		if (user == null) {
 			this.sendExtReturn(new ExtReturn(false, "用户未找到!"));
 			return;
 		}
-		if (StringUtils.isBlank(oldPassword)) {
-			this.sendExtReturn(new ExtReturn(false, "原密码不能为空！"));
+		if (StringUtils.isBlank(newExpensePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(newPassword)) {
-			this.sendExtReturn(new ExtReturn(false, "新密码不能为空！"));
+		if (StringUtils.isBlank(cmpExpensePassword)) {
+			this.sendExtReturn(new ExtReturn(false, "确认消费密码不能为空！"));
 			return;
 		}
-		if (StringUtils.isBlank(comparePassword)) {
-			this.sendExtReturn(new ExtReturn(false, "确认密码不能为空！"));
-			return;
-		}
-		if (!comparePassword.equals(newPassword)) {
+		if (!newExpensePassword.equals(cmpExpensePassword)) {
 			this.sendExtReturn(new ExtReturn(false, "两次输入的密码不一致！"));
 			return;
 		}
-		String encPassword = MD5.getInstance().encrypt(oldPassword);
-		if (!encPassword.equals(user.getPassword())) {
-			this.sendExtReturn(new ExtReturn(false, "原密码不正确！请重新输入！"));
-			return;
-		}
-		String encNewPassword = MD5.getInstance().encrypt(newPassword);
-		user.setPassword(encNewPassword);
+		String encNewExpPassword = MD5.getInstance().encrypt(newExpensePassword);
+		user.setExpensePassword(encNewExpPassword);
 		sysUserService.update(user);
 
-		session.remove(WebConstants.CURRENT_USER);
-		this.sendExtReturn(new ExtReturn(true, "修改密码成功！请重新登录！"));
+		this.sendExtReturn(new ExtReturn(true, "修改消费密码成功！"));
 	}
 
 	@Override
@@ -418,6 +403,34 @@ public class MerchantAction extends BaseAction implements SessionAware {
 	 */
 	public void setExpensePassword(String expensePassword) {
 		this.expensePassword = expensePassword;
+	}
+
+	/**
+	 * @return the cmpExpensePassword
+	 */
+	public String getCmpExpensePassword() {
+		return cmpExpensePassword;
+	}
+
+	/**
+	 * @param cmpExpensePassword the cmpExpensePassword to set
+	 */
+	public void setCmpExpensePassword(String cmpExpensePassword) {
+		this.cmpExpensePassword = cmpExpensePassword;
+	}
+
+	/**
+	 * @return the newExpensePassword
+	 */
+	public String getNewExpensePassword() {
+		return newExpensePassword;
+	}
+
+	/**
+	 * @param newExpensePassword the newExpensePassword to set
+	 */
+	public void setNewExpensePassword(String newExpensePassword) {
+		this.newExpensePassword = newExpensePassword;
 	}
 
 }

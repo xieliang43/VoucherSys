@@ -8,7 +8,7 @@ merchant = Ext.Authority.merchant; // 定义命名空间的别名
 merchant = {
 	all : ctx + '/merchantAction!loadMerchant.action', // 所有用户
 	save : ctx + "/merchantAction!update.action",// 保存用户
-	reset : ctx + "/merchantAction!changePassword.action",// 重置用户密码
+	reset : ctx + "/merchantAction!changeExpPassword.action",// 重置用户密码
 	pageSize : 20,// 每页显示的记录数
 	AREAMAP :eval('(${mchAreaMap})'),
 	SEX: eval('(${fields.sex==null?"{}":fields.sex})')//注意括号
@@ -57,11 +57,11 @@ merchant.selModel = new Ext.grid.CheckboxSelectionModel({
 	listeners : {
 		'rowselect' : function(selectionModel, rowIndex, record) {
 			merchant.editAction.enable();
-			merchant.resetPwdAction.enable();
+			merchant.resetExpPwdAction.enable();
 		},
 		'rowdeselect' : function(selectionModel, rowIndex, record) {
 			merchant.editAction.disable();
-			merchant.resetPwdAction.disable();
+			merchant.resetExpPwdAction.disable();
 		}
 	}
 });
@@ -82,6 +82,7 @@ merchant.colModel = new Ext.grid.ColumnModel({
 		header : '用户姓名',
 		dataIndex : 'realName'
 	}, {
+		hidden: true,
 		header : '消费密码',
 		dataIndex : 'expensePassword'
 	}, {
@@ -142,21 +143,21 @@ merchant.editAction = new Ext.Action({
 	}
 });
 /** 重置密码 */
-merchant.resetPwdAction = new Ext.Action({
-	text : '重置密码',
+merchant.resetExpPwdAction = new Ext.Action({
+	text : '重置消费密码',
 	iconCls : 'reset_pwd',
 	disabled : true,
 	handler : function() {
 		var record = merchant.grid.getSelectionModel().getSelected();
-		merchant.resetPwdWindow.setIconClass('reset_pwd'); // 设置窗口的样式
-		merchant.resetPwdWindow.setTitle('重置密码'); // 设置窗口的名称
-		merchant.resetPwdWindow.show().center();
-		merchant.resetPwdFormPanel.getForm().reset();
-		merchant.resetPwdFormPanel.getForm().loadRecord(record);
+		merchant.resetExpPwdWindow.setIconClass('reset_pwd'); // 设置窗口的样式
+		merchant.resetExpPwdWindow.setTitle('重置消费密码'); // 设置窗口的名称
+		merchant.resetExpPwdWindow.show().center();
+		merchant.resetExpPwdFormPanel.getForm().reset();
+		merchant.resetExpPwdFormPanel.getForm().loadRecord(record);
 	}
 });
 /** 顶部工具栏 */
-merchant.tbar = [ merchant.editAction, '-', merchant.resetPwdAction];
+merchant.tbar = [ merchant.editAction, '-', merchant.resetExpPwdAction];
 /** 底部工具条 */
 merchant.bbar = new Ext.PagingToolbar({
 			pageSize : merchant.pageSize,
@@ -235,13 +236,6 @@ merchant.formPanel = new Ext.form.FormPanel({
 		allowBlank : false,
 		name : 'realName',
 		anchor : '99%'
-	}, {
-		fieldLabel : '消费密码',
-		inputType : 'password',
-		maxLength : 4,
-		allowBlank : false,
-		name : 'expensePassword',
-		anchor : '99%'
 	}, merchant.sexCombo, merchant.cityCombo, {
 		fieldLabel : '电子邮件',
 		maxLength : 64,
@@ -298,7 +292,7 @@ merchant.formPanel = new Ext.form.FormPanel({
 merchant.addWindow = new Ext.Window({
 	layout : 'fit',
 	width : 500,
-	height : 480,
+	height : 450,
 	closeAction : 'hide',
 	plain : true,
 	modal : true,
@@ -321,55 +315,54 @@ merchant.addWindow = new Ext.Window({
 			}]
 });
 
-merchant.resetPwdFormPanel = new Ext.form.FormPanel({
+merchant.tipLabel =  new Ext.form.Label({
+    text:"消费密码为消费者使用时商家需输入的密码，长度为4的数字！"
+});
+
+merchant.resetExpPwdFormPanel = new Ext.form.FormPanel({
 	autoScroll : true,
 	frame : false,
-	title : '修改密码',
+	title : '修改消费密码',
 	bodyStyle : 'padding:10px;border:0px',
 	labelwidth : 70,
 	defaultType : 'textfield',
 	items : [{
 		inputType: 'password',
-		fieldLabel : '旧密码',
-		maxLength : 32,
+		fieldLabel : '新消费密码',
+		maxLength : 4,
 		allowBlank : false,
-		name : 'oldPassword',
+		xtype : 'numberfield',
+		name : 'newExpensePassword',
 		anchor : '99%'
 	}, {
 		inputType: 'password',
-		fieldLabel : '新密码',
-		maxLength : 32,
+		fieldLabel : '确认消费密码',
+		maxLength : 4,
 		allowBlank : false,
-		name : 'newPassword',
+		xtype : 'numberfield',
+		name : 'cmpExpensePassword',
 		anchor : '99%'
-	}, {
-		inputType: 'password',
-		fieldLabel : '确认密码',
-		maxLength : 32,
-		allowBlank : false,
-		name : 'comparePassword',
-		anchor : '99%'
-	}]
+	}, merchant.tipLabel]
 });
 
-merchant.resetPwdWindow = new Ext.Window({
+merchant.resetExpPwdWindow = new Ext.Window({
 	layout : 'fit',
 	width : 300,
-	height : 240,
+	height : 200,
 	closeAction : 'hide',
 	plain : true,
 	modal : true,
 	resizable : true,
-	items : [merchant.resetPwdFormPanel],
+	items : [merchant.resetExpPwdFormPanel],
 	buttons : [{
 				text : '保存',
 				handler : function() {
-					merchant.resetPwdFun();
+					merchant.resetExpPwdFun();
 				}
 			}, {
 				text : '重置',
 				handler : function() {
-					var form = merchant.resetPwdFormPanel.getForm();
+					var form = merchant.resetExpPwdFormPanel.getForm();
 					form.reset();
 				}
 			}]
@@ -391,8 +384,8 @@ merchant.saveFun = function() {
 				}
 	});
 };
-merchant.resetPwdFun = function() {
-	var form = merchant.resetPwdFormPanel.getForm();
+merchant.resetExpPwdFun = function() {
+	var form = merchant.resetExpPwdFormPanel.getForm();
 	if (!form.isValid()) {
 		return;
 	}
@@ -401,7 +394,7 @@ merchant.resetPwdFun = function() {
 				url : merchant.reset,
 				params : form.getValues(),
 				callback : function(json) {
-					merchant.resetPwdWindow.hide();
+					merchant.resetExpPwdWindow.hide();
 					merchant.alwaysFun();
 					merchant.store.reload();
 				}
@@ -410,7 +403,7 @@ merchant.resetPwdFun = function() {
 
 merchant.alwaysFun = function() {
 	Share.resetGrid(merchant.grid);
-	merchant.resetPwdAction.disable();
+	merchant.resetExpPwdAction.disable();
 	merchant.editAction.disable();
 };
 

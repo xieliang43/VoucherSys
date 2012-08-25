@@ -11,9 +11,7 @@ import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
@@ -44,11 +42,11 @@ public class BaiduMapUtil {
 	/**
 	 * @param region
 	 * 			  地区（市，县）
-	 * @param address
+	 * @param queryAddress
 	 *           地址
 	 * @return HTTP状态代码,精确度（请参见精确度常数）,纬度,经度
 	 */
-	public String getLatlngByAddress(String region, String address) {
+	public String getLatlngByAddress(String region, String queryAddress) {
 		String ret = "";
 		if (region != null && !region.equals("")) {
 			try {
@@ -57,15 +55,15 @@ public class BaiduMapUtil {
 				logger.error("转码失败", e1);
 			}
 		}
-		if (address != null && !address.equals("")) {
+		if (queryAddress != null && !queryAddress.equals("")) {
 			try {
-				address = URLEncoder.encode(address, "UTF-8");// 进行这一步是为了避免乱码
+				queryAddress = URLEncoder.encode(queryAddress, "UTF-8");// 进行这一步是为了避免乱码
 			} catch (UnsupportedEncodingException e1) {
 				logger.error("转码失败", e1);
 			}
 		}
 		String[] arr = new String[4];
-		arr[0] = address;
+		arr[0] = queryAddress;
 		arr[1] = region;
 		arr[2] = OUTPUT;
 		arr[3] = KEY;
@@ -93,9 +91,9 @@ public class BaiduMapUtil {
 		return ret;
 	}
 
-	public Map<String, Double> getLatLng(String region, String address) {
+	public Map<String, Double> getLatLng(String region, String queryAddress) {
 		Map<String, Double> map = new HashMap<String, Double>();
-		String res = this.getLatlngByAddress(region, address);
+		String res = this.getLatlngByAddress(region, queryAddress);
 		Gson gson = new Gson();
 		BaiduMap baiduMap = gson.fromJson(res, BaiduMap.class);
 		Result []results = baiduMap.getResults();
@@ -108,16 +106,5 @@ public class BaiduMapUtil {
 			map.put(WebConstants.LNG, .0);
 		}
 		return map;
-	}
-
-	public static void main(String[] args) {
-		Properties props = System.getProperties();
-		props.setProperty("proxyHost", "proxy.cd.ncsi.com.cn");
-		props.setProperty("proxyPort", "8080");
-
-		String region = "成都";
-		String address = "高新天府软件园B区";
-		Map<String, Double> res = BaiduMapUtil.getInstance().getLatLng(region, address);
-		System.out.println(res);
 	}
 }

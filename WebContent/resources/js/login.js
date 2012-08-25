@@ -115,9 +115,9 @@ $(document).ready(function () {
     });
 
     // 状态栏HTMl
-    //login.bbarHtml = "<a href='javascript:login.resetPassword();'>忘记密码？</a>";
-    //login.bbarHtml = login.bbarHtml	+ "&nbsp;&nbsp;<a href='javascript:login.register();'>注册</a>";
-    login.bbarHtml = "<a href='javascript:login.register();'>注册</a>";
+    login.bbarHtml = "<a href='javascript:login.resetPassword();'>忘记密码？</a>";
+    login.bbarHtml = login.bbarHtml	+ "&nbsp;&nbsp;<a href='javascript:login.register();'>注册</a>";
+    //login.bbarHtml = "<a href='javascript:login.register();'>注册</a>";
     // 用户登录窗口
     login.loginWindow = new Ext.Window({
         renderTo: 'login-win-div',
@@ -221,7 +221,7 @@ $(document).ready(function () {
     login.resetPassword = function () {
         // 跳转到忘记密码
         login.findPwdWindow = new Ext.Window({
-            title: '系统将发送重置密码链接到你的注册手机！',
+            title: '系统将发送重置密码链接到你的注册邮箱！',
             width: 300,
             height: 190,
             modal: true,
