@@ -102,6 +102,7 @@ public class UserVoucherServiceImpl implements UserVoucherService {
 			return "01";
 		}
 		userVoucher.setIsUsed((short)1);
+		userVoucherDao.update(userVoucher);
 		return "02";
 	}
 

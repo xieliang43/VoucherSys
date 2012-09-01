@@ -7,7 +7,7 @@
 <title>index</title>
 </head>
 <body>
-Please wait, redirecting...
+请稍等，正在跳转...
 <script type="text/javascript">
 	window.location.href="index.action";
 </script>

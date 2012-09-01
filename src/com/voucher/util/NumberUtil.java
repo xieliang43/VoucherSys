@@ -3,10 +3,11 @@ package com.voucher.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class NumberUtil {
 
-	private static final String DATE_REGEX = "yyyy-MM-dd HH:mm:ss";
+	private static final String DATE_REGEX = "EEE MMM dd HH:mm:ss zzz yyyy";
 	
 	private static NumberUtil instance = new NumberUtil();
 	
@@ -30,8 +31,8 @@ public class NumberUtil {
 		if (pattern == null) {
 			pattern = DATE_REGEX;
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-		Date newDate = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.US);
+		Date newDate = null;
 		try {
 			newDate = sdf.parse(date);
 		} catch (Exception ex) {
