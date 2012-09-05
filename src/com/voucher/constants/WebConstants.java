@@ -26,4 +26,5 @@ public interface WebConstants {
 	public static final String FORWARD_SLASH = "/";
 	public static final String UPLOAD = "upload";
 	public static final String MINUS = "-";
+	public static final String IMAGE_DIR = "examples";
 }

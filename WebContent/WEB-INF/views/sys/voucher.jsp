@@ -426,7 +426,7 @@ voucher.delFun = function() {
 		ids.push(selections[i].data.id);
 	}
 	var params = {
-			shopIds : ids
+			voucherIds : ids
 		};
 	Ext.Msg.confirm('提示', '你真的要删除选中的代金券吗?', function(btn, text) {
 				if (btn == 'yes') {
