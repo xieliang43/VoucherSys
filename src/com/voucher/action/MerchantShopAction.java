@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.voucher.constants.WebConstants;
@@ -30,7 +29,6 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 	 * 
 	 */
 	private static final long serialVersionUID = -8322966890273058929L;
-	private static Logger logger = Logger.getLogger(MerchantShopAction.class);
 
 	private int start;
 	private int limit;
@@ -160,9 +158,14 @@ public class MerchantShopAction extends BaseAction implements SessionAware {
 				uploadShopImage(merchant, upload, imageFileName);
 				deleteShopImage(merchant, oldShop.getImage());
 			}
+			if(area == null) {
+				shop.setArea(oldShop.getArea());
+			} else {
+				shop.setArea(area);
+			}
 			shop.setId(Integer.valueOf(id));
 			shop.setCity(city);
-			shop.setArea(area);
+			
 			shopService.update(shop);
 		}
 		sendExtReturn(new ExtReturn(true, "保存成功！"));

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
@@ -30,8 +29,6 @@ public class VoucherAction extends BaseAction implements SessionAware {
 	 */
 	private static final long serialVersionUID = -3834209328822135526L;
 	
-	private static Logger logger = Logger.getLogger(VoucherAction.class);
-
 	private int start;
 	private int limit;
 	private String dir;
