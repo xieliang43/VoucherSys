@@ -5,12 +5,15 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.voucher.dao.UserDao;
+import com.voucher.dao.UserVoucherDao;
 import com.voucher.entity.User;
+import com.voucher.entity.UserVoucher;
 import com.voucher.pojo.ExtPager;
 import com.voucher.service.UserService;
 
 public class UserServiceImpl implements UserService {
 	private UserDao userDao;
+	private UserVoucherDao userVoucherDao;
 
 	@Override
 	public void save(User user) {
@@ -69,7 +72,28 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteById(int id) {
 		User user = this.findUserById(id);
-		this.delete(user);
+		if(user != null) {
+			List<UserVoucher> userVouchers = userVoucherDao.findUserInstancese(id);
+			if(userVouchers != null && !userVouchers.isEmpty()) {
+				for(UserVoucher userVoucher : userVouchers) {
+					userVoucherDao.removeUserVoucher(userVoucher);
+				}
+			}
+			this.delete(user);
+		}
 	}
 
+	/**
+	 * @return the userVoucherDao
+	 */
+	public UserVoucherDao getUserVoucherDao() {
+		return userVoucherDao;
+	}
+
+	/**
+	 * @param userVoucherDao the userVoucherDao to set
+	 */
+	public void setUserVoucherDao(UserVoucherDao userVoucherDao) {
+		this.userVoucherDao = userVoucherDao;
+	}
 }

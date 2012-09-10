@@ -78,6 +78,7 @@
 	
 	<bean id="userService" class="com.voucher.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"/>
+		<property name="userVoucherDao" ref="userVoucherDao"/>
 	</bean>
 	
 	<bean id="regionService" class="com.voucher.service.impl.RegionServiceImpl">

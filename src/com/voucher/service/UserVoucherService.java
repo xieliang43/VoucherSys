@@ -18,4 +18,5 @@ public interface UserVoucherService {
 	public String useUserVoucher(int uvId);
 
 	public void deleteUserVoucher(int viId);
+	
 }
