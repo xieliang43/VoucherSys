@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.impl.BaseDaoImpl;
@@ -72,11 +71,8 @@ public class SysUserDaoImpl extends BaseDaoImpl implements SysUserDao {
 	@Override
 	public List<SysUser> findUsersByRealName(ExtPager pager, String realName) {
 		String hql = "from SysUser su where su.account like :account or su.realName like :realName";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysUser.class, hql, pager);
 			query.setParameter("account", "%" + realName + "%");
 			query.setParameter("realName", "%" + realName + "%");
 			return query.getResultList();
@@ -89,11 +85,8 @@ public class SysUserDaoImpl extends BaseDaoImpl implements SysUserDao {
 	@Override
 	public List<SysUser> findUsers(ExtPager pager) {
 		String hql = "from SysUser su";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysUser.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

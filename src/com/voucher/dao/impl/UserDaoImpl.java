@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.UserDao;
@@ -92,11 +91,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public List<User> findUsersByPhoneNo(ExtPager pager, String phoneNo) {
 		String hql = "from User u where u.phoneNo like :phoneNo";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(User.class, hql, pager);
 			query.setParameter("phoneNo", "%" + phoneNo + "%");
 			return query.getResultList();
 		} catch (Exception e) {
@@ -108,11 +104,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public List<User> findUsers(ExtPager pager) {
 		String hql = "from User u";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(User.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

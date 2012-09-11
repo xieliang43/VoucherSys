@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.impl.BaseDaoImpl;
@@ -23,11 +22,8 @@ public class SysRoleDaoImpl extends BaseDaoImpl implements SysRoleDao {
 	@Override
 	public List<SysRole> getSysRoles(ExtPager pager) {
 		String hql = "from SysRole sr";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysRole.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,11 +34,8 @@ public class SysRoleDaoImpl extends BaseDaoImpl implements SysRoleDao {
 	@Override
 	public List<SysRole> getSysRolesByRoleName(ExtPager pager, String roleName) {
 		String hql = "from SysRole sr where sr.roleName = :roleName";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysRole.class, hql, pager);
 			query.setParameter("roleName", roleName);
 			return query.getResultList();
 		} catch (Exception e) {

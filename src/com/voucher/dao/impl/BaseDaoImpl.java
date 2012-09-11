@@ -20,12 +20,12 @@ public abstract class BaseDaoImpl extends JpaDaoSupport {
 				.createEntityManager().createQuery(query);
 	}
 
-	protected String createQueryString(Class clazz, String hql, ExtPager pager) {
+	protected String createQueryString(Class<?> clazz, String hql, ExtPager pager) {
 		String tmpHql = hql;
 		if (pager != null) {
 			if (!StringUtils.isBlank(pager.getDir())
 					&& !StringUtils.isBlank(pager.getSort())) {
-				if(FieldChecker.getInstance().checkField(clazz, pager.getSort())) {
+				if(FieldChecker.getInstance().checkField(clazz, pager.getOriginalSort())) {
 					tmpHql = hql + " order by " + pager.getSort() + " "
 							+ pager.getDir();
 				}

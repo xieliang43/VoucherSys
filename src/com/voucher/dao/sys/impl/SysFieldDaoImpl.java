@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.impl.BaseDaoImpl;
@@ -28,11 +27,8 @@ public class SysFieldDaoImpl extends BaseDaoImpl implements SysFieldDao {
 	@Override
 	public List<SysField> getSysFieldsByFieldName(ExtPager pager, String fieldName) {
 		String hql = "from SysField sf where sf.fieldName = :fieldName";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysField.class, hql, pager);
 			query.setParameter("fieldName", fieldName);
 			return query.getResultList();
 		} catch (Exception e) {
@@ -44,11 +40,8 @@ public class SysFieldDaoImpl extends BaseDaoImpl implements SysFieldDao {
 	@Override
 	public List<SysField> getAllSysFields(ExtPager pager) {
 		String hql = "from SysField sf";
-		if(!StringUtils.isBlank(pager.getDir()) && !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysField.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

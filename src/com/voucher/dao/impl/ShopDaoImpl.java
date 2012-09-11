@@ -73,9 +73,7 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 		String hql = "from Shop s where s.merchant.id = :id";
 		hql = this.createQueryString(Shop.class, hql, pager);
 		try {
-			Query query = this.createQuery(hql)
-					.setFirstResult(pager.getStart())
-					.setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(Shop.class, hql, pager);
 			query.setParameter("id", merchant.getId());
 			return query.getResultList();
 		} catch (Exception e) {
@@ -88,12 +86,8 @@ public class ShopDaoImpl extends BaseDaoImpl implements ShopDao {
 	public List<Shop> getAllShopsByShopName(ExtPager pager, SysUser merchant,
 			String shopName) {
 		String hql = "from Shop s where s.merchant.id = :id and s.shopName like :shopName";
-		hql = this.createQueryString(Shop.class, hql, pager);
 		try {
-			Query query = this.createQuery(hql)
-					.setFirstResult(pager.getStart())
-					.setMaxResults(pager.getLimit());
-			query.setParameter("id", merchant.getId());
+			Query query = this.createPagerQuery(Shop.class, hql, pager);
 			query.setParameter("shopName", "%" + shopName + "%");
 			return query.getResultList();
 		} catch (Exception e) {

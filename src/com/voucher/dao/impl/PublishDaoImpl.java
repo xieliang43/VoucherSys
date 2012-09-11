@@ -25,9 +25,8 @@ public class PublishDaoImpl extends BaseDaoImpl implements PublishDao {
 	@Override
 	public List<Publish> findPublishes(ExtPager pager) {
 		String hql = "from Publish pub";
-		hql = this.createQueryString(Publish.class, hql, pager);
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(Publish.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -38,10 +37,9 @@ public class PublishDaoImpl extends BaseDaoImpl implements PublishDao {
 	@Override
 	public List<Publish> findPublishesByPhoneNo(ExtPager pager, String phoneNo) {
 		String hql = "from Publish pb where pb.phoneNo like :phoneNo";
-		hql = this.createQueryString(Publish.class, hql, pager);
 		
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart()).setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(Publish.class, hql, pager);
 			query.setParameter("phoneNo", "%" + phoneNo + "%");
 			return query.getResultList();
 		} catch (Exception e) {

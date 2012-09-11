@@ -57,6 +57,10 @@ public class ExtPager {
 	public String getSort() {
 		return Table.toClumn(sort);
 	}
+	
+	public String getOriginalSort() {
+		return sort;
+	}
 
 	public void setSort(String sort) {
 		this.sort = sort;

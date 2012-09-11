@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 
 import com.voucher.dao.impl.BaseDaoImpl;
@@ -29,18 +28,10 @@ public class SysModuleDaoImpl extends BaseDaoImpl implements SysModuleDao {
 	@Override
 	public List<SysModule> getAllSysModules(ExtPager pager) {
 		String hql = "from SysModule sm";
-		if (!StringUtils.isBlank(pager.getDir())
-				&& !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		} else {
-			hql = hql + " ORDER BY PARENT_ID asc, DISPLAY_INDEX asc";
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart())
-					.setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysModule.class, hql, pager);
 			return query.getResultList();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -50,19 +41,11 @@ public class SysModuleDaoImpl extends BaseDaoImpl implements SysModuleDao {
 	public List<SysModule> getSysModulesByModuleName(ExtPager pager,
 			String moduleName) {
 		String hql = "from SysModule sm where sm.moduleName = :moduleName";
-		if (!StringUtils.isBlank(pager.getDir())
-				&& !StringUtils.isBlank(pager.getSort())) {
-			hql = hql + " order by " + pager.getSort() + " " + pager.getDir();
-		} else {
-			hql = hql + " ORDER BY PARENT_ID asc, DISPLAY_INDEX asc";
-		}
 		try {
-			Query query = this.createQuery(hql).setFirstResult(pager.getStart())
-					.setMaxResults(pager.getLimit());
+			Query query = this.createPagerQuery(SysModule.class, hql, pager);
 			query.setParameter("moduleName", moduleName);
 			return query.getResultList();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
