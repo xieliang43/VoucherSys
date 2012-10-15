@@ -5,7 +5,7 @@ import java.util.Comparator;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 
-import com.voucher.entity.Region;
+import com.voucher.entity.common.Region;
 
 public class RegionalComparator implements Comparator<Region> {
 

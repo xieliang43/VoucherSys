@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="usage" name="VoucherSys">
+
+	<target name="init">
+
+		<property name="Name" value="VoucherSys" />
+		<property name="name" value="VoucherSys" />
+		<property name="version" value="1.2" />
+		<property name="year" value="2012" />
+
+		<echo message="----------- ${Name} ${version} [${year}] ------------" />
+
+		<property name="debug" value="off" />
+		<property name="optimize" value="on" />
+		<property name="deprecation" value="on" />
+
+		<!--   java源文件路径 -->
+		<property name="src.dir" value="${basedir}/src" />
+		<!--   jar包路径 -->
+		<property name="lib.dir" value="${basedir}/WebContent/WEB-INF/lib" />
+		<!--   webapp路径 -->
+		<property name="webapp.dir" value="${basedir}/WebContent" />
+		<property name="packages" value="com.voucher.*.*" />
+		<!--   准备源文件路径 -->
+		<property name="build.src" value="${basedir}/src" />
+		<!--   编译源文件路径 -->
+		<property name="build.dest" value="${basedir}/AntBuild/dest" />
+		<!--   准备webapp文件路径 -->
+		<property name="buildwar.dest" value="${basedir}/AntBuild/warsrc" />
+		<!--   打包jar文件路径 -->
+		<property name="jar.dest" value="${basedir}/AntBuild/jar" />
+		<!--   打包war文件路径 -->
+		<property name="war.dest" value="${basedir}/AntBuild/war" />
+		<!--   tomcat-home路径 -->
+		<property name="tomcat.home" value="E:/apache-tomcat-6.0.35" />
+
+		<path id="classpath">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</path>
+
+		<filter token="year" value="${year}" />
+		<filter token="version" value="${version}" />
+		<filter token="date" value="${TODAY}" />
+		<filter token="log" value="true" />
+		<filter token="verbose" value="true" />
+
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Help on usage -->
+	<!-- =================================================================== -->
+	<target name="usage" depends="init">
+		<echo message="${Name} Build file" />
+		<echo message="-------------------------------------------------------------" />
+		<echo message="" />
+		<echo message=" available targets are:" />
+		<echo message="" />
+		<echo message=" jar --> generates the ${name}.jar file" />
+		<echo message=" build --> compiles the source code" />
+		<echo message=" clean --> cleans up the directory" />
+		<echo message="" />
+		<echo message=" Please rename build.properties.default to build.properties" />
+		<echo message=" and edit build.properties to specify JSDK 2.3 classpath." />
+		<echo message="" />
+		<echo message=" See the comments inside the build.xml file for more details." />
+		<echo message="-------------------------------------------------------------" />
+		<echo message="" />
+		<echo message="" />
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 准备源文件-->
+	<!-- =================================================================== -->
+	<target name="prepare-src" depends="init">
+		<!-- create directories -->
+		<mkdir dir="${build.src}" />
+		<mkdir dir="${build.dest}" />
+		<mkdir dir="${war.dest}" />
+		<mkdir dir="${buildwar.dest}" />
+		<mkdir dir="${buildwar.dest}/WEB-INF/classes" />
+
+
+		<!-- copy src files -->
+		<copy todir="${build.src}">
+			<fileset dir="${src.dir}" />
+		</copy>
+		<copy todir="${buildwar.dest}">
+			<fileset dir="${webapp.dir}" />
+		</copy>
+
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 编译源文件-->
+	<!-- =================================================================== -->
+	<target name="build" depends="prepare-src">
+		<echo message="Compile source dir: ${build.src}" />
+		<javac srcdir="${build.src}" encoding="utf-8" destdir="${buildwar.dest}/WEB-INF/classes" debug="${debug}" optimize="${optimize}">
+			<classpath refid="classpath" />
+			<include name="**/*.java"/>
+		</javac>
+		<copy todir="${buildwar.dest}/WEB-INF/classes">
+			<fileset dir="${build.src}">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 打war包-->
+	<!-- =================================================================== -->
+
+	<target name="assemble" depends="build">
+		<echo message="Assemble the war file" />
+		<war warfile="${war.dest}/VoucherSys.war" webxml="${buildwar.dest}/WEB-INF/web.xml">
+			<fileset dir="${buildwar.dest}"/>
+		</war>
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- 发布到tomcat-->
+	<!-- =================================================================== -->
+
+	<target name="all" depends="assemble, clean">
+		<copy todir="${tomcat.home}/webapps">
+			<fileset dir="${war.dest}">
+				<include name="**/*.war" />
+			</fileset>
+		</copy>
+
+	</target>
+	<!-- =================================================================== -->
+	<!-- 清除临时文件-->
+	<!-- =================================================================== -->
+	<target name="clean" depends="init">
+		<delete dir="${build.dest}/com" />
+		<delete dir="${buildwar.dest}" />
+		<delete>
+			<fileset dir="${build.dest}" includes="**/*.class" />
+		</delete>
+	</target>
+
+</project>

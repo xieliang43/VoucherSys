@@ -8,33 +8,28 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 
-import com.voucher.action.BaseAction;
+import com.voucher.action.BasePagerAction;
 import com.voucher.constants.WebConstants;
-import com.voucher.entity.Region;
-import com.voucher.entity.Shop;
-import com.voucher.entity.ShopType;
+import com.voucher.entity.common.Region;
+import com.voucher.entity.common.Shop;
+import com.voucher.entity.common.ShopType;
 import com.voucher.entity.sys.SysUser;
-import com.voucher.pojo.AreaVO;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
-import com.voucher.pojo.ShopVO;
-import com.voucher.service.RegionService;
-import com.voucher.service.ShopService;
-import com.voucher.service.ShopTypeService;
+import com.voucher.service.common.RegionService;
+import com.voucher.service.common.ShopService;
+import com.voucher.service.common.ShopTypeService;
 import com.voucher.util.JackJson;
+import com.voucher.vo.AreaVO;
+import com.voucher.vo.ShopVO;
 
-public class SysShopAction extends BaseAction implements SessionAware {
+public class SysShopAction extends BasePagerAction implements SessionAware {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3106697979741132678L;
-
-	private int start;
-	private int limit;
-	private String dir;
-	private String sort;
 	
 	private String id;
 	private String shopName;
@@ -70,7 +65,7 @@ public class SysShopAction extends BaseAction implements SessionAware {
 	
 	public void loadAreaByCity() {
 		if (StringUtils.isBlank(getCityId())) {
-			sendExtReturn(new ExtReturn(false, "城市不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "城市不能为空！"));
 			return;
 		}
 		List<AreaVO> list = regionService.getAreasByParent(Integer.valueOf(cityId));
@@ -92,34 +87,34 @@ public class SysShopAction extends BaseAction implements SessionAware {
 	
 	public void save() {
 		if (StringUtils.isBlank(getShopName())) {
-			sendExtReturn(new ExtReturn(false, "商店名不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "商店名不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getShopTypeId())) {
-			sendExtReturn(new ExtReturn(false, "类型不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "类型不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getCityId())) {
-			sendExtReturn(new ExtReturn(false, "城市不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "城市不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getShopAddress())) {
-			sendExtReturn(new ExtReturn(false, "地址不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "地址不能为空！"));
 			return;
 		}
 		
-		ShopType shopType = shopTypeService.getShopTypeById(Integer.valueOf(shopTypeId));
-		Region city = regionService.getRegionById(Integer.valueOf(cityId));
+		ShopType shopType = shopTypeService.findShopTypeById(Integer.valueOf(shopTypeId));
+		Region city = regionService.findRegionById(Integer.valueOf(cityId));
 		Region area = null;
 		if (!StringUtils.isBlank(getAreaId())) {
-			area = regionService.getRegionById(Integer.valueOf(areaId));
+			area = regionService.findRegionById(Integer.valueOf(areaId));
 		}
 		SysUser merchant = (SysUser) session.get(WebConstants.CURRENT_USER);
 		Shop shop = new Shop(shopName, shopAddress, getTelNo(), description, shopType);
 		
 		if(StringUtils.isBlank(id)) {
 			if(StringUtils.isBlank(uploadFileName)) {
-				this.sendExtReturn(new ExtReturn(false, "图片不能为空！"));
+				this.sendExtReturn(new ExtReturn(FALSE, "图片不能为空！"));
 				return;
 			}
 			final String imageFileName = buildFileName(uploadFileName.trim());
@@ -133,7 +128,7 @@ public class SysShopAction extends BaseAction implements SessionAware {
 		} else {
 			Shop oldShop = shopService.findShopById(Integer.valueOf(id));
 			if(oldShop == null) {
-				sendExtReturn(new ExtReturn(false, "商店不能为空！"));
+				sendExtReturn(new ExtReturn(FALSE, "商店不能为空！"));
 				return;
 			}
 			if(StringUtils.isBlank(uploadFileName)) {
@@ -151,79 +146,22 @@ public class SysShopAction extends BaseAction implements SessionAware {
 			}
 			shop.setId(Integer.valueOf(id));
 			shop.setCity(city);
-			
 			shopService.update(shop);
 		}
-		sendExtReturn(new ExtReturn(true, "保存成功！"));
+		sendExtReturn(new ExtReturn(TRUE, "保存成功！"));
 	}
 	
 	public void delete() {
 		if(shopIds == null || shopIds.length == 0) {
-			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "主键不能为空！"));
 			return;
 		}
 		for(String shopId : shopIds) {
 			if (!StringUtils.isBlank(shopId)) {
-				shopService.deleteById(Integer.valueOf(shopId));
+				shopService.deleteShopById(Integer.valueOf(shopId));
 			}
 		}
-		sendExtReturn(new ExtReturn(true, "删除成功！"));
-	}
-
-	/**
-	 * @return the start
-	 */
-	public int getStart() {
-		return start;
-	}
-
-	/**
-	 * @param start the start to set
-	 */
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	/**
-	 * @return the limit
-	 */
-	public int getLimit() {
-		return limit;
-	}
-
-	/**
-	 * @param limit the limit to set
-	 */
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
-
-	/**
-	 * @return the dir
-	 */
-	public String getDir() {
-		return dir;
-	}
-
-	/**
-	 * @param dir the dir to set
-	 */
-	public void setDir(String dir) {
-		this.dir = dir;
-	}
-
-	/**
-	 * @return the sort
-	 */
-	public String getSort() {
-		return sort;
-	}
-
-	/**
-	 * @param sort the sort to set
-	 */
-	public void setSort(String sort) {
-		this.sort = sort;
+		sendExtReturn(new ExtReturn(TRUE, "删除成功！"));
 	}
 
 	/**

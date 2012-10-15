@@ -6,9 +6,9 @@
 Ext.ns("Ext.Authority.shoptype"); // 自定义一个命名空间
 shoptype = Ext.Authority.shoptype; // 定义命名空间的别名
 shoptype = {
-	all : ctx + '/shopTypeAction!loadAll.action',// 加载所有
-	save : ctx + "/shopTypeAction!save.action",//保存
-	del : ctx + "/shopTypeAction!delete.action",//删除
+	all : ctx + '/sysShopTypeAction!loadAll.action',// 加载所有
+	save : ctx + "/sysShopTypeAction!save.action",//保存
+	del : ctx + "/sysShopTypeAction!delete.action",//删除
 	ENABLED : eval('(${fields.enabled==null?"{}":fields.enabled})'),
 	pagesizes:eval('(${fields.pagesizes==null?"{}":fields.pagesizes})'),
 	pageSize : 20 // 每页显示的记录数

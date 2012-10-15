@@ -6,9 +6,9 @@
 Ext.ns("Ext.Authority.distance"); // 自定义一个命名空间
 distance = Ext.Authority.distance; // 定义命名空间的别名
 distance = {
-	all : ctx + '/distanceAction!loadAll.action',// 加载所有
-	save : ctx + "/distanceAction!save.action",//保存
-	del : ctx + "/distanceAction!delete.action",//删除
+	all : ctx + '/sysDistanceAction!loadAll.action',// 加载所有
+	save : ctx + "/sysDistanceAction!save.action",//保存
+	del : ctx + "/sysDistanceAction!delete.action",//删除
 	pageSize : 20, // 每页显示的记录数
 	ENABLED : eval('(${fields.enabled==null?"{}":fields.enabled})')
 };

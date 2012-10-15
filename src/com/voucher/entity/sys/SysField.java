@@ -1,5 +1,7 @@
 package com.voucher.entity.sys;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="T_SYS_FIELD")
-public class SysField {
+public class SysField implements Serializable {
+
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 5653139733336550943L;
 
 	/**
 	 * 字段ID

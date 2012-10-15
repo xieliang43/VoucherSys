@@ -6,9 +6,9 @@
 Ext.ns("Ext.Authority.areas"); // 自定义一个命名空间
 area = Ext.Authority.areas; // 定义命名空间的别名
 area = {
-	all : ctx + '/regionAction!loadAll.action',// 加载所有
-	save : ctx + "/regionAction!save.action",//保存
-	del : ctx + "/regionAction!delete.action",//删除
+	all : ctx + '/sysRegionAction!loadAll.action',// 加载所有
+	save : ctx + "/sysRegionAction!save.action",//保存
+	del : ctx + "/sysRegionAction!delete.action",//删除
 	AREAMAP :eval('(${areaMap})'),
 	pageSize : 20, // 每页显示的记录数
 	AREATYPE : eval('(${fields.areatype==null?"{}":fields.areatype})'),

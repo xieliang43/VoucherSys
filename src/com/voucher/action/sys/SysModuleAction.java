@@ -7,35 +7,22 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 
-import com.voucher.action.BaseAction;
+import com.voucher.action.BasePagerAction;
 import com.voucher.entity.sys.SysModule;
 import com.voucher.pojo.ExtGridReturn;
 import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
-import com.voucher.pojo.RoleModuleVO;
 import com.voucher.pojo.Tree;
 import com.voucher.service.sys.SysModuleService;
 import com.voucher.util.JackJson;
+import com.voucher.vo.RoleModuleVO;
 
-public class SysModuleAction extends BaseAction implements SessionAware {
+public class SysModuleAction extends BasePagerAction implements SessionAware {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5256016275291809404L;
-	
-	private SysModuleService sysModuleService;
-	
-	private int start;
-	private int limit;
-	/**
-	 * 大写的ASC or DESC
-	 */
-	private String dir;
-	/**
-	 * 排序的字段
-	 */
-	private String sort;
 	
 	private String id;
 	private String moduleName;
@@ -51,6 +38,7 @@ public class SysModuleAction extends BaseAction implements SessionAware {
 	private String roleId;
 	private String moduleIds;
 
+	private SysModuleService sysModuleService;
 	private Map<String, Object> session;
 	
 	public String module() {
@@ -77,40 +65,40 @@ public class SysModuleAction extends BaseAction implements SessionAware {
 	
 	public void save() {
 		if (StringUtils.isBlank(moduleName)) {
-			sendExtReturn(new ExtReturn(false, "字段不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "字段不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(iconCss)) {
-			sendExtReturn(new ExtReturn(false, "样式不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "样式不能为空！"));
 			return;
 		}
 		SysModule module = new SysModule(moduleName, moduleUrl, Integer.valueOf(parentId), Short.valueOf(leaf), Short.valueOf(expanded), Short.valueOf(displayIndex), Short.valueOf(isDisplay), null, iconCss, information);
 		if(StringUtils.isBlank(id)) {
-			sysModuleService.saveModule(module);
+			sysModuleService.save(module);
 		} else {
 			module.setId(Integer.valueOf(id));
-			sysModuleService.updateModule(module);
+			sysModuleService.update(module);
 		}
-		sendExtReturn(new ExtReturn(true, "保存成功！"));
+		sendExtReturn(new ExtReturn(TRUE, "保存成功！"));
 	}
 	
 	public void delete() {
 		if (StringUtils.isBlank(id)) {
-			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "主键不能为空！"));
 			return;
 		}
 		int roleModuleCount = sysModuleService.getSysRoleModuleCount(Integer.valueOf(id));
 		if(roleModuleCount > 0) {
-			sendExtReturn(new ExtReturn(false, "其他用户拥有该模块，还不能删除!"));
+			sendExtReturn(new ExtReturn(FALSE, "其他用户拥有该模块，还不能删除!"));
 			return;
 		}
-		sysModuleService.deleteById(Integer.valueOf(id));
-		sendExtReturn(new ExtReturn(true, "删除成功！"));
+		sysModuleService.deleteModuleById(Integer.valueOf(id));
+		sendExtReturn(new ExtReturn(TRUE, "删除成功！"));
 	}
 	
 	public void getSysModulesByRole() {
 		if (StringUtils.isBlank(roleId)) {
-			sendExtReturn(new ExtReturn(false, "角色主键不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "角色主键不能为空！"));
 			return;
 		}
 		List<RoleModuleVO> list = sysModuleService.getSysRoleModulesByRoleId(Integer.valueOf(roleId));
@@ -120,16 +108,16 @@ public class SysModuleAction extends BaseAction implements SessionAware {
 	public void saveRoleModules() {
 		List<Integer> modulesIdList = new ArrayList<Integer>();
 		if (StringUtils.isBlank(roleId)) {
-			sendExtReturn(new ExtReturn(false, "角色主键不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "角色主键不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getModuleIds())) {
-			sendExtReturn(new ExtReturn(false, "选择的资源不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "选择的资源不能为空！"));
 			return;
 		} else {
 			String[] modules = StringUtils.split(getModuleIds(), ",");
 			if (null == modules || modules.length == 0) {
-				sendExtReturn(new ExtReturn(false, "选择的资源不能为空！"));
+				sendExtReturn(new ExtReturn(FALSE, "选择的资源不能为空！"));
 				return;
 			}
 			for (int i = 0; i < modules.length; i++) {
@@ -138,7 +126,7 @@ public class SysModuleAction extends BaseAction implements SessionAware {
 		}
 		
 		sysModuleService.saveRoleModules(Integer.valueOf(roleId), modulesIdList);
-		sendExtReturn(new ExtReturn(true, "保存成功！"));
+		sendExtReturn(new ExtReturn(TRUE, "保存成功！"));
 	}
 
 	/**
@@ -158,62 +146,6 @@ public class SysModuleAction extends BaseAction implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
-	}
-
-	/**
-	 * @return the start
-	 */
-	public int getStart() {
-		return start;
-	}
-
-	/**
-	 * @param start the start to set
-	 */
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	/**
-	 * @return the limit
-	 */
-	public int getLimit() {
-		return limit;
-	}
-
-	/**
-	 * @param limit the limit to set
-	 */
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
-
-	/**
-	 * @return the dir
-	 */
-	public String getDir() {
-		return dir;
-	}
-
-	/**
-	 * @param dir the dir to set
-	 */
-	public void setDir(String dir) {
-		this.dir = dir;
-	}
-
-	/**
-	 * @return the sort
-	 */
-	public String getSort() {
-		return sort;
-	}
-
-	/**
-	 * @param sort the sort to set
-	 */
-	public void setSort(String sort) {
-		this.sort = sort;
 	}
 
 	/**

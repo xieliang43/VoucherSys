@@ -6,8 +6,8 @@
 Ext.ns("Ext.Authority.advice"); // 自定义一个命名空间
 advice = Ext.Authority.advice; // 定义命名空间的别名
 advice = {
-	all : ctx + '/adviceAction!loadAll.action',// 加载所有
-	del : ctx + "/adviceAction!delete.action",//删除
+	all : ctx + '/sysAdviceAction!loadAll.action',// 加载所有
+	del : ctx + "/sysAdviceAction!delete.action",//删除
 	pageSize : 20 // 每页显示的记录数
 };
 

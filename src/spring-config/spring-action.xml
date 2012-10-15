@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+
+	<bean id="cmnMerchantAction" class="com.voucher.action.common.CmnMerchantAction"
+		scope="prototype">
+		<property name="regionService" ref="regionService" />
+		<property name="sysUserService" ref="sysUserService" />
+	</bean>
+
+	<bean id="cmnMerchantShopAction" class="com.voucher.action.common.CmnMerchantShopAction"
+		scope="prototype">
+		<property name="shopTypeService" ref="shopTypeService" />
+		<property name="shopService" ref="shopService" />
+		<property name="regionService" ref="regionService" />
+	</bean>
+
+	<bean id="cmnVoucherAction" class="com.voucher.action.common.CmnVoucherAction"
+		scope="prototype">
+		<property name="voucherService" ref="voucherService" />
+		<property name="shopService" ref="shopService" />
+	</bean>
+
+
+	<bean id="adviceAction" class="com.voucher.action.external.AdviceAction"
+		scope="prototype">
+		<property name="adviceService" ref="adviceService" />
+	</bean>
+
+	<bean id="publishAction" class="com.voucher.action.external.PublishAction"
+		scope="prototype">
+		<property name="publishService" ref="publishService" />
+	</bean>
+
+	<bean id="purchaseAction" class="com.voucher.action.external.PurchaseAction"
+		scope="prototype">
+		<property name="voucherService" ref="voucherService" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+	<bean id="regionAction" class="com.voucher.action.external.RegionAction"
+		scope="prototype">
+		<property name="regionService" ref="regionService" />
+	</bean>
+
+	<bean id="shopAction" class="com.voucher.action.external.ShopAction"
+		scope="prototype">
+		<property name="regionService" ref="regionService" />
+		<property name="shopTypeService" ref="shopTypeService" />
+		<property name="shopService" ref="shopService" />
+		<property name="distanceService" ref="distanceService" />
+		<property name="voucherService" ref="voucherService" />
+	</bean>
+
+	<bean id="userAction" class="com.voucher.action.external.UserAction"
+		scope="prototype">
+		<property name="userService" ref="userService" />
+		<property name="messageService" ref="messageService" />
+	</bean>
+
+	<bean id="walletAction" class="com.voucher.action.external.WalletAction"
+		scope="prototype">
+		<property name="userVoucherService" ref="userVoucherService" />
+		<property name="userService" ref="userService" />
+	</bean>
+
+
+	<bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+		<property name="config">
+			<bean class="com.google.code.kaptcha.util.Config">
+				<constructor-arg>
+					<props>
+						<prop key="kaptcha.textproducer.font.color">red</prop>
+						<prop key="kaptcha.noise.color">blue</prop>
+						<prop key="kaptcha.border">no</prop>
+						<prop key="kaptcha.textproducer.char.space">2</prop>
+						<prop key="kaptcha.textproducer.char.length">4</prop>
+						<prop key="kaptcha.textproducer.font.names">宋体</prop>
+					</props>
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="captchaImageCreateAction" class="com.voucher.action.sys.CaptchaImageCreateAction"
+		scope="prototype">
+		<property name="captchaProducer" ref="captchaProducer"></property>
+	</bean>
+	
+	<bean id="sysAdviceAction" class="com.voucher.action.sys.SysAdviceAction"
+		scope="prototype">
+		<property name="adviceService" ref="adviceService" />
+	</bean>
+	
+	<bean id="sysDistanceAction" class="com.voucher.action.sys.SysDistanceAction"
+		scope="prototype">
+		<property name="distanceService" ref="distanceService" />
+	</bean>
+	
+	<bean id="sysFieldAction" class="com.voucher.action.sys.SysFieldAction"
+		scope="prototype">
+		<property name="sysFieldService" ref="sysFieldService" />
+	</bean>
+	
+	<bean id="sysLoginAction" class="com.voucher.action.sys.SysLoginAction"
+		scope="prototype">
+		<property name="sysUserService" ref="sysUserService" />
+		<property name="sysModuleService" ref="sysModuleService"></property>
+	</bean>
+	
+	<bean id="sysMerchantAction" class="com.voucher.action.sys.SysMerchantAction"
+		scope="prototype">
+		<property name="sysUserService" ref="sysUserService" />
+		<property name="sysUserRoleService" ref="sysUserRoleService"></property>
+		<property name="sysRoleService" ref="sysRoleService"></property>
+	</bean>
+	
+	<bean id="sysModuleAction" class="com.voucher.action.sys.SysModuleAction"
+		scope="prototype">
+		<property name="sysModuleService" ref="sysModuleService" />
+	</bean>
+	
+	<bean id="sysPublishAction" class="com.voucher.action.sys.SysPublishAction"
+		scope="prototype">
+		<property name="publishService" ref="publishService" />
+	</bean>
+	
+	<bean id="sysRegionAction" class="com.voucher.action.sys.SysRegionAction"
+		scope="prototype">
+		<property name="regionService" ref="regionService" />
+		<property name="shopService" ref="shopService" />
+	</bean>
+	
+	<bean id="sysRoleAction" class="com.voucher.action.sys.SysRoleAction"
+		scope="prototype">
+		<property name="sysRoleService" ref="sysRoleService" />
+	</bean>
+	
+	<bean id="sysShopAction" class="com.voucher.action.sys.SysShopAction"
+		scope="prototype">
+		<property name="shopTypeService" ref="shopTypeService" />
+		<property name="shopService" ref="shopService" />
+		<property name="regionService" ref="regionService" />
+	</bean>
+	
+	<bean id="sysShopTypeAction" class="com.voucher.action.sys.SysShopTypeAction"
+		scope="prototype">
+		<property name="shopTypeService" ref="shopTypeService" />
+	</bean>
+	
+	<bean id="sysCmnUserAction" class="com.voucher.action.sys.SysCmnUserAction"
+		scope="prototype">
+		<property name="userService" ref="userService" />
+		<property name="regionService" ref="regionService" />
+	</bean>
+	
+</beans>

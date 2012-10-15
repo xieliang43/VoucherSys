@@ -10,8 +10,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import com.voucher.entity.Voucher;
-import com.voucher.service.VoucherService;
+import com.voucher.entity.common.Voucher;
+import com.voucher.service.common.VoucherService;
 
 /**
  *
@@ -30,7 +30,7 @@ public class VoucherInstanceQuartzJob extends QuartzJobBean {
 		if(vouchers != null && !vouchers.isEmpty()) {
 			for(Voucher voucher : vouchers) {
 				voucher.setEnabled((short)0);
-				voucherService.updateVoucher(voucher);
+				voucherService.update(voucher);
 			}
 		}
 		logger.info("Disable outdated vouchers has been completed!");

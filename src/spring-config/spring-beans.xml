@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<bean id="baseDao" class="com.voucher.dao.impl.BaseDaoImpl">
+		
+	</bean>
+	
+	<bean id="adviceDao" class="com.voucher.dao.impl.common.AdviceDaoImpl" parent="baseDao"/>
+	
+	<bean id="distanceDao" class="com.voucher.dao.impl.common.DistanceDaoImpl" parent="baseDao"/>
+	
+	<bean id="positionDao" class="com.voucher.dao.impl.common.PositionDaoImpl" parent="baseDao"/>
+	
+	<bean id="publishDao" class="com.voucher.dao.impl.common.PublishDaoImpl" parent="baseDao"/>
+	
+	<bean id="regionDao" class="com.voucher.dao.impl.common.RegionDaoImpl" parent="baseDao"/>
+	
+	<bean id="shopDao" class="com.voucher.dao.impl.common.ShopDaoImpl" parent="baseDao"/>
+	
+	<bean id="shopTypeDao" class="com.voucher.dao.impl.common.ShopTypeDaoImpl" parent="baseDao"/>
+
+	<bean id="userDao" class="com.voucher.dao.impl.common.UserDaoImpl" parent="baseDao"/>
+
+	<bean id="voucherDao" class="com.voucher.dao.impl.common.VoucherDaoImpl" parent="baseDao"/>
+
+	<bean id="voucherInstanceDao" class="com.voucher.dao.impl.common.VoucherInstanceDaoImpl" parent="baseDao"/>
+
+	<bean id="userVoucherDao" class="com.voucher.dao.impl.common.UserVoucherDaoImpl" parent="baseDao"/>
+	
+	
+	<bean id="sysFieldDao" class="com.voucher.dao.impl.sys.SysFieldDaoImpl" parent="baseDao"/>
+	
+	<bean id="sysModuleDao" class="com.voucher.dao.impl.sys.SysModuleDaoImpl" parent="baseDao"/>
+	
+	<bean id="sysRoleDao" class="com.voucher.dao.impl.sys.SysRoleDaoImpl" parent="baseDao"/>
+
+	<bean id="sysUserRoleDao" class="com.voucher.dao.impl.sys.SysUserRoleDaoImpl" parent="baseDao"/>
+
+	<bean id="sysRoleModuleDao" class="com.voucher.dao.impl.sys.SysRoleModuleDaoImpl" parent="baseDao"/>
+
+	<bean id="sysUserDao" class="com.voucher.dao.impl.sys.SysUserDaoImpl" parent="baseDao"/>
+
+
+
+	<bean id="baseService" class="com.voucher.service.impl.BaseServiceImpl" abstract="true">
+		<property name="baseDao" ref="baseDao" />
+	</bean>
+
+	<bean id="adviceService" class="com.voucher.service.impl.common.AdviceServiceImpl" parent="baseService">
+		<property name="adviceDao" ref="adviceDao" />
+	</bean>
+	
+	<bean id="distanceService" class="com.voucher.service.impl.common.DistanceServiceImpl" parent="baseService">
+		<property name="distanceDao" ref="distanceDao" />
+	</bean>
+
+
+	<bean id="userService" class="com.voucher.service.impl.common.UserServiceImpl" parent="baseService">
+		<property name="userDao" ref="userDao" />
+		<property name="userVoucherDao" ref="userVoucherDao" />
+	</bean>
+
+	<bean id="regionService" class="com.voucher.service.impl.common.RegionServiceImpl" parent="baseService">
+		<property name="regionDao" ref="regionDao" />
+	</bean>
+
+	<bean id="messageService" class="com.voucher.service.impl.common.MessageServiceImpl"></bean>
+	
+	<bean id="publishService" class="com.voucher.service.impl.common.PublishServiceImpl" parent="baseService">
+		<property name="publishDao" ref="publishDao" />
+	</bean>
+	
+	<bean id="shopService" class="com.voucher.service.impl.common.ShopServiceImpl" parent="baseService">
+		<property name="shopDao" ref="shopDao" />
+		<property name="positionDao" ref="positionDao" />
+		<property name="voucherService" ref="voucherService" />
+	</bean>
+
+	<bean id="shopTypeService" class="com.voucher.service.impl.common.ShopTypeServiceImpl" parent="baseService">
+		<property name="shopTypeDao" ref="shopTypeDao" />
+	</bean>
+	
+	<bean id="voucherService" class="com.voucher.service.impl.common.VoucherServiceImpl" parent="baseService">
+		<property name="voucherDao" ref="voucherDao" />
+		<property name="voucherInstanceDao" ref="voucherInstanceDao" />
+		<property name="userService" ref="userService" />
+		<property name="userVoucherDao" ref="userVoucherDao" />
+	</bean>
+
+	<bean id="userVoucherService" class="com.voucher.service.impl.common.UserVoucherServiceImpl">
+		<property name="userVoucherDao" ref="userVoucherDao" />
+		<property name="voucherInstanceDao" ref="voucherInstanceDao" />
+	</bean>
+	
+	
+
+	<bean id="sysUserService" class="com.voucher.service.impl.sys.SysUserServiceImpl" parent="baseService">
+		<property name="sysUserDao" ref="sysUserDao" />
+		<property name="sysRoleDao" ref="sysRoleDao" />
+		<property name="sysUserRoleDao" ref="sysUserRoleDao" />
+	</bean>
+
+	<bean id="sysModuleService" class="com.voucher.service.impl.sys.SysModuleServiceImpl" parent="baseService">
+		<property name="sysModuleDao" ref="sysModuleDao" />
+		<property name="sysUserRoleDao" ref="sysUserRoleDao" />
+		<property name="sysRoleModuleDao" ref="sysRoleModuleDao" />
+		<property name="sysRoleDao" ref="sysRoleDao" />
+	</bean>
+
+	<bean id="sysFieldService" class="com.voucher.service.impl.sys.SysFieldServiceImpl" parent="baseService">
+		<property name="sysFieldDao" ref="sysFieldDao" />
+	</bean>
+
+	<bean id="sysRoleService" class="com.voucher.service.impl.sys.SysRoleServiceImpl" parent="baseService">
+		<property name="sysRoleDao" ref="sysRoleDao" />
+		<property name="sysRoleModuleDao" ref="sysRoleModuleDao" />
+		<property name="sysUserRoleDao" ref="sysUserRoleDao" />
+	</bean>
+	
+	<bean id="sysUserRoleService" class="com.voucher.service.impl.sys.SysUserRoleServiceImpl">
+		<property name="sysUserRoleDao" ref="sysUserRoleDao" />
+	</bean>
+
+</beans>

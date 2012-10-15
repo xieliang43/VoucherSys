@@ -7,13 +7,12 @@
 .metadata
 bin/
 tmp/
-AntBuild/
 *.tmp
 *.bak
 *.swp
 *~.nib
 local.properties
-#.classpath
+.classpath
 #.settings/
 .loadpath
 .sonar/

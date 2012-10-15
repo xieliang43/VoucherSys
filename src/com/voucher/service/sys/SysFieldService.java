@@ -5,22 +5,17 @@ import java.util.Map;
 
 import com.voucher.entity.sys.SysField;
 import com.voucher.pojo.ExtPager;
+import com.voucher.service.BaseService;
 
-public interface SysFieldService {
+public interface SysFieldService extends BaseService<SysField> {
 
 	SysField selectByPrimaryKey(String fieldId);
-
-	void saveField(SysField field);
-
-	void delete(SysField field);
-	
-	void deleteById(int id);
-	
-	void update(SysField field);
 	
 	Map<String, String> getAllEnabledSysFields();
 	
 	List<SysField> getSysFieldsByFieldName(ExtPager pager, String fieldName);
 	
 	int getTotalCount();
+	
+	void deleteFieldById(int id);
 }

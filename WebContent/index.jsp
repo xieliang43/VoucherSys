@@ -7,7 +7,7 @@
 <title>index</title>
 </head>
 <body>
-请稍等，正在跳转...
+正在跳转，请稍等...
 <script type="text/javascript">
 	window.location.href="index.action";
 </script>

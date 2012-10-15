@@ -6,10 +6,11 @@ import java.util.Map;
 import com.voucher.entity.sys.SysModule;
 import com.voucher.entity.sys.SysUser;
 import com.voucher.pojo.ExtPager;
-import com.voucher.pojo.RoleModuleVO;
 import com.voucher.pojo.Tree;
+import com.voucher.service.BaseService;
+import com.voucher.vo.RoleModuleVO;
 
-public interface SysModuleService {
+public interface SysModuleService extends BaseService<SysModule> {
 	public Tree getModulesByUser(SysUser user);
 	
 	public Tree getModuleTree();
@@ -22,15 +23,11 @@ public interface SysModuleService {
 	
 	public Map<String, Object> getRootSysModules();
 	
-	public void saveModule(SysModule module);
-	
-	public void updateModule(SysModule module);
-	
-	public void deleteById(int id);
-	
 	public List<RoleModuleVO> getSysRoleModulesByRoleId(int roleId);
 	
 	public void saveRoleModules(int roleId, List<Integer> moduleIds);
 	
 	public int getSysRoleModuleCount(int moduleId);
+	
+	public void deleteModuleById(int id);
 }

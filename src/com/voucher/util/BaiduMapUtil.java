@@ -22,6 +22,7 @@ import com.voucher.map.Result;
 
 public class BaiduMapUtil {
 	private static Logger logger = Logger.getLogger(BaiduMapUtil.class);
+	
 	private static final String OUTPUT = PropertiesLoader.getInstance()
 			.getBaiduMapsOutput();
 	private static final String KEY = PropertiesLoader.getInstance()
@@ -41,7 +42,7 @@ public class BaiduMapUtil {
 
 	/**
 	 * @param region
-	 * 			  地区（市，县）
+	 * 			  地区（市）
 	 * @param queryAddress
 	 *           地址
 	 * @return HTTP状态代码,精确度（请参见精确度常数）,纬度,经度
@@ -62,16 +63,16 @@ public class BaiduMapUtil {
 				logger.error("转码失败", e1);
 			}
 		}
-		String[] arr = new String[4];
+		Object[] arr = new String[4];
 		arr[0] = queryAddress;
 		arr[1] = region;
 		arr[2] = OUTPUT;
 		arr[3] = KEY;
 		String url = MessageFormat.format(MAPS_URL, arr);
-		URL urlmy = null;
+		URL myUrl = null;
 		try {
-			urlmy = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) urlmy.openConnection();
+			myUrl = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) myUrl.openConnection();
 			HttpURLConnection.setFollowRedirects(true);
 			con.setInstanceFollowRedirects(false);
 			con.connect();

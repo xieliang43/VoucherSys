@@ -5,13 +5,12 @@ import java.util.Map;
 
 import com.voucher.entity.sys.SysRole;
 import com.voucher.pojo.ExtPager;
+import com.voucher.service.BaseService;
 
-public interface SysRoleService {
+public interface SysRoleService extends BaseService<SysRole> {
 	int getTotalCount();
 	List<SysRole> getSysRolesByRoleName(ExtPager pager, String roleName);
-	void save(SysRole role);
-	void update(SysRole role);
-	void deleteById(int roleId);
+	void deleteRoleById(int roleId);
 	int getRoleUsersCount(int roleId);
 	Map<String, Object> getSysRoles();
 }

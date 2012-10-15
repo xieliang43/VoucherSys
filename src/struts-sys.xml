@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<package name="vssys" extends="vs-default">
+		
+		<action name="checkimage" class="captchaImageCreateAction" method="createImage">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="sysAdviceAction" class="sysAdviceAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysCmnUserAction" class="sysCmnUserAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysDistanceAction" class="sysDistanceAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysFieldAction" class="sysFieldAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysLoginAction" class="sysLoginAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="sysMerchantAction" class="sysMerchantAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysModuleAction" class="sysModuleAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysPublishAction" class="sysPublishAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysRegionAction" class="sysRegionAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysRoleAction" class="sysRoleAction">
+			<result name="login">index.jsp</result>
+		</action>
+
+		<action name="sysShopTypeAction" class="sysShopTypeAction">
+			<result name="login">index.jsp</result>
+		</action>
+		
+		<action name="sysShopAction" class="sysShopAction">
+			<interceptor-ref name="fileUpload">
+			     <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg,image/jpg</param>
+			     <param name="maximumSize">102400</param>
+		     </interceptor-ref>
+            <result name="login">index.jsp</result>
+            <interceptor-ref name="sysLoginDefaultStack"/>
+		</action>
+		
+	</package>
+
+</struts>

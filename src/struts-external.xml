@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+
+	<package name="vsexternal" extends="struts-default">
+		<action name="adviceAction" class="adviceAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="publishAction" class="publishAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="userAction" class="userAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="regionAction" class="regionAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="shopAction" class="shopAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="purchaseAction" class="purchaseAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+		
+		<action name="walletAction" class="walletAction">
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+	</package>
+</struts>

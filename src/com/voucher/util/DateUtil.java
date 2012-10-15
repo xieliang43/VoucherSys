@@ -1,6 +1,5 @@
 package com.voucher.util;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -156,14 +155,10 @@ public class DateUtil {
 	 * @return
 	 */
 	public Date strToDate(String strDate) {
-		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		Date strToDate = null;
-		try {
-			strToDate = formatter.parse(strDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return strToDate;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		ParsePosition pos = new ParsePosition(0);
+		Date strtodate = formatter.parse(strDate, pos);
+		return strtodate;
 	}
 
 	/**

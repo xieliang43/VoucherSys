@@ -8,7 +8,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
-import com.voucher.action.BaseAction;
+import com.voucher.action.BasePagerAction;
 import com.voucher.constants.WebConstants;
 import com.voucher.entity.sys.SysField;
 import com.voucher.pojo.ExtGridReturn;
@@ -16,7 +16,7 @@ import com.voucher.pojo.ExtPager;
 import com.voucher.pojo.ExtReturn;
 import com.voucher.service.sys.SysFieldService;
 
-public class SysFieldAction extends BaseAction {
+public class SysFieldAction extends BasePagerAction {
 
 	/**
 	 * 
@@ -25,17 +25,6 @@ public class SysFieldAction extends BaseAction {
 
 	
 	private SysFieldService sysFieldService;
-
-	private int start;
-	private int limit;
-	/**
-	 * 大写的ASC or DESC
-	 */
-	private String dir;
-	/**
-	 * 排序的字段
-	 */
-	private String sort;
 	
 	private String id;
 	private String field;
@@ -55,39 +44,39 @@ public class SysFieldAction extends BaseAction {
 	
 	public void save() {
 		if (StringUtils.isBlank(getField())) {
-			sendExtReturn(new ExtReturn(false, "字段不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "字段不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getFieldName())) {
-			sendExtReturn(new ExtReturn(false, "字段名称不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "字段名称不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getValueField())) {
-			sendExtReturn(new ExtReturn(false, "字段值不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "字段值不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(getDisplayField())) {
-			sendExtReturn(new ExtReturn(false, "字段显示值不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "字段显示值不能为空！"));
 			return;
 		}
 		SysField sysField = new SysField(field, fieldName, valueField, displayField, Short.valueOf(enabled), Short.valueOf(sortOrder));
 		if(StringUtils.isBlank(getId())) {
-			sysFieldService.saveField(sysField);
+			sysFieldService.save(sysField);
 		} else {
 			sysField.setId(Integer.valueOf(id));
 			sysFieldService.update(sysField);
 		}
-		sendExtReturn(new ExtReturn(true, "保存成功！"));
+		sendExtReturn(new ExtReturn(TRUE, "保存成功！"));
 	}
 	
 	public void delete() {
 		if (StringUtils.isBlank(id)) {
-			sendExtReturn(new ExtReturn(false, "主键不能为空！"));
+			sendExtReturn(new ExtReturn(FALSE, "主键不能为空！"));
 			return;
 		}
 		
-		sysFieldService.deleteById(Integer.valueOf(id));
-		sendExtReturn(new ExtReturn(true, "删除成功！"));
+		sysFieldService.deleteFieldById(Integer.valueOf(id));
+		sendExtReturn(new ExtReturn(TRUE, "删除成功！"));
 	}
 	
 	public void synchro() {
@@ -95,7 +84,7 @@ public class SysFieldAction extends BaseAction {
 		ServletContext ctx= ServletActionContext.getServletContext();
 		ctx.removeAttribute(WebConstants.FIELDS);
 		ctx.setAttribute(WebConstants.FIELDS, fieldMap);
-		sendExtReturn(new ExtReturn(true, "同步成功！"));
+		sendExtReturn(new ExtReturn(TRUE, "同步成功！"));
 	}
 
 	/**
@@ -124,62 +113,6 @@ public class SysFieldAction extends BaseAction {
 	 */
 	public void setSysFieldService(SysFieldService sysFieldService) {
 		this.sysFieldService = sysFieldService;
-	}
-
-	/**
-	 * @return the start
-	 */
-	public int getStart() {
-		return start;
-	}
-
-	/**
-	 * @param start the start to set
-	 */
-	public void setStart(int start) {
-		this.start = start;
-	}
-
-	/**
-	 * @return the limit
-	 */
-	public int getLimit() {
-		return limit;
-	}
-
-	/**
-	 * @param limit the limit to set
-	 */
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
-
-	/**
-	 * @return the dir
-	 */
-	public String getDir() {
-		return dir;
-	}
-
-	/**
-	 * @param dir the dir to set
-	 */
-	public void setDir(String dir) {
-		this.dir = dir;
-	}
-
-	/**
-	 * @return the sort
-	 */
-	public String getSort() {
-		return sort;
-	}
-
-	/**
-	 * @param sort the sort to set
-	 */
-	public void setSort(String sort) {
-		this.sort = sort;
 	}
 
 	/**

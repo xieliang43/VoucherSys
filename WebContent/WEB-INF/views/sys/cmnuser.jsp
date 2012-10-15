@@ -6,9 +6,9 @@
 Ext.ns("Ext.Authority.cmnuser"); // 自定义一个命名空间
 cmnuser = Ext.Authority.cmnuser; // 定义命名空间的别名
 cmnuser = {
-	all : ctx + '/userAction!loadAll.action',// 加载所有
-	save : ctx + "/userAction!save.action",//保存
-	del : ctx + "/userAction!delete.action",//删除
+	all : ctx + '/sysCmnUserAction!loadAll.action',// 加载所有
+	save : ctx + "/sysCmnUserAction!save.action",//保存
+	del : ctx + "/sysCmnUserAction!delete.action",//删除
 	AREAMAP :eval('(${userAreaMap})'),
 	pageSize : 20, // 每页显示的记录数
 	SEX: eval('(${fields.sex==null?"{}":fields.sex})')//注意括号

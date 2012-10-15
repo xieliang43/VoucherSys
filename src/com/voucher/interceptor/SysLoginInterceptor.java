@@ -3,7 +3,6 @@ package com.voucher.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.StrutsStatics;
 
 import com.opensymphony.xwork2.Action;

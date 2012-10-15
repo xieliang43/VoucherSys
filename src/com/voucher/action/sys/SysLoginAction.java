@@ -46,16 +46,16 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	public void login() {
 		try {
 			if (StringUtils.isBlank(account)) {
-				sendExtReturn(new ExtReturn(false, "帐号不能为空！"));
+				sendExtReturn(new ExtReturn(FALSE, "帐号不能为空！"));
 				return;
 			}
 			if (StringUtils.isBlank(password)) {
-				sendExtReturn(new ExtReturn(false, "密码不能为空！"));
+				sendExtReturn(new ExtReturn(FALSE, "密码不能为空！"));
 				return;
 			}
 			SysUser user = sysUserService.findUserByAccountAndPassword(account, password);
 			if(user == null) {
-				sendExtReturn(new ExtReturn(false, "用户名或者密码错误!"));
+				sendExtReturn(new ExtReturn(FALSE, "用户名或者密码错误!"));
 				return;
 			}
 			user.setLastLoginTime(new Date());
@@ -63,7 +63,7 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 			sysUserService.update(user);
 			session.put(WebConstants.CURRENT_USER, user);
 			
-			sendExtReturn(new ExtReturn(true, "success"));
+			sendExtReturn(new ExtReturn(TRUE, "success"));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -71,57 +71,57 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	
 	public void register() {
 		if (StringUtils.isBlank(account)) {
-			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "账号不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(password)) {
-			this.sendExtReturn(new ExtReturn(false, "密码不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "密码不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(comparePassword)) {
-			this.sendExtReturn(new ExtReturn(false, "确认密码不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "确认密码不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(expensePassword)) {
-			this.sendExtReturn(new ExtReturn(false, "消费密码不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "消费密码不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(realName)) {
-			this.sendExtReturn(new ExtReturn(false, "用户名不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "用户名不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(sex)) {
-			this.sendExtReturn(new ExtReturn(false, "性别不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "性别不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(email)) {
-			this.sendExtReturn(new ExtReturn(false, "邮箱不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "邮箱不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(mobile)) {
-			this.sendExtReturn(new ExtReturn(false, "手机不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "手机不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(officePhone)) {
-			this.sendExtReturn(new ExtReturn(false, "电话不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "电话不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(qqNo)) {
-			this.sendExtReturn(new ExtReturn(false, "QQ不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "QQ不能为空！"));
 			return;
 		}
 		if(!password.equals(comparePassword)) {
-			this.sendExtReturn(new ExtReturn(false, "登陆密码输入不一致！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "登陆密码输入不一致！"));
 			return;
 		}
 		SysUser existAccountUser = sysUserService.findUserByAccount(account);
 		if(existAccountUser != null) {
-			this.sendExtReturn(new ExtReturn(false, "此用户名已存在，请从新输入！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "此用户名已存在，请从新输入！"));
 			return;
 		}
 		SysUser existPhoneUser = sysUserService.findUserByPhoneNo(mobile);
 		if(existPhoneUser != null) {
-			this.sendExtReturn(new ExtReturn(false, "此电话用户已存在，请从新输入！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "此电话用户已存在，请从新输入！"));
 			return;
 		}
 		String encPassword = MD5.getInstance().encrypt(password);
@@ -131,14 +131,14 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 		user.setLastLoginIp("0.0.0.0");
 		
 		sysUserService.register(user);
-		sendExtReturn(new ExtReturn(true, "注册成功！"));
+		sendExtReturn(new ExtReturn(TRUE, "注册成功！"));
 	}
 	
 	public void treeMenu() {
 		SysUser user = (SysUser) session.get(WebConstants.CURRENT_USER);
 		// 得到的是根菜单
 		if(user == null) {
-			this.sendExtReturn(new ExtReturn(false, "用户不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "用户不能为空！"));
 			return;
 		}
 		Tree tree = sysModuleService.getModulesByUser(user);
@@ -149,52 +149,52 @@ public class SysLoginAction extends BaseAction implements SessionAware {
 	public void logout() {
 		session.remove(WebConstants.CURRENT_USER);
 		
-		this.sendExtReturn(new ExtReturn(true, "退出系统成功！"));
+		this.sendExtReturn(new ExtReturn(TRUE, "退出系统成功！"));
 	}
 	
 	public void resetPassword() {
 		if (StringUtils.isBlank(account)) {
-			this.sendExtReturn(new ExtReturn(false, "账号不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "账号不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(email)) {
-			this.sendExtReturn(new ExtReturn(false, "邮箱不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "邮箱不能为空！"));
 			return;
 		}
 		if (StringUtils.isBlank(captcha)) {
-			this.sendExtReturn(new ExtReturn(false, "验证码不能为空！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "验证码不能为空！"));
 			return;
 		}
 		
 		Object sessionCaptcha =  session.get(Constants.KAPTCHA_SESSION_KEY);
 		if(null == sessionCaptcha){
-			this.sendExtReturn(new ExtReturn(false, "验证码已经失效!请重新输入新的验证码！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "验证码已经失效!请重新输入新的验证码！"));
 			return;
 		}
 		if (!captcha.equalsIgnoreCase((String)sessionCaptcha)) {
-			this.sendExtReturn(new ExtReturn(false, "验证码输入不正确,请重新输入！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "验证码输入不正确,请重新输入！"));
 			return;
 		}
 		session.remove(Constants.KAPTCHA_SESSION_KEY);
 		
 		SysUser user = sysUserService.findUserByAccount(account);
 		if(user == null) {
-			this.sendExtReturn(new ExtReturn(false, "不能找到用户！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "不能找到用户！"));
 			return;
 		}
 		if(!email.equals(user.getEmail())) {
-			this.sendExtReturn(new ExtReturn(false, "注册邮箱不正确！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "注册邮箱不正确！"));
 			return;
 		}
 		
 		String result = sysUserService.findPassword(user);
 		
 		if ("01".equals(result)) {
-			this.sendExtReturn(new ExtReturn(true, "邮件发送成功！请登录注册邮箱查收！"));
+			this.sendExtReturn(new ExtReturn(TRUE, "邮件发送成功！请登录注册邮箱查收！"));
 		} else if ("00".equals(result)) {
-			this.sendExtReturn(new ExtReturn(false, "邮件发送失败！"));
+			this.sendExtReturn(new ExtReturn(FALSE, "邮件发送失败！"));
 		} else {
-			this.sendExtReturn(new ExtReturn(false, result));
+			this.sendExtReturn(new ExtReturn(FALSE, result));
 		}
 	}
 	

@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class NumberUtil {
 
-	private static final String DATE_REGEX = "EEE MMM dd HH:mm:ss zzz yyyy";
+	private static final String DATE_REGEX = "EEE MMM d HH:mm:ss z yyyy";
 	
 	private static NumberUtil instance = new NumberUtil();
 	
@@ -32,7 +32,7 @@ public class NumberUtil {
 			pattern = DATE_REGEX;
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.US);
-		Date newDate = null;
+		Date newDate = new Date();
 		try {
 			newDate = sdf.parse(date);
 		} catch (Exception ex) {

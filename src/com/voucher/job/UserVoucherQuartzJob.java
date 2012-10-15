@@ -10,8 +10,8 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import com.voucher.entity.UserVoucher;
-import com.voucher.service.UserVoucherService;
+import com.voucher.entity.common.UserVoucher;
+import com.voucher.service.common.UserVoucherService;
 
 /**
  *

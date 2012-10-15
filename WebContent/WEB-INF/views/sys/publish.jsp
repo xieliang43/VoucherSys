@@ -6,8 +6,8 @@
 Ext.ns("Ext.Authority.publish"); // 自定义一个命名空间
 publish = Ext.Authority.publish; // 定义命名空间的别名
 publish = {
-	all : ctx + '/publishAction!loadAll.action',//加载所有
-	del : ctx + "/publishAction!delete.action",//删除
+	all : ctx + '/sysPublishAction!loadAll.action',//加载所有
+	del : ctx + "/sysPublishAction!delete.action",//删除
 	pageSize : 20 // 每页显示的记录数
 };
 
