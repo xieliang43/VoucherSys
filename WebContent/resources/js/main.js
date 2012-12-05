@@ -1,13 +1,13 @@
-Ext.ns("Ext.Authority.index"); // è‡ªå®šä¹‰ä¸€ä¸ªå‘½åç©ºé—´
-index = Ext.Authority.index; // å®šä¹‰å‘½åç©ºé—´çš„åˆ«å
+ï»¿Ext.ns("Ext.Authority.index"); // ×Ô¶¨ÒåÒ»¸öÃüÃû¿Õ¼ä
+index = Ext.Authority.index; // ¶¨ÒåÃüÃû¿Õ¼äµÄ±ğÃû
 index = {
     welcome: ctx + "/welcome.action",
     header: ctx + '/header.action',
     treeMenu: ctx + "/sysLoginAction!treeMenu.action"
 };
-// è®¾ç½®ä¸»é¢˜
+// ÉèÖÃÖ÷Ìâ
 Share.swapStyle();
-// å¤´éƒ¨
+// Í·²¿
 index.headerPanel = new Ext.Panel({
     region: 'north',
     height: 65,
@@ -24,15 +24,15 @@ index.headerPanel = new Ext.Panel({
 });
 index.menuTree = new Ext.tree.TreePanel({
     useArrows: true,
-    // è®¾ç½®ä¸ºtrueå°†åœ¨æ ‘ä¸­ä½¿ç”¨Vista-styleçš„ç®­å¤´
+    // ÉèÖÃÎªtrue½«ÔÚÊ÷ÖĞÊ¹ÓÃVista-styleµÄ¼ıÍ·
     autoScroll: true,
     animate: true,
-    // è®¾ç½®ä¸ºtrueä»¥å¯ç”¨å±•å¼€/æŠ˜å æ—¶çš„åŠ¨ç”»æ•ˆæœ
+    // ÉèÖÃÎªtrueÒÔÆôÓÃÕ¹¿ª/ÕÛµşÊ±µÄ¶¯»­Ğ§¹û
     containerScroll: true,
-    // è®¾ç½®ä¸ºtrueå‘ScrollManageræ³¨å†Œæ­¤å®¹å™¨
+    // ÉèÖÃÎªtrueÏòScrollManager×¢²á´ËÈİÆ÷
     border: false,
     rootVisible: false,
-    // è®¾ç½®ä¸ºfalseå°†éšè—rootèŠ‚ç‚¹
+    // ÉèÖÃÎªfalse½«Òş²Øroot½Úµã
     margins: '2 2 0 0',
     loader: new Ext.tree.TreeLoader({
         dataUrl: index.treeMenu,
@@ -43,8 +43,8 @@ index.menuTree = new Ext.tree.TreePanel({
         id: '0'
     },
     listeners: {
-        'click': function (node, e) { // ç‚¹å‡»äº‹ä»¶
-            if (node.attributes.url) { // å¦‚æœæ˜¯é“¾æ¥ node.isLeaf()
+        'click': function (node, e) { // µã»÷ÊÂ¼ş
+            if (node.attributes.url) { // Èç¹ûÊÇÁ´½Ó node.isLeaf()
                 Share.openTab(node, ctx + node.attributes.url);
             } else {
                 e.stopEvent();
@@ -52,10 +52,10 @@ index.menuTree = new Ext.tree.TreePanel({
         }
     }
 });
-// èœå•é¢æ¿
+// ²Ëµ¥Ãæ°å
 index.menuPanel = new Ext.Panel({
     region: 'west',
-    title: 'ä¸»èœå•',
+    title: 'Ö÷²Ëµ¥',
     iconCls: 'computer',
     margins: '0 2 0 0',
     layout: 'fit',
@@ -73,7 +73,7 @@ index.menuPanel = new Ext.Panel({
     items: [index.menuTree]
 });
 
-// tabä¸»é¢æ¿
+// tabÖ÷Ãæ°å
 index.tabPanel = new Ext.TabPanel({
     id: 'mainTabPanel',
     region: 'center',
@@ -86,13 +86,13 @@ index.tabPanel = new Ext.TabPanel({
         autoScroll: true
     },
     plugins: new Ext.ux.TabCloseMenu({
-        closeTabText: 'å…³é—­æ ‡ç­¾é¡µ',
-        closeOtherTabsText: 'å…³é—­å…¶ä»–æ ‡ç­¾é¡µ',
-        closeAllTabsText: 'å…³é—­æ‰€æœ‰æ ‡ç­¾é¡µ'
+        closeTabText: '¹Ø±Õ±êÇ©Ò³',
+        closeOtherTabsText: '¹Ø±ÕÆäËû±êÇ©Ò³',
+        closeAllTabsText: '¹Ø±ÕËùÓĞ±êÇ©Ò³'
     }),
     items: [{
         id: 'home',
-        title: 'æˆ‘çš„ä¸»é¡µ',
+        title: 'ÎÒµÄÖ÷Ò³',
         iconCls: 'home',
         closable: false,
         autoScroll: true,
@@ -104,7 +104,7 @@ index.tabPanel = new Ext.TabPanel({
     }],
     listeners: {
         'bodyresize': function (panel, neww, newh) {
-            // è‡ªåŠ¨è°ƒæ•´tabä¸‹é¢çš„panelçš„å¤§å°
+            // ×Ô¶¯µ÷ÕûtabÏÂÃæµÄpanelµÄ´óĞ¡
             var tab = panel.getActiveTab();
             var centerpanel = Ext.getCmp(tab.id + "_div_panel");
             if (centerpanel) {
@@ -123,21 +123,21 @@ index.msgArea = new Ext.form.TextArea({
 
 index.msgPanel = new Ext.Panel({
     layout: 'border',
-    title: 'æ¶ˆæ¯çª—å£',
+    title: 'ÏûÏ¢´°¿Ú',
     region: 'east',
     collapseMode: 'mini',
     width: 200,
     minSize: 100,
     maxSize: 300,
-    // Trueå°†ä¼šä½¿panelæŠ˜å å¹¶ä¸”ä¼šè‡ªåŠ¨æŠŠå±•å¼€/æŠ˜å 
-    // (expand/collapse)æŒ‰é’®æ¸²æŸ“åˆ°é¡¶éƒ¨å·¥å…·æŒ‰é’®åŒºåŸŸ
+    // True½«»áÊ¹panelÕÛµş²¢ÇÒ»á×Ô¶¯°ÑÕ¹¿ª/ÕÛµş
+    // (expand/collapse)°´Å¥äÖÈ¾µ½¶¥²¿¹¤¾ß°´Å¥ÇøÓò
     collapsible: true,
     collapsed: true,
-    // å¦‚æœå½“å‰panelè¢«æŠ˜å ä¸ºtrue
+    // Èç¹ûµ±Ç°panel±»ÕÛµşÎªtrue
     split: true,
     tbar: [{
         xtype: 'button',
-        text: 'æ¸…å±',
+        text: 'ÇåÆÁ',
         iconCls: 'cancel',
         handler: function () {
             index.msgArea.reset();
@@ -145,7 +145,7 @@ index.msgPanel = new Ext.Panel({
     }],
     items: [index.msgArea]
 });
-// åˆæœŸåŒ–é¡µé¢Layout
+// ³õÆÚ»¯Ò³ÃæLayout
 index.viewport = new Ext.Viewport({
     layout: 'border',
     items: [index.headerPanel, index.menuPanel, index.tabPanel, index.msgPanel]
